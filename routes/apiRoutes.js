@@ -1,24 +1,64 @@
 var db = require("../models");
 
 module.exports = function(app) {
-  // Get all examples
-  app.get("/api/examples", function(req, res) {
-    db.Example.findAll({}).then(function(dbExamples) {
-      res.json(dbExamples);
-    });
+  app.get("/api/experiences/:id?", function(request, response) {
+    if (request.params.id) {
+      db.Experiences.findOne({
+        where: {
+          id: request.params.id
+        }
+      }).then(function(results) {
+        if (results.data.length === 0) {
+          response.status(400).end();
+        }
+        response.json(results);
+      }).catch(function(error) {
+        response.status(503).json(error);
+      });
+    } else {
+      db.Experiences.findAll().then(function(results) {
+        response.json(results);
+      }).catch(function(error) {
+        console.log(error);
+        response.status(503).end();
+      });
+    }
   });
 
-  // Create a new example
-  app.post("/api/examples", function(req, res) {
-    db.Example.create(req.body).then(function(dbExample) {
-      res.json(dbExample);
-    });
-  });
+  // app.post("/api/experiences/new", function(request, response) {
+  //   let data = request.body;
+  //   // Add logic for determining correct data structure in place of true
+  //   if (true) {
+  //     // Add object for creating when database structure is known
+  //     db.Experiences.create({}).then(function(results) {
+  //       response.status(200).end()
+  //     }).catch(function(error) {
+  //       response.status(503).end()
+  //     })
+  //   } else {
+  //     response.status(400).end()
+  //   }
+  // })
 
-  // Delete an example by id
-  app.delete("/api/examples/:id", function(req, res) {
-    db.Example.destroy({ where: { id: req.params.id } }).then(function(dbExample) {
-      res.json(dbExample);
-    });
-  });
+  // app.put("/api/experiences/:id", function(request, response) {
+  //   let data = request.body;
+  //   // Add logic for determining correct data structure in place of true
+  //   if (true) {
+  //     // Add object for updating when database structure is known
+  //     db.Experiences.update({}, {
+  //       where: {
+  //         id: request.params.id
+  //       }
+  //     }).then(function(results) {
+  //       if (results.affectedRows === 0) {
+  //         response.status(404).end()
+  //       }
+  //       response.status(200).end()
+  //     }).catch(function(error) {
+  //       response.status(503).end()
+  //     })
+  //   } else {
+  //     response.status(400).end()
+  //   }
+  // })
 };
