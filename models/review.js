@@ -20,17 +20,34 @@ module.exports = function (sequelize, DataTypes) {
     }
   },
   {
-    freezeTableName: true
+    freezeTableName: true,
+    hooks: {
+      afterCreate: function (review) {
+        var User = this.sequelize.models.User;
+        //get the user id that created the experience reviewed
+        this.sequelize.models.Experience.findByPk(review.ExperienceId).then(function (experience) {
+          //update the user score
+          User.update({
+            score: sequelize.literal("score + 1")
+          },
+          {
+            where: { id: experience.UserId }
+          }).then(() => {
+            console.log("User score was updated!");          
+          });
+        });
+      }
+    }
   });
 
   Review.association = function (models) {
-    Review.belongsTo(models.Experience, {
+    Review.belongsTo(models.User, {
       foreignKey: {
         allowNull: false
       }
     });
-      
-    Review.belongsTo(models.User, {
+
+    Review.belongsTo(models.Experience, {
       foreignKey: {
         allowNull: false
       }

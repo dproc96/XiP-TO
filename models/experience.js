@@ -60,13 +60,33 @@ module.exports = function (sequelize, DataTypes) {
     }
   },
   {
-    freezeTableName: true
+    freezeTableName: true,
+    hooks: {
+      afterCreate: function (experience) {
+        //update the user score
+        this.sequelize.models.User.update({
+          score: sequelize.literal("score + 5")
+        },
+        {
+          where: { id: experience.UserId }
+        }).then(() => {
+          console.log("User score was updated!");          
+        });
+        
+      }
+    }
   });
 
   Experience.associate = function (models) {
     Experience.hasMany(models.Review, {
       foreignKey: {
         allowNull: true
+      }
+    });
+
+    Experience.belongsTo(models.User, {
+      foreignKey: {
+        allowNull: false
       }
     });
   };  

@@ -1,10 +1,9 @@
---run this before start the server
+/* 
 DROP DATABASE IF EXISTS xiptodb;
 CREATE DATABASE xiptodb;
 
-
---run these after start the server (if is in test mode)
-USE xiptodb;
+Automatic execution when the server startups:
+*/
 
 ALTER TABLE Category
 CHANGE COLUMN createdAt createdAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ,
