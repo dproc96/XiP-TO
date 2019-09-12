@@ -12,6 +12,7 @@ body {
     grid-template-columns: 1fr 3fr;
     min-height: 100vh;
     font-family: 'Lato', sans-serif;
+    color: var(--black-color);
 }
 
 h1, h2, h3, h4, h5, label {
