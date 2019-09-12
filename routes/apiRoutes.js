@@ -1,6 +1,10 @@
 var db = require("../models");
 
-module.exports = function(app) {
+module.exports = function (app) {
+  /*************
+   * CATEGORIES
+   *************/
+
   // Get all categories that are active
   app.get("/api/categories", function(req, res) {
     db.Category.findAll({
@@ -15,10 +19,14 @@ module.exports = function(app) {
     });
   });
 
+  /*************
+   * EXPERIENCES
+   *************/
+
   // Get all experiences that are active
   app.get("/api/experiences", function(req, res) {
     db.Experience.findAll({
-      include: [db.Review, db.User],
+      include: [{all:true}],
       order: [["CategoryId", "ASC"]],
       where: {
         active: true
@@ -26,7 +34,9 @@ module.exports = function(app) {
     }).then(function (data) {
       res.json(data);
     }).catch(err => {
-      res.status(500).end(err.errors[0].message);
+      console.log(err);
+      //res.status(500).end(err.errors[0].message);
+      res.status(500).end();
     });
   });
 
@@ -45,8 +55,8 @@ module.exports = function(app) {
     });
   });
 
-  // Get all user experiences that are active
-  app.get("/api/user/experiences/:userid", function(req, res) {
+  // Get all experiences that are active from an user
+  app.get("/api/experiences/user/:userid", function(req, res) {
     db.Experience.findOne({
       include: [db.Review, db.User],
       order: [["CategoryId", "ASC"]],
@@ -66,13 +76,15 @@ module.exports = function(app) {
     db.Experience.create(req.body).then(function(result) {
       res.json(result);
     }).catch(err => {
-      res.status(500).end(err.errors[0].message);
+      console.log(err);
+      //res.status(500).end(err.errors[0].message);
+      res.status(500).end();
     });
   });
 
   // Update an experience
   app.put("/api/experiences", function(req, res) {
-    db.Experience.update(req.body).then(function(result) {
+    db.Experience.update(req.body,{where:{id: req.body.id}}).then(function(result) {
       res.json(result);
     }).catch(err => {
       res.status(500).end(err.errors[0].message);
@@ -95,9 +107,31 @@ module.exports = function(app) {
     });
   });
 
+  /*************
+   * REVIEWS
+   *************/
+
+  // Get all reviews that are active from an experience
+  app.get("/api/reviews/experience/:experienceid", function(req, res) {
+    db.Review.findAll({
+      include: [{all: true}],
+      order: [["createdAt", "DESC"]],
+      where: {
+        active: true,
+        ExperienceId: req.params.experienceid
+      }
+    }).then(function (data) {
+      res.json(data);
+    }).catch(err => {
+      console.log(err);
+      //res.status(500).end(err.errors[0].message);
+      res.status(500).end();
+    });
+  });
+
   // Create a review
   app.post("/api/reviews", function(req, res) {
-    db.Review.create(req.body).then(function(result) {
+    db.Review.create(req.body).then(function (result) {
       res.json(result);
     }).catch(err => {
       res.status(500).end(err.errors[0].message);
@@ -106,12 +140,16 @@ module.exports = function(app) {
 
   // Update a review
   app.put("/api/reviews", function(req, res) {
-    db.Review.update(req.body).then(function(result) {
+    db.Review.update(req.body,{where:{id: req.body.id}}).then(function(result) {
       res.json(result);
     }).catch(err => {
       res.status(500).end(err.errors[0].message);
     });
   });
+
+  /*************
+   * USERS
+   *************/
 
   // Create a user
   app.post("/api/users", function (req, res) {
@@ -124,7 +162,7 @@ module.exports = function(app) {
 
   // Update a user
   app.put("/api/users", function(req, res) {
-    db.Update.update(req.body).then(function(result) {
+    db.User.update(req.body,{where:{id: req.body.id}}).then(function(result) {
       res.json(result);
     }).catch(err => {
       res.status(500).end(err.errors[0].message);

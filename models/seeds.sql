@@ -1,4 +1,4 @@
---run this after start the server
+/*Automatic execution when the server startups*/
 INSERT INTO Category (name) VALUES ("Park");
 INSERT INTO Category (name) VALUES ("Restaurant");
 INSERT INTO Category (name) VALUES ("Pub");

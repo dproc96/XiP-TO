@@ -7,7 +7,12 @@ module.exports = {
     "database": process.env.DB_NAME,
     "host": process.env.DB_HOST,
     "dialect": "mysql",
-    "operatorsAliases": false
+    "operatorsAliases": false,
+    "dialectOptions": {
+      "multipleStatements": true
+    }
+
+  
   },
   "test": {
     "username": process.env.DB_USER,
@@ -15,10 +20,18 @@ module.exports = {
     "database": process.env.DB_NAME,
     "host": process.env.DB_HOST,
     "dialect": "mysql",
-    "operatorsAliases": false
+    "operatorsAliases": false,
+    "dialectOptions": {
+      "multipleStatements": true
+    }
+    
   },
   "production": {
     "use_env_variable": "JAWSDB_URL",
-    "dialect": "mysql"
+    "dialect": "mysql",
+    "dialectOptions": {
+      "multipleStatements": true
+    }
+
   }
 };
