@@ -1,0 +1,37 @@
+<div class="grid--sidebar">
+    <a class="btn" href="/">{{metadata.homepageButtonText}}</a>
+
+    <img src="{{metadata.iconImageSrc}}" class="block__centered icon icon__large" />
+
+    <p>{{metadata.description}}</p>
+</div>
+<div class="grid--content">
+    <div class="card">
+        <div class="grid-two-col">
+            <div class="grid--column-1">
+                <h2>Add A New Experience</h2>
+
+                <input type="text" placeholder="Name Your Experience...">
+                <!-- To restrict the upload only for images you need to add accept attribute -->
+                <input type="file" accept="image/*" />
+
+                <label for="category">Select Experience Category:</label>
+                <select id="category">
+                    {{#each metadata.categories}}
+                    <option value="{{value}}">{{name}}</option>
+                    {{/each}}
+                </select>
+                <!-- Location.............................. -->
+                <input type="text" id="firstlocation_street" placeholder="First Location" />
+                <!-- New Location.............................. -->
+                <a href="#" class="btn"><i class="fas fa-plus"></i> Add a new location</a>
+            </div>
+            <div class="grid--column-2">
+                <textarea rows="10" id="body" placeholder="Describe Your Experience"></textarea>
+            </div>
+        </div>
+        <br>
+        <!-- submit button.............................. -->
+        <a class="btn btn__large">Submit</a>
+    </div>
+</div>

@@ -52,5 +52,7 @@
 
 .grid--content {
     grid-column: 2;
-    background-color: var(--light-color);
+    /* background-color: var(--light-color); */
+    background-image: url("../images/toronto.jpg");
+    background-size: cover;
 }
