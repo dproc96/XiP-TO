@@ -15,7 +15,9 @@ module.exports = function (app) {
     }).then(function (data) {
       res.json(data);
     }).catch(err => {
-      res.status(500).end(err.errors[0].message);
+      console.log(err);
+      //res.status(500).end(err.errors[0].message);
+      res.status(500).end();      
     });
   });
 
@@ -51,7 +53,9 @@ module.exports = function (app) {
     }).then(function (data) {
       res.json(data);
     }).catch(err => {
-      res.status(500).end(err.errors[0].message);
+      console.log(err);
+      //res.status(500).end(err.errors[0].message);
+      res.status(500).end();
     });
   });
 
@@ -67,7 +71,9 @@ module.exports = function (app) {
     }).then(function (data) {
       res.json(data);
     }).catch(err => {
-      res.status(500).end(err.errors[0].message);
+      console.log(err);
+      //res.status(500).end(err.errors[0].message);
+      res.status(500).end();
     });
   });
 
@@ -77,8 +83,8 @@ module.exports = function (app) {
       res.json(result);
     }).catch(err => {
       console.log(err);
-      //res.status(500).end(err.errors[0].message);
-      res.status(500).end();
+      res.status(500).end(err.errors[0].message);
+      //res.status(500).end();
     });
   });
 
