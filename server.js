@@ -41,7 +41,7 @@ db.sequelize.sync(syncOptions).then(function () {
   let schema = fs.readFileSync("./models/schema.sql", { encoding: "utf8" });
   let seeds = fs.readFileSync("./models/seeds.sql", { encoding: "utf8" });
   
-  db.sequelize.query(schema + seeds, { raw: true }).then(res => {
+  db.sequelize.query(schema + seeds, { raw: true }).then(() => {
     app.listen(PORT, function() {
       console.log(
         "==> 🌎  Listening on port %s. Visit http://localhost:%s/ in your browser.",
