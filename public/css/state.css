@@ -1,5 +1,6 @@
 .btn:hover {
     background-color: var(--darkest-color);
+    cursor: pointer;
 }
 
 .block__centered {
