@@ -1,0 +1,9 @@
+.btn:hover {
+    background-color: var(--darkest-color);
+}
+
+.block__centered {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}

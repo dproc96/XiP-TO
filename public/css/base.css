@@ -6,3 +6,29 @@
     --white-color: #eeeeee;
     --black-color: #222222;
 }
+
+body {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    min-height: 100vh;
+    font-family: 'Lato', sans-serif;
+}
+
+h1, h2, h3, h4, h5, label {
+    font-family: 'Lobster', cursive;
+}
+
+a {
+    text-decoration: none;
+    color: var(--black-color)
+}
+
+h2 {
+    font-weight: 700;
+    font-size: 24px;
+}
+
+input, textarea {
+    border-radius: 5px;
+    border: none;
+}

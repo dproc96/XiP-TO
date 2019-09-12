@@ -1,0 +1,20 @@
+.btn {
+    padding: 10px;
+    background-color: var(--dark-color);
+    color: var(--white-color);
+    border-radius: 2px;
+}
+
+.btn__large {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.icon {
+    border-radius: 100%;
+}
+
+.icon__large {
+    width: 250px;
+    height: 250px;
+}
