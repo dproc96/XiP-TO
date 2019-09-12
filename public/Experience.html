@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Experience</title>
+    <!-- Latest compiled and minified CSS & JS -->
+    <link
+      href="https://maxcdn.bootstrapcdn.com/bootswatch/4.0.0/flatly/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://kit.fontawesome.com/a4b838d1a2.js"></script>
+    <link
+      rel="stylesheet"
+      href="css/styles.css"
+      media="screen"
+      title="no title"
+    />
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-5 mt-4">
+          <!-- .............................. -->
+          <div class="row">
+            <a class="btn btn-light mb-3" href="/mainpage">Go to main page</a>
+          </div>
+          <!-- image.............................. -->
+          <div class="row mb-3">
+            <img src="#" style="width:250px ; height: 250px" />
+          </div>
+          <div class="row ">
+            <!-- To restrict the upload only for images you need to add accept attribute -->
+            <input type="file" accept="image/*" />
+          </div>
+        </div>
+        <!-- form.............................. -->
+        <div class="col-md-5 ">
+          <form>
+            <!-- Experience.............................. -->
+            <div class="card mt-4 mb-3">
+              <div class="card-header">
+                <div class="form-group">
+                  <label for="category">Select Experience Category:</label>
+                  <select class="custom-select" id="category">
+                    <option value="Personal">Nature and Parks</option>
+                    <option value="Product Review">Food</option>
+                    <option value="Political">Nightlife</option>
+                  </select>
+                </div>
+              </div>
+              <div class="card-body">
+                <textarea
+                  class="form-control"
+                  rows="10"
+                  id="body"
+                  placeholder="Share your experience with us"
+                ></textarea>
+              </div>
+            </div>
+            <!-- Location.............................. -->
+            <label for="location">First Location</label>
+            <input type="text" class="form-control" id="firstlocation_street" />
+            <br />
+            <!-- New Location.............................. -->
+            <div class="row">
+              <div class="col-md-7">
+                <a href="#"
+                  ><i class="fas fa-plus mr-2"></i>Add a new location</a
+                >
+              </div>
+              <!-- submit button.............................. -->
+              <div class="col-md-5 text-right">
+                <button
+                  type="submit"
+                  class="btn btn-success submit text-right "
+                >
+                  Submit
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!-- Custom Script -->
+    <script src="js/experience.js" type="text/javascript"></script>
+  </body>
+</html>
