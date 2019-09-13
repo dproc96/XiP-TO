@@ -12,10 +12,16 @@ module.exports = function(app) {
     });
   });
 
-  // Load example page and pass in an example by id
+  // Load experience form page and pass an experience id
   app.get("/experiences/:id", function(req, res) {
     if (req.param.id = "new") {
-      res.render("new-experience", {metadata: metadata});
+
+      //load categories from the database
+      metadata.loadCategories().then(data => {
+        metadata.categories = data;
+        res.render("new-experience", { metadata: metadata });
+      });
+      
     }
   });
 
