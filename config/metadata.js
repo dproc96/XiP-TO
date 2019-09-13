@@ -34,19 +34,23 @@ module.exports = {
   buttons: [
     {
       name: "Sign In/Sign Up",
-      link: "#"
+      link: "#",
+      id: "sign-in"
     },
     {
       name: "Post Your Experience",
-      link: "/experiences/new"
+      link: "/experiences/new",
+      id: "post"
     },
     {
       name: "How to Post",
-      link: "#"
+      link: "#",
+      id: "how-to"
     },
     {
       name: "About Us",
-      link: "#"
+      link: "#",
+      id: "about"
     },
   ]
 };

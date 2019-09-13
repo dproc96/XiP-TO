@@ -14,18 +14,24 @@
     flex-wrap: wrap;
 }
 
-.card input, label, select, a, textarea, button, h2 {
+.card input, .card label, .card select, .card a, .card textarea, .card button, .card h2 {
     display: block;
     margin: 10px;
 }
 
-.card input, select, textarea {
+.card input, .card select, .card textarea {
     width: Calc(100% - 40px);
     padding: 10px;
 }
 
 .card textarea {
     height: Calc(100% - 40px);
+}
+
+.flex {
+    display: flex;
+    justify-content: flex-start;
+    align-content: center;
 }
 
 .grid-two-col {
@@ -63,4 +69,10 @@
     background-image: url("../images/toronto.jpg");
     background-size: cover;
     overflow: scroll;
+}
+
+#rememberPassword {
+    width: 10px;
+    margin: 0;
+    display: inline-block;
 }
