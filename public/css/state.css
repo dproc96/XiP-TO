@@ -8,3 +8,38 @@
     margin-left: auto;
     margin-right: auto;
 }
+
+.card__small {
+    width: 20%;
+}
+
+
+
+@media only screen and (max-width: 768px) {
+  body {
+    grid-template-columns: 1fr;
+    grid-auto-rows: auto;
+  }
+
+  .grid--sidebar {
+    grid-column: 0;
+    grid-row: 1;
+  }
+
+  .grid--content {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .desktop-only {
+    display: none;
+  }
+
+  .grid-two-col {
+    display: block;
+  }
+
+  .card {
+    width: 80%;
+  }
+}

@@ -9,6 +9,7 @@
     font-size: 18px;
     font-weight: 700;
     padding: 15px;
+    text-align: center;
 }
 
 .icon {
@@ -18,4 +19,14 @@
 .icon__large {
     width: 250px;
     height: 250px;
+}
+
+.blockquote {
+    font-style: italic;
+    line-height: 1.5;
+}
+
+.blockquote-author {
+    font-family: 'Lobster', cursive;
+    font-size: 18px;
 }
