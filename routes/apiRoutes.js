@@ -15,9 +15,13 @@ module.exports = function (app) {
     }).then(function (data) {
       res.json(data);
     }).catch(err => {
-      console.log(err);
-      //res.status(500).end(err.errors[0].message);
-      res.status(500).end();      
+      if (err.errors) {
+        res.status(500).end(err.errors[0].message);
+      }
+      else {
+        console.log(err);
+        res.status(500).end(err.message);
+      }
     });
   });
 
@@ -36,9 +40,13 @@ module.exports = function (app) {
     }).then(function (data) {
       res.json(data);
     }).catch(err => {
-      console.log(err);
-      //res.status(500).end(err.errors[0].message);
-      res.status(500).end();
+      if (err.errors) {
+        res.status(500).end(err.errors[0].message);
+      }
+      else {
+        console.log(err);
+        res.status(500).end(err.message);
+      }
     });
   });
 
@@ -53,9 +61,13 @@ module.exports = function (app) {
     }).then(function (data) {
       res.json(data);
     }).catch(err => {
-      console.log(err);
-      //res.status(500).end(err.errors[0].message);
-      res.status(500).end();
+      if (err.errors) {
+        res.status(500).end(err.errors[0].message);
+      }
+      else {
+        console.log(err);
+        res.status(500).end(err.message);
+      }
     });
   });
 
@@ -71,29 +83,90 @@ module.exports = function (app) {
     }).then(function (data) {
       res.json(data);
     }).catch(err => {
-      console.log(err);
-      //res.status(500).end(err.errors[0].message);
-      res.status(500).end();
+      if (err.errors) {
+        res.status(500).end(err.errors[0].message);
+      }
+      else {
+        console.log(err);
+        res.status(500).end(err.message);
+      }
     });
   });
 
   // Create an experience
-  app.post("/api/experiences", function(req, res) {
-    db.Experience.create(req.body).then(function(result) {
+  app.post("/api/experiences", function (req, res) {
+
+    if (req.files) {
+              
+      //get the file extension
+      var fileExt = req.files.image.name.split(".");
+      fileExt = fileExt[fileExt.length - 1];
+      req.body.image = fileExt;
+    }
+    
+    //store the new experience on the database
+    db.Experience.create(req.body).then(function (result) {
+      //if there is file sent
+      if (req.files) {
+              
+        //create the file name
+        var fileName = `experience_${result.id}.${fileExt}`; 
+
+        //move the file from the tmp folder to the final folder
+        req.files.image.mv(`./public/uploads/${fileName}`, function(err) {
+          if (!err) {
+            console.log("File uploaded!");
+          }
+        });
+
+      }
       res.json(result);
+
+      
     }).catch(err => {
-      console.log(err);
-      res.status(500).end(err.errors[0].message);
-      //res.status(500).end();
+      if (err.errors) {
+        res.status(500).end(err.errors[0].message);
+      }
+      else {
+        console.log(err);
+        res.status(500).end(err.message);
+      }
     });
   });
 
   // Update an experience
-  app.put("/api/experiences", function(req, res) {
-    db.Experience.update(req.body,{where:{id: req.body.id}}).then(function(result) {
+  app.put("/api/experiences", function (req, res) {
+    if (req.files) {
+              
+      //get the file extension
+      var fileExt = req.files.image.name.split(".");
+      fileExt = fileExt[fileExt.length - 1];
+
+      //create the file name
+      var fileName = `experience_${req.body.id}.${fileExt}`; 
+
+      //move the file from the tmp folder to the final folder
+      req.files.image.mv(`./public/uploads/${fileName}`, function(err) {
+        if (!err) {
+          console.log("File uploaded!");
+        }
+      });
+      
+      req.body.image = fileName;
+    }
+
+    db.Experience.update(req.body, { where: { id: req.body.id } }).then(function (result) {
       res.json(result);
     }).catch(err => {
-      res.status(500).end(err.errors[0].message);
+      
+      if (err.errors) {
+        res.status(500).end(err.errors[0].message);
+      }
+      else {
+        console.log(err);
+        res.status(500).end(err.message);
+      }
+        
     });
   });
 
@@ -109,7 +182,13 @@ module.exports = function (app) {
     }).then(function (result) {
       res.json(result);
     }).catch(err => {
-      res.status(500).end(err.errors[0].message);
+      if (err.errors) {
+        res.status(500).end(err.errors[0].message);
+      }
+      else {
+        console.log(err);
+        res.status(500).end(err.message);
+      }
     });
   });
 
@@ -120,7 +199,7 @@ module.exports = function (app) {
   // Get all reviews that are active from an experience
   app.get("/api/reviews/experience/:experienceid", function(req, res) {
     db.Review.findAll({
-      include: [{all: true}],
+      include: [db.User],
       order: [["createdAt", "DESC"]],
       where: {
         active: true,
@@ -129,9 +208,13 @@ module.exports = function (app) {
     }).then(function (data) {
       res.json(data);
     }).catch(err => {
-      console.log(err);
-      //res.status(500).end(err.errors[0].message);
-      res.status(500).end();
+      if (err.errors) {
+        res.status(500).end(err.errors[0].message);
+      }
+      else {
+        console.log(err);
+        res.status(500).end(err.message);
+      }
     });
   });
 
@@ -140,7 +223,13 @@ module.exports = function (app) {
     db.Review.create(req.body).then(function (result) {
       res.json(result);
     }).catch(err => {
-      res.status(500).end(err.errors[0].message);
+      if (err.errors) {
+        res.status(500).end(err.errors[0].message);
+      }
+      else {
+        console.log(err);
+        res.status(500).end(err.message);
+      }
     });
   });
 
@@ -149,7 +238,13 @@ module.exports = function (app) {
     db.Review.update(req.body,{where:{id: req.body.id}}).then(function(result) {
       res.json(result);
     }).catch(err => {
-      res.status(500).end(err.errors[0].message);
+      if (err.errors) {
+        res.status(500).end(err.errors[0].message);
+      }
+      else {
+        console.log(err);
+        res.status(500).end(err.message);
+      }
     });
   });
 
@@ -162,7 +257,13 @@ module.exports = function (app) {
     db.User.create(req.body).then(function(result) {
       res.json(result);
     }).catch(err => {
-      res.status(500).end(err.errors[0].message);
+      if (err.errors) {
+        res.status(500).end(err.errors[0].message);
+      }
+      else {
+        console.log(err);
+        res.status(500).end(err.message);
+      }
     });
   });
 
@@ -171,7 +272,13 @@ module.exports = function (app) {
     db.User.update(req.body,{where:{id: req.body.id}}).then(function(result) {
       res.json(result);
     }).catch(err => {
-      res.status(500).end(err.errors[0].message);
+      if (err.errors) {
+        res.status(500).end(err.errors[0].message);
+      }
+      else {
+        console.log(err);
+        res.status(500).end(err.message);
+      }
     });
   });
 };

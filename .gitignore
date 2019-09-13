@@ -3,4 +3,5 @@ package-lock.json
 node_modules
 npm-debug.log
 .env
+public/uploads
 
