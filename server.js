@@ -29,7 +29,10 @@ app.engine(
 app.set("view engine", "handlebars");
 
 // Routes
-require("./routes/apiRoutes")(app);
+require("./routes/apiRoutes-categories")(app);
+require("./routes/apiRoutes-experiences")(app);
+require("./routes/apiRoutes-reviews")(app);
+require("./routes/apiRoutes-users")(app);
 require("./routes/htmlRoutes")(app);
 
 var syncOptions = { force: false };
