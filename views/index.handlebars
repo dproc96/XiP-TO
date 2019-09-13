@@ -1,9 +1,15 @@
 <div class="grid--sidebar">
-  <h1>Experience Toronto!</h1>
-  <img src="{{metadata.iconImageSrc}}" alt="" class="block__centered icon icon__large">
-  {{#each metadata.buttons}}
-  <a href="{{link}}" class="btn">{{name}}</a>
-  {{/each}}
+  <div class="flex">
+    <h1 id="menu" class="fas fa-bars mobile-only"></h1>
+    <h1 class="title">Experience Toronto!</h1>
+    <h1 class="fas fa-bars mobile-only invisible"></h1>
+  </div>
+  <img src="{{metadata.iconImageSrc}}" alt="" class="block__centered icon icon__large desktop-only">
+  <div id="nav" class="desktop-only">
+    {{#each metadata.buttons}}
+    <a href="{{link}}" id="{{id}}" class="btn">{{name}}</a>
+    {{/each}}
+  </div>
 </div>
 
 <!-- // first look -->

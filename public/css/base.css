@@ -26,9 +26,15 @@ h1 {
     text-align: center;
 }
 
+label {
+    display: inline;
+}
+
 a {
     text-decoration: none;
-    color: var(--black-color)
+    color: var(--black-color);
+    display: block;
+    margin: 10px;
 }
 
 h2 {

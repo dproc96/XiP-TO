@@ -3,6 +3,10 @@
     cursor: pointer;
 }
 
+.hidden {
+  display: none;
+}
+
 .block__centered {
     display: block;
     margin-left: auto;
@@ -13,22 +17,39 @@
     width: 20%;
 }
 
+.btn-close:hover {
+  color: var(--black-color);
+  cursor: pointer;
+}
+
+.invisible {
+  opacity: 0;
+}
+
+#menu:hover {
+  color: var(--black-color);
+  cursor: pointer;
+}
+
+@media only screen and (min-width: 768px) {
+  .mobile-only {
+    display: none;
+  }
+}
 
 
 @media only screen and (max-width: 768px) {
   body {
-    grid-template-columns: 1fr;
-    grid-auto-rows: auto;
+    display: block;
+    min-height: 100vh;
   }
 
   .grid--sidebar {
-    grid-column: 0;
-    grid-row: 1;
+    height: min-content;
   }
 
   .grid--content {
-    grid-column: 1;
-    grid-row: 2;
+    min-height: 100vh;
   }
 
   .desktop-only {
