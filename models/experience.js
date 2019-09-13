@@ -51,7 +51,7 @@ module.exports = function (sequelize, DataTypes) {
       }
     },
     image: {
-      type: DataTypes.BLOB("long"),
+      type: DataTypes.STRING,
       allowNull: true
     },
     active: {
@@ -62,7 +62,25 @@ module.exports = function (sequelize, DataTypes) {
   {
     freezeTableName: true,
     hooks: {
+      //trigger to update the file name and user score after store on database
       afterCreate: function (experience) {
+
+        if (experience.image) {
+          var fileName = "experience_" + experience.id + "." + experience.image;
+          experience.image = fileName;
+
+          Experience.update({
+            image: fileName
+          },
+          {
+            where: {
+              id: experience.id
+            }
+          }).then(() => {
+            console.log("Image renamed!");
+          });
+        }
+
         //update the user score
         this.sequelize.models.User.update({
           score: sequelize.literal("score + 5")
