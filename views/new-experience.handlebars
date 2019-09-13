@@ -15,7 +15,10 @@
 
                 <input type="text" placeholder="Name Your Experience...">
                 <!-- To restrict the upload only for images you need to add accept attribute -->
-                <input type="file" accept="image/*" />
+                <form action="/api/photo" method="post" enctype="multipart/form-data" id="submitbt">
+                    <input type="file" name="myimage" />
+                    <input class="btn" type="submit" name="submit" value="Upload" />
+                </form>
 
                 <label for="category">Select Experience Category:</label>
                 <select id="category">

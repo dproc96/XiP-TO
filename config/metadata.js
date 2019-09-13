@@ -23,7 +23,7 @@ module.exports = {
     },
     {
       text: "I use XiP-TO for planning with my friends",
-      author: "Richard"
+      author: "Richie"
     },
     {
       text: "For what it's worth,I have been using XiP-TO for a while and I have much more fun these days!",
@@ -37,7 +37,7 @@ module.exports = {
     },
     {
       name: "Post Your Experience",
-      link: "#"
+      link: "/experiences/new"
     },
     {
       name: "How to Post",
