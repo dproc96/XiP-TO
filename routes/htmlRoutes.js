@@ -1,15 +1,10 @@
-var db = require("../models");
+// var db = require("../models");
 var metadata = require("../config/metadata");
 
 module.exports = function(app) {
   // Load index page
   app.get("/", function(req, res) {
-    db.Example.findAll({}).then(function(dbExamples) {
-      res.render("index", {
-        msg: "Welcome!",
-        examples: dbExamples
-      });
-    });
+    res.render("index", {metadata: metadata});
   });
 
   // Load experience form page and pass an experience id
