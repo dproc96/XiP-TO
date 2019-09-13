@@ -12,10 +12,18 @@ body {
     grid-template-columns: 1fr 3fr;
     min-height: 100vh;
     font-family: 'Lato', sans-serif;
+    color: var(--black-color);
 }
 
 h1, h2, h3, h4, h5, label {
     font-family: 'Lobster', cursive;
+}
+
+h1 {
+    font-size: 32px;
+    margin: 10px;
+    color: var(--white-color);
+    text-align: center;
 }
 
 a {
