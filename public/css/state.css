@@ -9,9 +9,11 @@
     margin-right: auto;
 }
 
-.desktop-only {
-    display: initial;
+.card__small {
+    width: 20%;
 }
+
+
 
 @media only screen and (max-width: 768px) {
   body {
@@ -35,5 +37,9 @@
 
   .grid-two-col {
     display: block;
+  }
+
+  .card {
+    width: 80%;
   }
 }

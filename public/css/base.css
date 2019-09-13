@@ -19,6 +19,13 @@ h1, h2, h3, h4, h5, label {
     font-family: 'Lobster', cursive;
 }
 
+h1 {
+    font-size: 32px;
+    margin: 10px;
+    color: var(--white-color);
+    text-align: center;
+}
+
 a {
     text-decoration: none;
     color: var(--black-color)
