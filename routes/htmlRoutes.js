@@ -1,4 +1,4 @@
-var db = require("../models");
+// var db = require("../models");
 var metadata = require("../config/metadata");
 
 module.exports = function(app) {
