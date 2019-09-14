@@ -22,20 +22,18 @@ $(".slide").slick({
   slidesToScroll: 1,
   autoplay: true,
   autoplaySpeed: 1500,
-  responsive: [
-    {
-      breakpoint: 850,
-      settings: {
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        infinite: true
-      }
-    }],
+  responsive: [{
+    breakpoint: 850,
+    settings: {
+      slidesToShow: 1,
+      slidesToScroll: 1,
+      infinite: true,
+    }
+  }],
   variableWidth: true,
-  nextArrow:
-    "<button type='button' data-role='none' class='slick-next slick-arrow' aria-label='Next' role='button' style='display: block;'>Next</button>",
-  prevArrow:
-    "<button type='button' data-role='none' class='slick-prev slick-arrow' aria-label='Next' role='button' style='display: block;'>Next</button>"
+  nextArrow: "<button type='button' data-role='none' class='slick-next slick-arrow' aria-label='Next' role='button' style='display: block;'>Next</button>",
+  prevArrow: "<button type='button' data-role='none' class='slick-prev slick-arrow' aria-label='Next' role='button' style='display: block;'>Next</button>"
+
 });
 
 $(document).ready(function() {
