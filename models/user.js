@@ -1,12 +1,22 @@
 module.exports = function (sequelize, DataTypes) {
   var User = sequelize.define("User", {
-    name: {
+    firstname: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
         len: {
           args: [3, 50],
-          msg: "User name must have at least 3 and max 20 characters"
+          msg: "User first name must have at least 3 and max 50 characters"
+        }
+      }
+    },
+    lastname: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        len: {
+          args: [3, 50],
+          msg: "User last name must have at least 3 and max 50 characters"
         }
       }
     },
