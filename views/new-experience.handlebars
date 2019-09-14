@@ -24,7 +24,7 @@
                     <label for="category">Select Experience Category:</label>
                     <select id="category" name="CategoryId">
                         {{#each metadata.categories}}
-                        <option value="{{value}}">{{name}}</option>
+                        <option value="{{id}}">{{name}}</option>
                         {{/each}}
                     </select>
                     <!-- Location.............................. -->
@@ -44,6 +44,10 @@
                 </div>
             </div>
             <br>
+
+            <!-- error message.............................. -->
+            <p id="error-message"></p>
+
             <!-- submit button.............................. -->
             <button type="submit" class="btn btn__large" id="submit-btn">Submit</button>
         </form>

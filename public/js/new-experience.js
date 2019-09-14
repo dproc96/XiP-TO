@@ -1,12 +1,12 @@
 $(document).ready(function () {
   var totLocations = 1;
-  var location1 = $("#location1"); 
-  var location2 = $("#location2"); 
-  var location3 = $("#location3"); 
+  var $errorMsg = $("#error-message").css("display","none");
+  var $location2 = $("#location2"); 
+  var $location3 = $("#location3"); 
 
   //hide the 2 extra locations
-  location2.css("display", "none");
-  location3.css("display", "none");
+  $location2.css("display", "none");
+  $location3.css("display", "none");
 
   //initialize the algolia places (responsible to autocomplete the locations)
   for(let i = 1; i <= 3; i++) {
@@ -18,14 +18,15 @@ $(document).ready(function () {
 
   //when user clicks on the button to add new location
   $("#add-location").click(function () {
+   
     event.preventDefault();
     
     if (totLocations === 1) {
-      location2.css("display", "block");
+      $location2.css("display", "block");
       totLocations = 2;
     }
     else {
-      location3.css("display", "block");
+      $location3.css("display", "block");
       totLocations = 3;
       $(this).css("display", "none");
     }
@@ -42,14 +43,12 @@ $(document).ready(function () {
     $(this).ajaxSubmit({
 
       error: function (xhr) {
-        console.log(xhr);
-        console.log("Error: " + xhr.status);
-        $submitButtom.css("disabled", "false");
+        $errorMsg.text(xhr.responseText).css("display", "block");
+        $submitButtom.text("Send").css("disabled","false");
       },
 
-      success: function (response) {
-        console.log(response);
-        location.reload();
+      success: function () {
+        document.location.reload();
       }
 
     });

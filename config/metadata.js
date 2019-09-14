@@ -3,7 +3,7 @@ db = require("../models");
 //load categories from the database
 function loadCategories() {
   return db.Category.findAll({
-    attributes: ["name", ["id", "value"]],
+    attributes: ["name", "id"],
     where: {
       active: true
     },
