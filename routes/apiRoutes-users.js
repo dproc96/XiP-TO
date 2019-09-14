@@ -66,7 +66,7 @@ module.exports = function (app) {
       //nothing to do, but the password won't be updated
     }    
 
-    db.User.update(req.body,{where:{id: req.body.id}}).then(function(result) {
+    db.User.update(req.body,{where:{id: req.body.id}}).then(function() {
       res.status(200).end("User has updated successfully!");
     }).catch(err => {
       if (err.errors) {

@@ -3,7 +3,7 @@ var express = require("express");
 var exphbs = require("express-handlebars");
 var fs = require("fs");
 var fileUpload = require("express-fileupload");
-var session = require('express-session');
+var session = require("express-session");
 
 var db = require("./models");
 
