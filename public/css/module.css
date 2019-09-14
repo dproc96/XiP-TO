@@ -78,3 +78,28 @@
 .title {
     width: 100%;
 }
+
+.grow-in {
+    animation-name: grow;
+    animation-duration: 1s;
+    animation-timing-function: ease-in-out;
+}
+
+.carousel--element {
+	position: relative;
+    display: inline-block;
+	margin: 10px 1%;
+    padding: 20px 20px;
+    width: 300px;
+    height: 200px;
+	text-align: center;
+    box-shadow: none !important;
+    background-color: #cccccc;
+    box-shadow: 3px 3px 3px 3px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+}
+
+.carousel--element img {
+    width: 100%;
+    margin: 5px 0px;
+}
