@@ -88,7 +88,7 @@
 .carousel--element {
 	position: relative;
     display: inline-block;
-	margin: 10px 1%;
+	margin: 10px;
     padding: 20px 20px;
     width: 300px;
     height: 200px;

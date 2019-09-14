@@ -32,6 +32,7 @@ $(".slide").slick({
       infinite: true,
     }
   }],
+  variableWidth: true,
   nextArrow: "<button type='button' data-role='none' class='slick-next slick-arrow' aria-label='Next' role='button' style='display: block;'>Next</button>",
   prevArrow: "<button type='button' data-role='none' class='slick-prev slick-arrow' aria-label='Next' role='button' style='display: block;'>Next</button>"
 });
