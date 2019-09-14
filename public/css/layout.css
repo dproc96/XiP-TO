@@ -30,8 +30,16 @@
 
 .flex {
     display: flex;
-    justify-content: flex-start;
     align-content: center;
+    flex-wrap: wrap;
+}
+
+.flex-start {
+    justify-content: flex-start;   
+}
+
+.flex-space-around {
+    justify-content: space-around;
 }
 
 .grid-two-col {
