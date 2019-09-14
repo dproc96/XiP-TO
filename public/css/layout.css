@@ -1,7 +1,7 @@
 .card {
     display: block;
     padding: 20px;
-    background-color: var(--primary-color);
+    background-color: var(--primary-color-opacity);
     width: fit-content;
     max-width: 80%;
     margin: 30px auto;
