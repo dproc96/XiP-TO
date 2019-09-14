@@ -48,15 +48,15 @@ module.exports = function (app) {
   app.get("/api/experiences/user/:userid", function (req, res) {
 
     //check if the user is logged in
-    // if (!req.session.loggedin) {
-    //   res.status(500).end("You need to sign in to see your experiences.");
-    // }
+    if (!req.session.loggedin) {
+      res.status(500).end("You need to sign in to see your experiences.");
+    }
   
     db.Experience.findOne({
       include: [db.Review, db.User],
       order: [["CategoryId", "ASC"]],
       where: {
-        UserId: req.params.userid,
+        UserId: req.session.UserId,
         active: true
       }
     }).then(function (data) {
@@ -77,9 +77,9 @@ module.exports = function (app) {
   app.post("/api/experiences", function (req, res) {
 
     // check if the user is logged in
-    // if (!req.session.loggedin) {
-    //   res.status(500).end("You need to sign in to create experience");
-    // }
+    if (!req.session.loggedin) {
+      res.status(500).end("You need to sign in to create experience");
+    }
 
     if (req.files) {
       //get the file extension
@@ -87,7 +87,10 @@ module.exports = function (app) {
       fileExt = fileExt[fileExt.length - 1];
       req.body.image = fileExt;
     }
-  
+
+    //set the user id from the session
+    req.body.UserId = req.session.UserId;
+
     //store the new experience on the database
     db.Experience.create(req.body).then(function (result) {
       //if there is file sent
@@ -122,9 +125,9 @@ module.exports = function (app) {
   app.put("/api/experiences", function (req, res) {
 
     // check if the user is logged in
-    // if (!req.session.loggedin) {
-    //   res.status(500).end("You need to sign in to update experience");
-    // }
+    if (!req.session.loggedin) {
+      res.status(500).end("You need to sign in to update experience");
+    }
 
     if (req.files) {
               
@@ -164,9 +167,9 @@ module.exports = function (app) {
   app.delete("/api/experiences/:id", function (req, res) {
     
     // check if the user is logged in
-    // if (!req.session.loggedin) {
-    //   res.status(500).end("You need to sign in to delete experience");
-    // }
+    if (!req.session.loggedin) {
+      res.status(500).end("You need to sign in to delete experience");
+    }
 
     db.Experience.update({
       active: false

@@ -31,7 +31,32 @@ $(document).ready(function () {
     }
   });
   
-  
+  //when user clicks on the submit buttom
+  $("#experience-form").submit(function () {
+    var $submitButtom = $("#submit-btn");
+    
+    //change the label and disable the submit buttom
+    $submitButtom.text("Sending...").css("disabled","true");
+
+    //submit the form to the api on the action attribute
+    $(this).ajaxSubmit({
+
+      error: function (xhr) {
+        console.log(xhr);
+        console.log("Error: " + xhr.status);
+        $submitButtom.css("disabled", "false");
+      },
+
+      success: function (response) {
+        console.log(response);
+        location.reload();
+      }
+
+    });
+    
+    //Very important line, it disable the page refresh.
+    return false;
+  });      
 
     
     

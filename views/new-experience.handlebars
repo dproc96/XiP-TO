@@ -12,7 +12,7 @@
 </div>
 <div class="grid--content">
     <div class="card">
-        <form action="/api/experiences" method="post" enctype="multipart/form-data" id="submitbt">
+        <form action="/api/experiences" id="experience-form" method="post" enctype="multipart/form-data">
             <div class="grid-two-col">
                 <div class="grid--column-1">
                     <h2>Add A New Experience</h2>
@@ -45,9 +45,12 @@
             </div>
             <br>
             <!-- submit button.............................. -->
-            <a class="btn btn__large">Submit</a>
+            <button type="submit" class="btn btn__large" id="submit-btn">Submit</button>
         </form>
     </div>
 </div>
+<!-- Ajax form library -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.51/jquery.form.min.js"></script>
 
 <script src="./js/new-experience.js"></script>
