@@ -30,8 +30,7 @@ $(".slide").slick({
         slidesToScroll: 1,
         infinite: true
       }
-    }
-  ],
+    }],
   variableWidth: true,
   nextArrow:
     "<button type='button' data-role='none' class='slick-next slick-arrow' aria-label='Next' role='button' style='display: block;'>Next</button>",
