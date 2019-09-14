@@ -39,8 +39,6 @@ $(".slide").slick({
     "<button type='button' data-role='none' class='slick-prev slick-arrow' aria-label='Next' role='button' style='display: block;'>Next</button>"
 });
 
-//-------- Sign up modal-----
-
 $(document).ready(function() {
   $(document).on("click", "#signUP", makeNewModal);
 
@@ -86,9 +84,7 @@ $(document).ready(function() {
       placeholder: "ReEnter Password",
       required: "true"
     });
-    {
-      /* <a class="btn btn__large" id="signUP">Sign UP</a> */
-    }
+
     var submitBtn = $("<button>")
       .attr("id", "submitUserInformation")
       .addClass("btn btn__large")
