@@ -32,6 +32,7 @@ $(".slide").slick({
       }
     }
   ],
+  variableWidth: true,
   nextArrow:
     "<button type='button' data-role='none' class='slick-next slick-arrow' aria-label='Next' role='button' style='display: block;'>Next</button>",
   prevArrow:
@@ -47,7 +48,7 @@ $(document).ready(function() {
     event.preventDefault();
 
     $("#modal").empty();
-    
+
     var newModal = $("<modal>").addClass("modal");
 
     var xIcon = $("<i>")
