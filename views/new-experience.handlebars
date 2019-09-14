@@ -1,3 +1,6 @@
+<link rel="stylesheet" href="css/algolia.css" type="text/css">
+<script src="https://cdn.jsdelivr.net/npm/places.js@1.16.4"></script>
+
 <div class="grid--sidebar">
     <a class="btn btn__large" href="/">{{metadata.homepageButtonText}}</a>
 
@@ -9,34 +12,42 @@
 </div>
 <div class="grid--content">
     <div class="card">
-        <div class="grid-two-col">
-            <div class="grid--column-1">
-                <h2>Add A New Experience</h2>
+        <form action="/api/experiences" method="post" enctype="multipart/form-data" id="submitbt">
+            <div class="grid-two-col">
+                <div class="grid--column-1">
+                    <h2>Add A New Experience</h2>
 
-                <input type="text" placeholder="Name Your Experience...">
-                <!-- To restrict the upload only for images you need to add accept attribute -->
-                <form action="/api/photo" method="post" enctype="multipart/form-data" id="submitbt">
-                    <input type="file" name="myimage" />
-                    <input class="btn" type="submit" name="submit" value="Upload" />
-                </form>
+                    <input type="text" type="search" name="name" placeholder="Name Your Experience...">
 
-                <label for="category">Select Experience Category:</label>
-                <select id="category">
-                    {{#each metadata.categories}}
-                    <option value="{{value}}">{{name}}</option>
-                    {{/each}}
-                </select>
-                <!-- Location.............................. -->
-                <input type="text" id="firstlocation_street" placeholder="First Location" />
-                <!-- New Location.............................. -->
-                <a href="#" class="btn"><i class="fas fa-plus"></i> Add a new location</a>
+                    <input type="file" name="image" />
+
+                    <label for="category">Select Experience Category:</label>
+                    <select id="category" name="CategoryId">
+                        {{#each metadata.categories}}
+                        <option value="{{value}}">{{name}}</option>
+                        {{/each}}
+                    </select>
+                    <!-- Location.............................. -->
+                    <input type="text" name="location" id="location1" placeholder="First Location" />
+
+                    <!-- Location 2-->
+                    <input type="text" name="location2" id="location2" placeholder="Second Location" />
+
+                    <!-- Location 3-->
+                    <input type="text" name="location3" id="location3" placeholder="Third Location" />
+
+                    <!-- New Location.............................. -->
+                    <a href="#" class="btn" id="add-location"><i class="fas fa-plus"></i> Add a new location</a>
+                </div>
+                <div class="grid--column-2">
+                    <textarea rows="10" name="description" id="body" placeholder="Describe Your Experience"></textarea>
+                </div>
             </div>
-            <div class="grid--column-2">
-                <textarea rows="10" id="body" placeholder="Describe Your Experience"></textarea>
-            </div>
-        </div>
-        <br>
-        <!-- submit button.............................. -->
-        <a class="btn btn__large">Submit</a>
+            <br>
+            <!-- submit button.............................. -->
+            <a class="btn btn__large">Submit</a>
+        </form>
     </div>
 </div>
+
+<script src="./js/new-experience.js"></script>
