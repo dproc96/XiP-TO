@@ -21,11 +21,22 @@
 
     <div class="slide">
       {{#each elements}}
-      <figure class="carousel--element grow-in">
-        <h3>{{name}}</h3>
-        <img src="images/uploads/{{image}}" alt="">
-        <p>{{User.score}}</p>
-      </figure>
+      <div class="carousel--element grow-in">
+        <div class="carousel--element--header">
+          <h3>{{name}}</h3>
+          <p>By: {{User.firstname}} {{User.lastname}}</p>
+        </div>
+        <img src="images/uploads/{{image}}" onerror="this.onerror=null; this.src='images/toronto.jpg'" alt="">
+        <div class="flex badge-box">
+          <div class="carousel--element--badge">
+            <h4>User's Rating:</h4>
+            <p>{{User.score}}</p>
+          </div>
+          <div class="carousel--element--badge">
+            <a href="/experience/{{id}}"><h4>Read More</h4></a>
+          </div>
+        </div>
+      </div>
       {{/each}}
     </div>
   </div>
