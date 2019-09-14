@@ -88,7 +88,7 @@
 .carousel--element {
 	position: relative;
     display: inline-block;
-	margin: 10px 1%;
+	margin: 10px;
     padding: 20px 20px;
     width: 300px;
     height: 200px;
@@ -118,6 +118,11 @@
     color: var(--light-color);
     padding: 5px 0px;
     z-index: 1;
+}
+
+.carousel--element--header p {
+    font-size: 10px;
+    margin-top: 5px;
 }
 
 .carousel--element--badge {
