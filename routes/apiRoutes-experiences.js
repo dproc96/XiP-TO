@@ -77,9 +77,9 @@ module.exports = function (app) {
   app.post("/api/experiences", function (req, res) {
 
     // check if the user is logged in
-    // if (!req.session.loggedin) {
-    //   res.status(500).end("You need to sign in to create experience");
-    // }
+    if (!req.session.loggedin) {
+      res.status(500).end("You need to sign in to create experience");
+    }
 
     if (req.files) {
       //get the file extension
