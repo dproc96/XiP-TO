@@ -35,8 +35,8 @@ module.exports = function (sequelize, DataTypes) {
       allowNull: false,
       validate: {
         len: {
-          args: [8, 20],
-          msg: "Password must have at least 8 and max 20 characters"
+          args: [8, 60],
+          msg: "Password must have at least 8 characters"
         }
       }
     },
@@ -55,17 +55,19 @@ module.exports = function (sequelize, DataTypes) {
   });
 
   User.associate = function (models) {
+    User.hasMany(models.Review, {
+      
+      foreignKey: {
+        allowNull: false
+      }
+    });
     User.hasMany(models.Experience, {
       foreignKey: {
         allowNull: false
       }
     });
 
-    User.hasMany(models.Review, {
-      foreignKey: {
-        allowNull: false
-      }
-    });
+  
     
   };  
 
