@@ -25,7 +25,12 @@ module.exports = function (app) {
   });
 
   // Create a review
-  app.post("/api/reviews", function(req, res) {
+  app.post("/api/reviews", function (req, res) {
+    //check if the user is logged in
+    // if (!req.session.loggedin) {
+    //   res.status(500).end("You need to sign in to create a review.");
+    // }
+    
     db.Review.create(req.body).then(function (result) {
       res.json(result);
     }).catch(err => {
@@ -40,7 +45,12 @@ module.exports = function (app) {
   });
 
   // Update a review
-  app.put("/api/reviews", function(req, res) {
+  app.put("/api/reviews", function (req, res) {
+    //check if the user is logged in
+    // if (!req.session.loggedin) {
+    //   res.status(500).end("You need to sign in to update an review.");
+    // }
+
     db.Review.update(req.body,{where:{id: req.body.id}}).then(function(result) {
       res.json(result);
     }).catch(err => {

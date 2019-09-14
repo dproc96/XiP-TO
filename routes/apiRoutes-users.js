@@ -18,7 +18,11 @@ module.exports = function (app) {
   });
 
   // Update a user
-  app.put("/api/users", function(req, res) {
+  app.put("/api/users", function (req, res) {
+    // if (!req.session.loggedin) {
+    //   res.status(500).end("You need to sign in to update a user.");
+    // }
+
     db.User.update(req.body,{where:{id: req.body.id}}).then(function(result) {
       res.json(result);
     }).catch(err => {

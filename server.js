@@ -16,7 +16,7 @@ app.use(express.static("public"));
 app.use(fileUpload({
   limits: { fileSize: 50 * 1024 * 1024 },
   useTempFiles : true,
-  tempFileDir : "./public/uploads/tmp/"
+  tempFileDir : "./public/images/uploads/tmp/"
 }));
 
 // Handlebars
