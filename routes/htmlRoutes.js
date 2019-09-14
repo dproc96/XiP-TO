@@ -26,7 +26,6 @@ module.exports = function(app) {
             data.categories.push(categoryData);
           }
         }
-        console.log(data);
         res.render("index", data);
       });
     }).catch(err => {

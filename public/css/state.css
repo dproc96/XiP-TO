@@ -37,7 +37,7 @@
     opacity: 0;
   }
   60% {
-    transform: scale(1.2);
+    transform: scale(1.04);
     opacity: 1;
   }
   100% {
@@ -64,6 +64,12 @@
 
   .grid--content {
     min-height: 100vh;
+  }
+
+  .sidebar--content {
+    position: relative;
+    left: 0;
+    top: 0;
   }
 
   .desktop-only {
