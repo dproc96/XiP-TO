@@ -15,10 +15,9 @@ module.exports = function (app) {
       res.json(data);
     }).catch(err => {
       if (err.errors) {
-        res.status(500).end(err.errors[0].message);
+        res.status(400).end(err.errors[0].message);
       }
       else {
-        console.log(err);
         res.status(500).end(err.message);
       }
     });
@@ -27,40 +26,43 @@ module.exports = function (app) {
   // Create a review
   app.post("/api/reviews", function (req, res) {
     //check if the user is logged in
-    // if (!req.session.loggedin) {
-    //   res.status(500).end("You need to sign in to create a review.");
-    // }
+    if (!req.session.loggedin) {
+      res.status(400).end("You need to sign in to create a review.");
+    }
+    else {
     
-    db.Review.create(req.body).then(function (result) {
-      res.json(result);
-    }).catch(err => {
-      if (err.errors) {
-        res.status(500).end(err.errors[0].message);
-      }
-      else {
-        console.log(err);
-        res.status(500).end(err.message);
-      }
-    });
+      db.Review.create(req.body).then(function (result) {
+        res.json(result);
+      }).catch(err => {
+        if (err.errors) {
+          res.status(400).end(err.errors[0].message);
+        }
+        else {
+          res.status(500).end(err.message);
+        }
+      });
+    }
   });
 
   // Update a review
   app.put("/api/reviews", function (req, res) {
     //check if the user is logged in
-    // if (!req.session.loggedin) {
-    //   res.status(500).end("You need to sign in to update an review.");
-    // }
-
-    db.Review.update(req.body,{where:{id: req.body.id}}).then(function(result) {
-      res.json(result);
-    }).catch(err => {
-      if (err.errors) {
-        res.status(500).end(err.errors[0].message);
-      }
-      else {
-        console.log(err);
-        res.status(500).end(err.message);
-      }
-    });
+    if (!req.session.loggedin) {
+      res.status(400).end("You need to sign in to update an review.");
+    }
+    else {
+    
+      db.Review.update(req.body, { where: { id: req.body.id } }).then(function (result) {
+        res.json(result);
+      }).catch(err => {
+        if (err.errors) {
+          res.status(400).end(err.errors[0].message);
+        }
+        else {
+          console.log(err);
+          res.status(500).end(err.message);
+        }
+      });
+    }
   });
 };

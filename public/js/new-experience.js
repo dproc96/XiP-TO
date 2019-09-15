@@ -4,9 +4,23 @@ $(document).ready(function () {
   let $location2 = $("#location2"); 
   let $location3 = $("#location3"); 
 
-  //hide the 2 extra locations
-  $location2.css("display", "none");
-  $location3.css("display", "none");
+  if ($location2.val().trim() === "") {
+    $location2.css("display", "none");
+  }
+  else {
+    totLocations++;
+  }
+
+  if ($location3.val().trim() !== "") {
+    $location3.css("display", "none");
+  }
+  else {
+    totLocations++;
+  }
+  
+  if (totLocations === 3) {
+    $("#add-location").css("display", "none");
+  }
 
   //initialize the algolia places (responsible to autocomplete the locations)
   for(let i = 1; i <= 3; i++) {
@@ -18,47 +32,90 @@ $(document).ready(function () {
   }
 
   //when user clicks on the button to add new location
-  $("#add-location").click(function () {
+  $("#add-location").on("click", function (event) {
    
     event.preventDefault();
     
-    if (totLocations === 1) {
+    if ($location2.css("display") === "none") {
       $location2.css("display", "block");
-      totLocations = 2;
+    }
+    else if ($location3.css("display") === "none") {
+      $location3.css("display", "block");
     }
     else {
-      $location3.css("display", "block");
-      totLocations = 3;
       $(this).css("display", "none");
     }
   });
   
   //when user clicks on the submit buttom
+
   $("#experience-form").submit(function () {
     let $submitButtom = $("#submit-btn");
     
+
+  $("#submit-btn").click(function (event) {
+    event.preventDefault();
+
+
     //change the label and disable the submit buttom
-    $submitButtom.text("Sending...").css("disabled","true");
+    $(this).text("Sending...").css("disabled", "true");
 
-    //submit the form to the api on the action attribute
-    $(this).ajaxSubmit({
+    var data = {
+      name: $("#name").val().trim(),
+      description: $("#description").val().trim(),
+      image: $("#image").val().trim(),
+      CategoryId: $("#category").val().trim(),
+      location: $("#location1").val().trim(),
+      location2: $("#location2").val().trim(),
+      location3: $("#location3").val().trim()
+    };
 
-      error: function (xhr) {
-        $errorMsg.text(xhr.responseText).css("display", "block");
-        $submitButtom.text("Send").css("disabled","false");
+    var experienceId = $("#experience-id").val().trim();
+    var method = "POST";
+
+    if (experienceId !== "") {
+      method = "PUT";
+      data.id = experienceId;
+    }
+    
+    $.ajax({
+      url: "/api/experiences",
+      type: method,
+      data: data,
+
+      error: err => {
+        $errorMsg.text(err.responseText).css("display", "block");
+        $(this).text("Send").css("disabled", "false");
       },
 
-      success: function () {
-        document.location.reload();
+      success: () => {
+        location.reload();
       }
 
     });
-    
-    //Very important line, it disable the page refresh.
-    return false;
-  });      
 
-    
+  });
+
+  $("#file").change(function () {
+    var $picture = $("#picture");
+
+    $picture.css("display", "none");
+
+    $("#upload-form").ajaxSubmit({
+
+      error: function (xhr) {
+        $errorMsg.text(xhr.responseText).css("display", "block");
+      },
+
+      success: function (file) {
+        $picture.css("display", "block");
+        $picture.attr("src", file.fullFileName);
+        $("#image").val(file.fileName);
+        $errorMsg.text("");
+      }
+
+    });
+  });
     
 });
   
