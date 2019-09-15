@@ -201,16 +201,16 @@ module.exports = function (app) {
     else {
       if (req.files) {
               
-        var fileName = req.files.file.name;
+        let fileName = req.files.file.name;
         
         //get the file extension
-        var fileExt = fileName.split(".");
+        let fileExt = fileName.split(".");
         fileExt = fileExt[fileExt.length - 1];
   
         //add extension to filename
-        var fullFileName = `${req.files.file.tempFilePath}.${fileExt}`;
+        let fullFileName = `${req.files.file.tempFilePath}.${fileExt}`;
   
-        var fileName = fullFileName.split("/");
+        fileName = fullFileName.split("/");
         fileName = fileName[fileName.length - 1];
         
         //rename the file to add the extension
