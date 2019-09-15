@@ -51,6 +51,12 @@ module.exports = function (app) {
 
       //load categories from the database
       metadata.loadCategories().then(data => {
+        if (!req.session.loggedin) {
+          metadata.buttons = metadata.buttonsLoggedOut;
+        }
+        else {
+          metadata.buttons = metadata.buttonsLoggedIn;
+        }
         metadata.categories = data;
         res.render("new-experience", { metadata: metadata });
       });

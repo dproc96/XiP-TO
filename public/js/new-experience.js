@@ -11,7 +11,7 @@ $(document).ready(function () {
     totLocations++;
   }
 
-  if ($location3.val().trim() !== "") {
+  if ($location3.val().trim() === "") {
     $location3.css("display", "none");
   }
   else {
@@ -41,8 +41,6 @@ $(document).ready(function () {
     }
     else if ($location3.css("display") === "none") {
       $location3.css("display", "block");
-    }
-    else {
       $(this).css("display", "none");
     }
   });
