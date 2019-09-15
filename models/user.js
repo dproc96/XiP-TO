@@ -23,10 +23,14 @@ module.exports = function (sequelize, DataTypes) {
     email: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: {
+        args: true,
+        msg: "This e-mail is already registered"
+      },
       validate: {
         len: {
-          args: [1, 100],
-          msg: "E-mail must have max 100 characters"
+          args: [1, 200],
+          msg: "E-mail must have max 200 characters"
         }
       }
     },

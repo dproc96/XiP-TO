@@ -48,15 +48,15 @@ module.exports = function (app) {
   app.get("/api/experiences/user/:userid", function (req, res) {
 
     //check if the user is logged in
-    // if (!req.session.loggedin) {
-    //   res.status(500).end("You need to sign in to see your experiences.");
-    // }
+    if (!req.session.loggedin) {
+      res.status(500).end("You need to sign in to see your experiences.");
+    }
   
     db.Experience.findOne({
       include: [db.Review, db.User],
       order: [["CategoryId", "ASC"]],
       where: {
-        UserId: req.params.userid,
+        UserId: req.session.UserId,
         active: true
       }
     }).then(function (data) {
@@ -78,16 +78,21 @@ module.exports = function (app) {
 
     // check if the user is logged in
     if (!req.session.loggedin) {
-      res.status(500).end("You need to sign in to create experience");
+      res.status(500).end("You need to sign in to create an experience");
     }
-
+    else {
+      //set the user id from the session
+      req.body.UserId = req.session.UserId;
+    }
+    
     if (req.files) {
       //get the file extension
       var fileExt = req.files.image.name.split(".");
       fileExt = fileExt[fileExt.length - 1];
       req.body.image = fileExt;
     }
-  
+
+    
     //store the new experience on the database
     db.Experience.create(req.body).then(function (result) {
       //if there is file sent
@@ -97,7 +102,7 @@ module.exports = function (app) {
         var fileName = `experience_${result.id}.${fileExt}`;
 
         //move the file from the tmp folder to the final folder
-        req.files.image.mv(`./public/uploads/${fileName}`, function (err) {
+        req.files.image.mv(`./public/images/uploads/${fileName}`, function (err) {
           if (!err) {
             console.log("File uploaded!");
           }
@@ -122,9 +127,9 @@ module.exports = function (app) {
   app.put("/api/experiences", function (req, res) {
 
     // check if the user is logged in
-    // if (!req.session.loggedin) {
-    //   res.status(500).end("You need to sign in to update experience");
-    // }
+    if (!req.session.loggedin) {
+      res.status(500).end("You need to sign in to update an experience");
+    }
 
     if (req.files) {
               
@@ -136,7 +141,7 @@ module.exports = function (app) {
       var fileName = `experience_${req.body.id}.${fileExt}`; 
 
       //move the file from the tmp folder to the final folder
-      req.files.image.mv(`./public/uploads/${fileName}`, function(err) {
+      req.files.image.mv(`./public/images/uploads/${fileName}`, function(err) {
         if (!err) {
           console.log("File uploaded!");
         }
@@ -164,9 +169,9 @@ module.exports = function (app) {
   app.delete("/api/experiences/:id", function (req, res) {
     
     // check if the user is logged in
-    // if (!req.session.loggedin) {
-    //   res.status(500).end("You need to sign in to delete experience");
-    // }
+    if (!req.session.loggedin) {
+      res.status(500).end("You need to sign in to delete experience");
+    }
 
     db.Experience.update({
       active: false
