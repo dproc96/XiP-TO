@@ -22,7 +22,7 @@ app.use(fileUpload({
 }));
 
 app.use(session({
-  secret: "secret",
+  secret: "XiPTOkey",
   resave: true,
   saveUninitialized: true
 }));
