@@ -1,5 +1,6 @@
 var db = require("../models");
 const bcrypt = require("bcrypt");
+var lib = require("../library/functions");
 
 module.exports = function (app) {
 
@@ -108,6 +109,32 @@ module.exports = function (app) {
       }
       else {
         console.log(err);
+        res.status(500).end(err.message);
+      }
+    });
+  });
+
+  app.post("/api/users/resetpwd", function (req, res) {
+    
+    db.User.findOne({
+      where: {
+        email: req.body.email
+      }
+    }).then(function (user) {
+      
+      if (user) {
+        lib.sendEmail(user.email);
+        res.status(200).end("Email has been sent!");  
+      }
+      else {
+        res.status(400).end("This e-mail is not registered!");
+      }
+      
+    }).catch(err => {
+      if (err.errors) {
+        res.status(400).end(err.errors[0].message);
+      }
+      else {
         res.status(500).end(err.message);
       }
     });
