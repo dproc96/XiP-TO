@@ -26,17 +26,18 @@ function showElement(elementId, display) {
   $(`#${elementId}`).css("display", "block");
 }
 
+function closeModal() {
+  $("#overlay").attr("class", "overlay hidden");
+  $("#sign-in-modal").attr("class", "modal hidden");
+  $("#sign-up-modal").attr("class", "modal hidden");
+}
+
 $(document).on("click", "#sign-in", function () {
   $("#overlay").attr("class", "overlay");
   $("#sign-in-modal").attr("class", "modal");
 });
 
-$(document).on("click", "#close-modal", function() {
-  $("#overlay").attr("class", "overlay hidden");
-  $("#sign-in-modal").attr("class", "modal hidden");
-  $("#sign-up-modal").attr("class", "modal hidden");
-
-});
+$(document).on("click", "#close-modal", closeModal);
 
 $(document).on("click", "#menu", function() {
   let nav = $("#nav");
@@ -164,4 +165,22 @@ $("#cancelResetPwd").click(function () {
   //hide reset and cancel buttons
   hideElement("resetPwd");
   hideElement("cancelResetPwd");
+});
+
+
+$("#submitSignIn").on("click", function () {
+  
+  let user = {
+    email: $("#signInEmail").val().trim(),
+    password: $("#signInPassword").val().trim()
+  };
+  
+  $.ajax("/api/auth", {
+    method: "POST",
+    data: user
+  }).then(() => {
+    closeModal();
+  }).catch(err => {
+    showErrorMessage(err.responseText);
+  });
 });
