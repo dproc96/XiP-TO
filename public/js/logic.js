@@ -1,13 +1,13 @@
 //insert the error message on the #message element
 function showErrorMessage(msg) {
-  $("#message").removeClass("success-message");  
-  $("#message").text(msg).addClass("error-message");  
+  $("#message-signIn").removeClass("success-message");  
+  $("#message-signIn").text(msg).addClass("error-message");  
 }
 
 //insert the success message on the #message element
 function showSuccessMessage(msg) {
-  $("#message").removeClass("error-message");  
-  $("#message").text(msg).addClass("success-message");  
+  $("#message-signIn").removeClass("error-message");  
+  $("#message-signIn").text(msg).addClass("success-message");  
 }
 
 //hide an element of the dom. Sample: hideElement("myelementid")
@@ -149,7 +149,8 @@ $("#forgot-pwd").click(function () {
 
 //when clicks on cancel button to request a password to show default modal sign in fields
 $("#cancelResetPwd").click(function () {
-
+  event.preventDefault();
+  
   $("#title-signIn").text("Welcome Back!");
 
   //show the unecessary fields to request a new password

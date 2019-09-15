@@ -1,7 +1,7 @@
 let db = require("../models");
 const bcrypt = require("bcrypt");
-var lib = require("../library/functions");
-var generator = require("generate-password");
+let lib = require("../library/functions");
+let generator = require("generate-password");
 
 module.exports = function (app) {
 
@@ -123,7 +123,7 @@ module.exports = function (app) {
       
       if (user) {
         //creates a new pwd
-        var newPassword = generator.generate({
+        let newPassword = generator.generate({
           length: 10,
           numbers: true
         });
