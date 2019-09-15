@@ -78,8 +78,7 @@ module.exports = function (app) {
 
     // check if the user is logged in
     if (!req.session.loggedin) {
-      req.body.UserId = 1;
-      //res.status(500).end("You need to sign in to create an experience");
+      res.status(500).end("You need to sign in to create an experience");
     }
     else {
       //set the user id from the session
