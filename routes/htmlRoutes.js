@@ -75,7 +75,12 @@ module.exports = function (app) {
             metadata.buttons = metadata.buttonsLoggedIn;
           }
           metadata.experience = experience;
-          res.render("new-experience", { metadata: metadata, experience: experience });
+          if (req.session.UserId === experience.UserId) {
+            res.render("new-experience", { metadata: metadata, experience: experience });
+          }
+          else {
+            res.redirect("/");
+          }
         });
 
       }).catch(err => {
