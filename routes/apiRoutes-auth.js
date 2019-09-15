@@ -45,11 +45,22 @@ module.exports = function (app) {
         res.status(400).end(err.errors[0].message);
       }
       else {
-        console.log(err);
         res.status(500).end(err.message);
       }
     });
   });
 
+  //Sign out the user
+  app.post("/api/signout", function (req, res) {
+    req.session.destroy((err) => {
+      if (err) {
+        console.log("Error destroying session:");
+        console.log(err);
+      }
+      else {
+        res.status(200).end("User was signed out successfully!");  
+      }
+    });
+  });
   
 };
