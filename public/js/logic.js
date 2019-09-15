@@ -108,11 +108,13 @@ function alertInSignUp(message) {
   }, 5000);
 }
 
-//hide the send submit button to request a new password
+//hide the send and cancel button to request a new password
 $("#resetPwd").css("display", "none");
-//request a new password
+$("#cancelResetPwd").css("display", "none");
+
+//send a request to new password
 $("#resetPwd").click(function () {
-  let email = $("#inputEmail").val().trim();
+  let email = $("#signInEmail").val().trim();
 
   $.ajax("/api/users/resetpwd", {
     method: "POST",
@@ -125,17 +127,40 @@ $("#resetPwd").click(function () {
   
 });
 
+//when clicks on forgot password
 $("#forgot-pwd").click(function () {
   event.preventDefault();
-  //hide the unecessary fields to request a new password
-  hideElement("inputPassword");
   
-  //hide sign in and sign up buttons and forgot passowrd link
+  $("#title-signIn").text("Request a new password");
+
+  //hide the unecessary fields to request a new password
+  hideElement("signInPassword");
+  
+  //hide sign in and sign up buttons and forgot passoword link
   hideElement("submitSignIn");
-  hideElement("signUP");
+  hideElement("signUp");
   hideElement("forgot-pwd");
   
-  //show reset button
+  //show reset and cancel buttons
   showElement("resetPwd");
+  showElement("cancelResetPwd");
   
+});
+
+//when clicks on cancel button to request a password to show default modal sign in fields
+$("#cancelResetPwd").click(function () {
+
+  $("#title-signIn").text("Welcome Back!");
+
+  //show the unecessary fields to request a new password
+  showElement("signInPassword");
+  
+  //show sign in and sign up buttons and forgot passoword link
+  showElement("submitSignIn");
+  showElement("signUp");
+  showElement("forgot-pwd");
+  
+  //hide reset and cancel buttons
+  hideElement("resetPwd");
+  hideElement("cancelResetPwd");
 });
