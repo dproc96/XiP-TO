@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 
 module.exports = function (app) {
 
-  // Create a user
+  // Create an user
   app.post("/api/users", function (req, res) {
 
     var pwd;
@@ -40,7 +40,7 @@ module.exports = function (app) {
     });
   });
 
-  // Update a user
+  // Update an user
   app.put("/api/users", function (req, res) {
     
     //checks if the user is logged in
@@ -78,4 +78,39 @@ module.exports = function (app) {
       }
     });
   });
+
+  // Get all users
+  app.get("/api/users", function (req, res) {
+    db.User.findAll({}).then(function (data) {
+      res.json(data);
+    }).catch(err => {
+      if (err.errors) {
+        res.status(500).end(err.errors[0].message);
+      }
+      else {
+        console.log(err);
+        res.status(500).end(err.message);
+      }
+    });
+  });
+
+  // Get an user
+  app.get("/api/users/:userid", function(req, res) {
+    db.User.findOne({
+      where: {
+        id: req.params.userid
+      }
+    }).then(function (data) {
+      res.json(data);
+    }).catch(err => {
+      if (err.errors) {
+        res.status(500).end(err.errors[0].message);
+      }
+      else {
+        console.log(err);
+        res.status(500).end(err.message);
+      }
+    });
+  });
+
 };
