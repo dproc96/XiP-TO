@@ -31,16 +31,27 @@
 
   <div id="overlay" class="overlay hidden"></div>
 
-  <div id="modal" class="modal hidden">
+  <div id="sign-in-modal" class="modal hidden">
     <i id="close-modal" class="fas fa-times btn-close"></i>
     <h2 class="">Welcome back!</h2>
-    <input type="email" id="inputEmail" class="" placeholder="Email Address" required autofocus>
-    <input type="password" id="inputPassword" class="" placeholder="Password" required>
+    <input type="email" id="signInEmail" class="" placeholder="Email Address" required autofocus>
+    <input type="password" id="signInPassword" class="" placeholder="Password" required>
     <label class="" for="rememberPassword"><input type="checkbox" class="" id="rememberPassword"> Remember
       password</label>
     <a class="btn btn__large">Sign in</a>
-    <a class="btn btn__large" id="signUP">Sign Up</a>
+    <a class="btn btn__large" id="signUp">Sign Up</a>
     <a class="" href="#">Forgot password?</a>
+  </div>
+
+  <div id="sign-up-modal" class="modal hidden">
+    <div class="modal"><i id="close-modal" class="fas fa-times btn-close" aria-hidden="true"></i>
+      <input type="text" id="signUpFirstName" placeholder="First Name" required="required">
+      <input type="text" id="signUplastName" placeholder="Last Name" required="required">
+      <input type="email" id="signUpEmail" placeholder="Email Address" required="required" autofocus="autofocus">
+      <input type="text" id="signUpPassword" placeholder="Password" required="required">
+      <input type="text" id="reenterSignUpPassword" placeholder="ReEnter Password" required="required">
+      <a id="submitUserInformation" class="btn btn__large">Submit</a>
+    </div>
   </div>
 
   <script src="js/logic.js"></script>
