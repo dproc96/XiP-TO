@@ -9,7 +9,7 @@ module.exports = function (app) {
     try {
       //check if the required fields are empty
       if (req.body.email.trim() === "" || req.body.password.trim() === "") {
-        res.status(500).end("E-mail and/or Password must be informed!");        
+        res.status(400).end("E-mail and/or Password must be informed!");        
       }      
     }
     catch (e) {
@@ -33,16 +33,16 @@ module.exports = function (app) {
             
         } else {
           // Passwords don't match
-          res.status(500).end("Incorrect Username and/or Password!");    
+          res.status(400).end("Incorrect Username and/or Password!");    
         }
         
       }
       else {
-        res.status(500).end("User was not found!");    
+        res.status(400).end("User was not found!");    
       }
     }).catch(err => {
       if (err.errors) {
-        res.status(500).end(err.errors[0].message);
+        res.status(400).end(err.errors[0].message);
       }
       else {
         console.log(err);
