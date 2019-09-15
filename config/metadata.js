@@ -36,6 +36,11 @@ module.exports = {
       name: "Sign In/Sign Up",
       link: "#",
       id: "sign-in"
+    }, 
+    {
+      name: "Back to Home",
+      link: "/",
+      id: "home"
     },
     {
       name: "Post Your Experience",
@@ -58,6 +63,11 @@ module.exports = {
       name: "Log Out",
       link: "#",
       id: "log-out"
+    },
+    {
+      name: "Back to Home",
+      link: "/",
+      id: "home"
     },
     {
       name: "View My Page",
