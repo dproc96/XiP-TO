@@ -57,11 +57,25 @@ function postUserInfo(event) {
     active: true
   };
 
-  if (newUserInfo.password === $("#reenterSignUpPassword").val()) {
-    $.post("/api/users", newUserInfo, function(){
-      location.reload();
-    });
+  if (!newUserInfo.firstname || !newUserInfo.lastname || !newUserInfo.email || !newUserInfo.password) {
+    alertInSignUp("* All fields must be entered");
+  }
+  else {
+    if (newUserInfo.password === $("#reenterSignUpPassword").val()) {
+      $.post("/api/users", newUserInfo, function(){
+        location.reload();
+      });
+    }
+    else {
+      alertInSignUp("* Passwords must match");
+    }
   }
 }
 
+function alertInSignUp(message) {
+  $("#sign-up-modal").append(`<p id='alert' class='error-message'>${message}</p>`);
+  setTimeout(function () {
+    $("#alert").remove();
+  }, 5000);
+}
 
