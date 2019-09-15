@@ -80,7 +80,36 @@ module.exports = function(app) {
     }
   });
 
+<<<<<<< HEAD
   app.get("/profile", function (req, res) {
+=======
+
+  app.get("/users/:id", function(req, res) {
+    let id = req.params.id;
+    db.User.findOne({
+      where: {
+        id: id
+      },
+      include: [{ all: true }]
+    }).then(function(results) {
+      if (true) {
+        metadata.buttons = metadata.buttonsLoggedOut;
+      }
+      else {
+        metadata.buttons = metadata.buttonsLoggedIn;
+      }
+      res.render("user", {metadata: metadata, user: results});
+    }).catch(err => {
+      if (err.errors) {
+        res.status(400).end(err.errors[0].message);
+      }
+      else {
+        res.status(500).end(err.message);
+      }
+    });
+
+  app.get("/users/", function (req, res) {
+>>>>>>> 03d6f7222b23e5407bac018b47552777a3afe5bf
     let userId;
     //check if the user is logged in
     if (!req.session.loggedin) {
@@ -106,6 +135,7 @@ module.exports = function(app) {
         }
       });
     }
+
   });
 
   app.get("/users/:id", function (req, res) {
