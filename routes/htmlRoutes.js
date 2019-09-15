@@ -80,8 +80,7 @@ module.exports = function(app) {
     }
   });
 
-<<<<<<< HEAD
-  app.get("/users/", function (req, res) {
+  app.get("/profile", function (req, res) {
     let userId;
     //check if the user is logged in
     if (!req.session.loggedin) {
@@ -97,7 +96,7 @@ module.exports = function(app) {
         },
         include: [{ all: true }]
       }).then(function (results) {
-        res.render("user", { metadata: metadata, user: results });
+        res.render("profile", { metadata: metadata, user: results });
       }).catch(err => {
         if (err.errors) {
           res.status(400).end(err.errors[0].message);
@@ -107,22 +106,18 @@ module.exports = function(app) {
         }
       });
     }
-=======
-  app.get("/users/:id", function(req, res) {
-    let id = req.params.id;
+  });
+
+  app.get("/users/:id", function (req, res) {
+    let userId = req.params.id;
+
     db.User.findOne({
       where: {
-        id: id
+        id: userId
       },
       include: [{ all: true }]
-    }).then(function(results) {
-      if (true) {
-        metadata.buttons = metadata.buttonsLoggedOut;
-      }
-      else {
-        metadata.buttons = metadata.buttonsLoggedIn;
-      }
-      res.render("user", {metadata: metadata, user: results});
+    }).then(function (results) {
+      res.render("user", { metadata: metadata, user: results });
     }).catch(err => {
       if (err.errors) {
         res.status(400).end(err.errors[0].message);
@@ -131,7 +126,6 @@ module.exports = function(app) {
         res.status(500).end(err.message);
       }
     });
->>>>>>> added different buttons for logged in and logges out states
   });
 
   // Render 404 page for any unmatched routes
