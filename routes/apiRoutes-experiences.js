@@ -18,8 +18,7 @@ module.exports = function (app) {
         res.status(400).end(err.errors[0].message);
       }
       else {
-        console.log(err);
-        res.status(400).end(err.message);
+        res.status(500).end(err.message);
       }
     });
   });
@@ -40,7 +39,7 @@ module.exports = function (app) {
       }
       else {
         console.log(err);
-        res.status(400).end(err.message);
+        res.status(500).end(err.message);
       }
     });
   });
@@ -69,7 +68,7 @@ module.exports = function (app) {
         }
         else {
           console.log(err);
-          res.status(400).end(err.message);
+          res.status(500).end(err.message);
         }
       });
     }
@@ -108,8 +107,7 @@ module.exports = function (app) {
           res.status(400).end(err.errors[0].message);
         }
         else {
-          console.log(err);
-          res.status(400).end(err.message);
+          res.status(500).end(err.message);
         }
       });
     }
@@ -152,7 +150,7 @@ module.exports = function (app) {
           res.status(400).end(err.errors[0].message);
         }
         else {
-          res.status(400).end(err.message);
+          res.status(500).end(err.message);
         }
         
       });
@@ -182,8 +180,7 @@ module.exports = function (app) {
           res.status(400).end(err.errors[0].message);
         }
         else {
-          console.log(err);
-          res.status(400).end(err.message);
+          res.status(500).end(err.message);
         }
       });
     }
@@ -229,11 +226,9 @@ module.exports = function (app) {
         
       }
       else {
-        res.status(400).end("File was not sent");
+        res.status(500).end("File was not sent");
       }  
     }
-
-    
 
   });
 
