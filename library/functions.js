@@ -11,7 +11,7 @@ var sendEmail = (email, subject, htmlBody) => {
     //text: "send as plain/text"
     html: htmlBody
   };
-  return (sgMail.send(msg));
+  sgMail.send(msg);
 };
 
 module.exports = {

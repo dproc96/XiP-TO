@@ -1,6 +1,7 @@
 var db = require("../models");
 const bcrypt = require("bcrypt");
 var lib = require("../library/functions");
+var generator = require("generate-password");
 
 module.exports = function (app) {
 
@@ -123,8 +124,36 @@ module.exports = function (app) {
     }).then(function (user) {
       
       if (user) {
-        lib.sendEmail(user.email);
-        res.status(200).end("Email has been sent!");  
+        //creates a new pwd
+        var newPassword = generator.generate({
+          length: 10,
+          numbers: true
+        });
+        
+        //encrypt the password
+        let cryptPwd = bcrypt.hashSync(newPassword, 10);
+
+        //update the new password on user model
+        db.User.update({
+          password: cryptPwd
+        },
+        {
+          where: {
+            id: user.id
+          }
+        }).then(function () {
+            
+          let body = `Hello ${user.firstname},`+
+          "<p>You've requested to reset your password on XiPTO website.</p>" +
+          `<p>Your new password: <b>${newPassword}</b></p>` +
+          "<p>We strongly recommend that you change it as soon as possible</p>" +
+          "<p>Regards,</p>"+
+          "<p>XiPTO Team</p>";
+        
+          lib.sendEmail(user.email, "Password Requested", body);
+          res.status(200).end("Email has been sent!");          
+        });
+        
       }
       else {
         res.status(400).end("This e-mail is not registered!");
