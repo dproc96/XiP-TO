@@ -36,11 +36,15 @@
     <h2 class="">Welcome back!</h2>
     <input type="email" id="inputEmail" class="" placeholder="Email Address" required autofocus>
     <input type="password" id="inputPassword" class="" placeholder="Password" required>
-    <label class="" for="rememberPassword"><input type="checkbox" class="" id="rememberPassword"> Remember
-      password</label>
-    <a class="btn btn__large">Sign in</a>
+
+    <a class="btn btn__large" id="submitSignIn">Sign in</a>
     <a class="btn btn__large" id="signUP">Sign Up</a>
-    <a class="" href="#">Forgot password?</a>
+    <a class="btn btn__large" id="resetPwd">Send</a>
+
+    {{!-- All error messages --}}
+    <p class="" id="message"></p>
+
+    <a class="" href="#" id="forgot-pwd">Forgot password?</a>
   </div>
 
   <script src="js/logic.js"></script>
