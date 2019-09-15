@@ -12,45 +12,57 @@
 </div>
 <div class="grid--content">
     <div class="card">
-        <form action="/api/experiences" id="experience-form" method="post" enctype="multipart/form-data">
-            <div class="grid-two-col">
-                <div class="grid--column-1">
-                    <h2>Add A New Experience</h2>
+        <div class="grid-two-col">
+            <div class="grid--column-1">
+                <h2>Add A New Experience</h2>
+                <input type="hidden" id="experience-id" value="{{experience.id}}">
 
-                    <input type="text" type="search" name="name" placeholder="Name Your Experience...">
+                <input type="text" id="name" value="{{experience.name}}" placeholder="Name Your Experience...">
 
-                    <input type="file" name="image" />
+                <img src="./images/uploads/{{experience.image}}" onerror="this.onerror=null; this.src='images/toronto.jpg'" id="picture" width="150" height="100">
 
-                    <label for="category">Select Experience Category:</label>
-                    <select id="category" name="CategoryId">
-                        {{#each metadata.categories}}
-                        <option value="{{id}}">{{name}}</option>
-                        {{/each}}
-                    </select>
-                    <!-- Location.............................. -->
-                    <input type="text" name="location" id="location1" placeholder="First Location" />
+                {{!-- Hide the temp name of the image --}}
+                <input type="hidden" id="image" value="{{experience.image}}">
 
-                    <!-- Location 2-->
-                    <input type="text" name="location2" id="location2" placeholder="Second Location" />
+                {{!-- File upload form --}}
+                <form action="/api/uploadfile" method="post" id="upload-form">
+                    <input type="file" name="file" id="file" />
+                </form>
 
-                    <!-- Location 3-->
-                    <input type="text" name="location3" id="location3" placeholder="Third Location" />
+                <label for="category">Select Experience Category:</label>
+                <select id="category">
+                    {{#each metadata.categories}}
+                        <option value="{{id}}"
+                        {{#ifEquals experience.id experience.CategoryId}}
+                            selected
+                        {{/ifEquals}}
+                        >{{name}}</option>
+                        
+                    {{/each}}
+                </select>
+                <!-- Location.............................. -->
+                <input type="text" value="{{experience.location}}" id="location1" placeholder="First Location" />
 
-                    <!-- New Location.............................. -->
-                    <a href="#" class="btn" id="add-location"><i class="fas fa-plus"></i> Add a new location</a>
-                </div>
-                <div class="grid--column-2">
-                    <textarea rows="10" name="description" id="body" placeholder="Describe Your Experience"></textarea>
-                </div>
+                <!-- Location 2-->
+                <input type="text" value="{{experience.location2}}" id="location2" placeholder="Second Location" />
+
+                <!-- Location 3-->
+                <input type="text" value="{{experience.location3}}" id="location3" placeholder="Third Location" />
+
+                <!-- New Location.............................. -->
+                <a class="btn" id="add-location"><i class="fas fa-plus"></i> Add a new location</a>
             </div>
-            <br>
+            <div class="grid--column-2">
+                <textarea rows="10" id="description" placeholder="Describe Your Experience">{{experience.description}}</textarea>
+            </div>
+        </div>
+        <br>
 
-            <!-- error message.............................. -->
-            <p class="error-message" id="error-message"></p>
+        <!-- error message.............................. -->
+        <p class="error-message" id="error-message"></p>
 
-            <!-- submit button.............................. -->
-            <button type="submit" class="btn btn__large" id="submit-btn">Submit</button>
-        </form>
+        <!-- submit button.............................. -->
+        <a class="btn btn__large" id="submit-btn">Submit</a>
     </div>
 </div>
 <!-- Ajax form library -->
