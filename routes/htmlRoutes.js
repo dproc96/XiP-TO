@@ -17,6 +17,12 @@ module.exports = function(app) {
           metadata: metadata,
           categories: []
         };
+        if (true) {
+          metadata.buttons = metadata.buttonsLoggedOut;
+        }
+        else {
+          metadata.buttons = metadata.buttonsLoggedIn;
+        }
         for (let category of metadata.categories) {
           let categoryData = {
             name: category.name,
@@ -74,7 +80,7 @@ module.exports = function(app) {
     }
   });
 
-  app.get("/users/", function (req, res) {
+  app.get("/profile", function (req, res) {
     let userId;
     //check if the user is logged in
     if (!req.session.loggedin) {
@@ -90,7 +96,7 @@ module.exports = function(app) {
         },
         include: [{ all: true }]
       }).then(function (results) {
-        res.render("user", { metadata: metadata, user: results });
+        res.render("profile", { metadata: metadata, user: results });
       }).catch(err => {
         if (err.errors) {
           res.status(400).end(err.errors[0].message);
@@ -100,6 +106,27 @@ module.exports = function(app) {
         }
       });
     }
+
+  });
+
+  app.get("/users/:id", function (req, res) {
+    let userId = req.params.id;
+
+    db.User.findOne({
+      where: {
+        id: userId
+      },
+      include: [{ all: true }]
+    }).then(function (results) {
+      res.render("user", { metadata: metadata, user: results });
+    }).catch(err => {
+      if (err.errors) {
+        res.status(400).end(err.errors[0].message);
+      }
+      else {
+        res.status(500).end(err.message);
+      }
+    });
   });
 
   // Render 404 page for any unmatched routes
