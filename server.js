@@ -3,6 +3,7 @@ var express = require("express");
 var exphbs = require("express-handlebars");
 var fs = require("fs");
 var fileUpload = require("express-fileupload");
+var session = require("express-session");
 
 var db = require("./models");
 
@@ -13,10 +14,17 @@ var PORT = process.env.PORT || 3000;
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static("public"));
+
 app.use(fileUpload({
   limits: { fileSize: 50 * 1024 * 1024 },
   useTempFiles : true,
   tempFileDir : "./public/images/uploads/tmp/"
+}));
+
+app.use(session({
+  secret: "secret",
+  resave: true,
+  saveUninitialized: true
 }));
 
 // Handlebars
@@ -33,6 +41,7 @@ require("./routes/apiRoutes-categories")(app);
 require("./routes/apiRoutes-experiences")(app);
 require("./routes/apiRoutes-reviews")(app);
 require("./routes/apiRoutes-users")(app);
+require("./routes/apiRoutes-auth")(app);
 require("./routes/htmlRoutes")(app);
 
 var syncOptions = { force: false };
