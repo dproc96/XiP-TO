@@ -1,8 +1,8 @@
 $(document).ready(function () {
-  var totLocations = 1;
-  var $errorMsg = $("#error-message").css("display","none");
-  var $location2 = $("#location2"); 
-  var $location3 = $("#location3"); 
+  let totLocations = 1;
+  let $errorMsg = $("#error-message").css("display","none");
+  let $location2 = $("#location2"); 
+  let $location3 = $("#location3"); 
 
   //hide the 2 extra locations
   $location2.css("display", "none");
@@ -14,6 +14,7 @@ $(document).ready(function () {
       container: document.querySelector(`#location${i}`),
       style: true
     });
+    $(`#location${i}`).attr("class", "");
   }
 
   //when user clicks on the button to add new location
@@ -34,7 +35,7 @@ $(document).ready(function () {
   
   //when user clicks on the submit buttom
   $("#experience-form").submit(function () {
-    var $submitButtom = $("#submit-btn");
+    let $submitButtom = $("#submit-btn");
     
     //change the label and disable the submit buttom
     $submitButtom.text("Sending...").css("disabled","true");

@@ -54,3 +54,7 @@ input, textarea {
     border-radius: 5px;
     border: none;
 }
+
+button {
+    border: none;
+}

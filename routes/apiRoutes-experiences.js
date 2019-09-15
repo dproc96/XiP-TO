@@ -1,4 +1,4 @@
-var db = require("../models");
+let db = require("../models");
 
 module.exports = function (app) {
 
@@ -87,7 +87,7 @@ module.exports = function (app) {
     
     if (req.files) {
       //get the file extension
-      var fileExt = req.files.image.name.split(".");
+      let fileExt = req.files.image.name.split(".");
       fileExt = fileExt[fileExt.length - 1];
       req.body.image = fileExt;
     }
@@ -99,7 +99,7 @@ module.exports = function (app) {
       if (req.files) {
             
         //create the file name
-        var fileName = `experience_${result.id}.${fileExt}`;
+        let fileName = `experience_${result.id}.${fileExt}`;
 
         //move the file from the tmp folder to the final folder
         req.files.image.mv(`./public/images/uploads/${fileName}`, function (err) {
@@ -134,11 +134,11 @@ module.exports = function (app) {
     if (req.files) {
               
       //get the file extension
-      var fileExt = req.files.image.name.split(".");
+      let fileExt = req.files.image.name.split(".");
       fileExt = fileExt[fileExt.length - 1];
 
       //create the file name
-      var fileName = `experience_${req.body.id}.${fileExt}`; 
+      let fileName = `experience_${req.body.id}.${fileExt}`; 
 
       //move the file from the tmp folder to the final folder
       req.files.image.mv(`./public/images/uploads/${fileName}`, function(err) {
