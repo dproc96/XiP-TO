@@ -48,73 +48,65 @@ $(document).ready(function () {
   });
 
   //when user clicks on the submit buttom
+  $("#submit-btn").click(function () {
+    event.preventDefault();
 
-  $("#experience-form").submit(function () {
-    let $submitButton = $("#submit-btn");
+    //change the label and disable the submit buttom
+    $(this).text("Sending...").css("disabled", "true");
 
+    let data = {
+      name: $("#name").val().trim(),
+      description: $("#description").val().trim(),
+      image: $("#image").val().trim(),
+      CategoryId: $("#category").val().trim(),
+      location: $("#location1").val().trim(),
+      location2: $("#location2").val().trim(),
+      location3: $("#location3").val().trim()
+    };
 
-    $submitButton.click(function (event) {
-      event.preventDefault();
+    let experienceId = $("#experience-id").val().trim();
+    let method = "POST";
 
+    if (experienceId !== "") {
+      method = "PUT";
+      data.id = experienceId;
+    }
 
-      //change the label and disable the submit buttom
-      $(this).text("Sending...").css("disabled", "true");
+    $.ajax({
+      url: "/api/experiences",
+      type: method,
+      data: data,
 
-      let data = {
-        name: $("#name").val().trim(),
-        description: $("#description").val().trim(),
-        image: $("#image").val().trim(),
-        CategoryId: $("#category").val().trim(),
-        location: $("#location1").val().trim(),
-        location2: $("#location2").val().trim(),
-        location3: $("#location3").val().trim()
-      };
+      error: err => {
+        $errorMsg.text(err.responseText).css("display", "block");
+        $(this).text("Send").css("disabled", "false");
+      },
 
-      let experienceId = $("#experience-id").val().trim();
-      let method = "POST";
-
-      if (experienceId !== "") {
-        method = "PUT";
-        data.id = experienceId;
+      success: () => {
+        location.reload();
       }
 
-      $.ajax({
-        url: "/api/experiences",
-        type: method,
-        data: data,
-
-        error: err => {
-          $errorMsg.text(err.responseText).css("display", "block");
-          $(this).text("Send").css("disabled", "false");
-        },
-
-        success: () => {
-          location.reload();
-        }
-
-      });
-
     });
+  });
 
-    $("#file").change(function () {
-      let $picture = $("#picture");
+  $("#file").change(function () {
+    let $picture = $("#picture");
 
-      $picture.css("display", "none");
+    $picture.css("display", "none");
 
-      $("#upload-form").ajaxSubmit({
+    $("#upload-form").ajaxSubmit({
 
-        error: function (xhr) {
-          $errorMsg.text(xhr.responseText).css("display", "block");
-        },
+      error: function (xhr) {
+        $errorMsg.text(xhr.responseText).css("display", "block");
+      },
 
-        success: function (file) {
-          $picture.css("display", "block");
-          $picture.attr("src", file.fullFileName);
-          $("#image").val(file.fileName);
-          $errorMsg.text("");
-        }
+      success: function (file) {
+        $picture.css("display", "block");
+        $picture.attr("src", file.fullFileName);
+        $("#image").val(file.fileName);
+        $errorMsg.text("");
+      }
 
-      });
     });
   });
 });
