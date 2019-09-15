@@ -17,6 +17,8 @@ $(document).on("click", "#menu", function() {
   }
 });
 
+$(document).on("click", "#signUP", makeNewModal);
+
 $(".slide").slick({
   slidesToShow: 2,
   slidesToScroll: 1,
@@ -36,67 +38,64 @@ $(".slide").slick({
 
 });
 
-$(document).ready(function() {
-  $(document).on("click", "#signUP", makeNewModal);
+function makeNewModal(event) {
+  event.preventDefault();
 
-  function makeNewModal(event) {
-    event.preventDefault();
+  $("#modal").empty();
 
-    $("#modal").empty();
+  var newModal = $("<modal>").addClass("modal");
 
-    var newModal = $("<modal>").addClass("modal");
+  var xIcon = $("<i>")
+    .attr("id", "close-modal")
+    .addClass("fas fa-times btn-close");
+  var firstNameRow = $("<input>").attr({
+    type: "text",
+    id: "inputFirstName",
+    placeholder: "First Name",
+    required: "true"
+  });
+  var lastNameRow = $("<input>").attr({
+    type: "text",
+    id: "inputlastName",
+    placeholder: "Last Name",
+    required: "true"
+  });
 
-    var xIcon = $("<i>")
-      .attr("id", "close-modal")
-      .addClass("fas fa-times btn-close");
-    var firstNameRow = $("<input>").attr({
-      type: "text",
-      id: "inputFirstName",
-      placeholder: "First Name",
-      required: "true"
-    });
-    var lastNameRow = $("<input>").attr({
-      type: "text",
-      id: "inputlastName",
-      placeholder: "Last Name",
-      required: "true"
-    });
+  var emailRow = $("<input>").attr({
+    type: "email",
+    id: "inputEmail",
+    placeholder: "Email Address",
+    required: "true",
+    autofocus: "true"
+  });
+  var passswordRow = $("<input>").attr({
+    type: "text",
+    id: "inputPassword",
+    placeholder: "Password",
+    required: "true"
+  });
+  var reEnterPassswordRow = $("<input>").attr({
+    type: "text",
+    id: "reinputPassword",
+    placeholder: "ReEnter Password",
+    required: "true"
+  });
 
-    var emailRow = $("<input>").attr({
-      type: "email",
-      id: "inputEmail",
-      placeholder: "Email Address",
-      required: "true",
-      autofocus: "true"
-    });
-    var passswordRow = $("<input>").attr({
-      type: "text",
-      id: "inputPassword",
-      placeholder: "Password",
-      required: "true"
-    });
-    var reEnterPassswordRow = $("<input>").attr({
-      type: "text",
-      id: "reinputPassword",
-      placeholder: "ReEnter Password",
-      required: "true"
-    });
+  var submitBtn = $("<a>")
+    .attr("id", "submitUserInformation")
+    .addClass("btn btn__large")
+    .text("Submit");
 
-    var submitBtn = $("<button>")
-      .attr("id", "submitUserInformation")
-      .addClass("btn btn__large")
-      .text("Submit");
+  newModal.append(
+    xIcon,
+    firstNameRow,
+    lastNameRow,
+    emailRow,
+    passswordRow,
+    reEnterPassswordRow,
+    submitBtn
+  );
 
-    newModal.append(
-      xIcon,
-      firstNameRow,
-      lastNameRow,
-      emailRow,
-      passswordRow,
-      reEnterPassswordRow,
-      submitBtn
-    );
+  $("#modal").append(newModal);
+}
 
-    $("#modal").append(newModal);
-  }
-});
