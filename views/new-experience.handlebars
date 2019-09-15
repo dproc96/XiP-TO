@@ -36,7 +36,7 @@
                 <select id="category">
                     {{#each metadata.categories}}
                         <option value="{{id}}"
-                        {{#ifEquals experience.id experience.CategoryId}}
+                        {{#ifEquals id experience.CategoryId}}
                             selected
                         {{/ifEquals}}
                         >{{name}}</option>

@@ -75,7 +75,7 @@ module.exports = function (app) {
             metadata.buttons = metadata.buttonsLoggedIn;
           }
           metadata.experience = experience;
-          if (req.session.UserId === experience.UserId) {
+          if (req.session.UserId === experience.UserId && req.query.q === "edit") {
             res.render("new-experience", { metadata: metadata, experience: experience });
           }
           else {
