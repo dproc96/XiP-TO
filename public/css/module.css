@@ -153,8 +153,13 @@
 .error-message{
     color: rgb(144, 39, 39);
     font-weight: bold;
+    text-align: center;
 }
-
+.success-message{
+    color: rgb(91, 80, 150);
+    font-weight: bold;
+    text-align: center;
+}
 /* Algolia styling */
 .ap-input-icon svg{
   display: none;
