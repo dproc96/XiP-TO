@@ -17,6 +17,12 @@ module.exports = function(app) {
           metadata: metadata,
           categories: []
         };
+        if (true) {
+          metadata.buttons = metadata.buttonsLoggedOut;
+        }
+        else {
+          metadata.buttons = metadata.buttonsLoggedIn;
+        }
         for (let category of metadata.categories) {
           let categoryData = {
             name: category.name,
@@ -82,6 +88,12 @@ module.exports = function(app) {
       },
       include: [{ all: true }]
     }).then(function(results) {
+      if (true) {
+        metadata.buttons = metadata.buttonsLoggedOut;
+      }
+      else {
+        metadata.buttons = metadata.buttonsLoggedIn;
+      }
       res.render("user", {metadata: metadata, user: results});
     }).catch(err => {
       if (err.errors) {
