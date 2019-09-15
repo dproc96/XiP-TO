@@ -7,7 +7,7 @@ module.exports = function (app) {
 
   // Create an user
   app.post("/api/users", function (req, res) {
-
+    console.log(req.body);
     let pwd;
     //checks if the password field was passed
     try{
@@ -22,12 +22,14 @@ module.exports = function (app) {
     if (pwd === "") {
       res.status(400).end("Password must be informed!");        
     }
-    if (pwd.length < 8) {
+    else if (pwd.length < 8) {
       res.status(400).end("Password must have at least 8 characters!");        
     }
-
-    //crypt the password
-    req.body.password = bcrypt.hashSync(pwd, 10);
+    else {
+      //crypt the password
+      req.body.password = bcrypt.hashSync(pwd, 10);  
+    }
+    
     
     db.User.create(req.body).then(function(result) {
       res.json(result);

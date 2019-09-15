@@ -41,6 +41,7 @@ function clearFields() {
   $("#signUpLastName").val("");
   $("#signUpEmail").val("");
   $("#signUpPassword").val("");
+  $("#reenterSignUpPassword").val("");
 
   $("#signInEmail").val("");
   $("#signInPassword").val("");
@@ -48,7 +49,8 @@ function clearFields() {
 }
 
 function openSignInModal() {
-  
+  event.preventDefault();
+
   if ($(this).attr("id") === "sign-in") {
     clearFields();
   }
@@ -57,6 +59,8 @@ function openSignInModal() {
 }
 
 function openSignUpModal() {
+  event.preventDefault();
+
   if ($(this).attr("id") === "signUp") {
     clearFields();
   }
@@ -109,9 +113,7 @@ function postUserInfo(event) {
     firstname: $("#signUpFirstName").val().trim(),
     lastname: $("#signUpLastName").val().trim(),
     email: $("#signUpEmail").val().trim(),
-    password: $("#signUpPassword").val().trim(),
-    score: 0,
-    active: true
+    password: $("#signUpPassword").val().trim()
   };
 
   if (!newUserInfo.firstname || !newUserInfo.lastname || !newUserInfo.email || !newUserInfo.password) {
@@ -119,17 +121,24 @@ function postUserInfo(event) {
   }
   else {
     if (newUserInfo.password === $("#reenterSignUpPassword").val()) {
-      $.ajax("/api/users", {
-        method: "POST",
-        data: newUserInfo
-      }).then(() => {
-        clearFields();
-        closeModal();
-        openSignInModal();
-        showSuccessMessage("You were registered successfully!");
-      }).catch(err => {
-        showErrorMessage(err.responseText);
-      });      
+      $.ajax({
+        url: "/api/users",
+        type: "POST",
+        data: newUserInfo,
+    
+        error: err => {
+          showErrorMessage(err.responseText);
+        },
+    
+        success: () => {
+          
+          clearFields();
+          closeModal();
+          openSignInModal();
+          showSuccessMessage("You were registered successfully!");
+        }
+      });
+          
     }
     else {
       showErrorMessage("* Passwords must match");
@@ -145,14 +154,19 @@ $("#cancelResetPwd").css("display", "none");
 $("#resetPwd").click(function () {
   let email = $("#signInEmail").val().trim();
 
-  $.ajax("/api/users/resetpwd", {
-    method: "POST",
-    data: { email: email}
-  }).then(() => {
-    showSuccessMessage("Your new password was sent. Check your inbox in a few minutes!");
-    clearFields();
-  }).catch(err => {
-    showErrorMessage(err.responseText);
+  $.ajax({
+    url: "/api/users/resetpwd",
+    type: "POST",
+    data: { email: email },
+
+    error: err => {
+      showErrorMessage(err.responseText);
+    },
+
+    success: () => {
+      showSuccessMessage("Your new password was sent. Check your inbox in a few minutes!");
+      clearFields();
+    }
   });
   
 });
@@ -160,7 +174,8 @@ $("#resetPwd").click(function () {
 //when clicks on forgot password
 $("#forgot-pwd").click(function () {
   event.preventDefault();
-  
+  clearFields();
+
   $("#title-signIn").text("Request a new password");
 
   //hide the unecessary fields to request a new password
@@ -204,13 +219,20 @@ $("#submitSignIn").on("click", function () {
     password: $("#signInPassword").val().trim()
   };
   
-  $.ajax("/api/auth", {
-    method: "POST",
-    data: user
-  }).then(() => {
-    clearFields();
-    closeModal();
-  }).catch(err => {
-    showErrorMessage(err.responseText);
+  $.ajax({
+    url: "/api/auth",
+    type: "POST",
+    data: user,
+
+    error: err => {
+      showErrorMessage(err.responseText);
+    },
+
+    success: () => {
+      clearFields();
+      closeModal();
+    }
+
   });
+
 });

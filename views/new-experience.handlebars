@@ -1,13 +1,16 @@
-{{!-- <link rel="stylesheet" href="css/algolia.css" type="text/css"> --}}
 <script src="https://cdn.jsdelivr.net/npm/places.js@1.16.4"></script>
 
 <div class="grid--sidebar">
-    <a class="btn btn__large" href="/">{{metadata.homepageButtonText}}</a>
-
-    <div class="desktop-only">
-        <img src="{{metadata.iconImageSrc}}" class="block__centered icon icon__large" />
-
-        <p>{{metadata.description}}</p>
+    <div class="flex flex-start">
+        <h1 id="menu" class="fas fa-bars mobile-only"></h1>
+        <h1 class="title">Experience Toronto!</h1>
+        <h1 class="fas fa-bars mobile-only invisible"></h1>
+    </div>
+    <img src="{{metadata.iconImageSrc}}" alt="" class="block__centered icon icon__large desktop-only">
+    <div id="nav" class="desktop-only">
+        {{#each metadata.buttons}}
+        <a href="{{link}}" id="{{id}}" class="btn">{{name}}</a>
+        {{/each}}
     </div>
 </div>
 <div class="grid--content">

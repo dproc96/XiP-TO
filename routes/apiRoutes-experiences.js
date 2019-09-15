@@ -86,10 +86,6 @@ module.exports = function (app) {
       //set the user id from the session
       req.body.UserId = req.session.UserId;
     
-
-
-
-    
       //store the new experience on the database
       db.Experience.create(req.body).then(function (exp) {
       
