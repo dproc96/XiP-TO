@@ -154,3 +154,8 @@
     color: rgb(144, 39, 39);
     font-weight: bold;
 }
+
+/* Algolia styling */
+.ap-input-icon svg{
+  display: none;
+}

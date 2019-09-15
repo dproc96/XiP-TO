@@ -80,6 +80,7 @@ module.exports = function(app) {
     }
   });
 
+
   app.get("/users/:id", function(req, res) {
     let id = req.params.id;
     db.User.findOne({
@@ -103,6 +104,34 @@ module.exports = function(app) {
         res.status(500).end(err.message);
       }
     });
+
+  app.get("/users/", function (req, res) {
+    let userId;
+    //check if the user is logged in
+    if (!req.session.loggedin) {
+      res.redirect("/");
+    }
+    else {
+    
+      userId = req.session.UserId;
+
+      db.User.findOne({
+        where: {
+          id: userId
+        },
+        include: [{ all: true }]
+      }).then(function (results) {
+        res.render("user", { metadata: metadata, user: results });
+      }).catch(err => {
+        if (err.errors) {
+          res.status(400).end(err.errors[0].message);
+        }
+        else {
+          res.status(500).end(err.message);
+        }
+      });
+    }
+
   });
 
   // Render 404 page for any unmatched routes

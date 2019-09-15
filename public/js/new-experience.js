@@ -60,7 +60,7 @@ $(document).ready(function () {
       //change the label and disable the submit buttom
       $(this).text("Sending...").css("disabled", "true");
 
-      var data = {
+      let data = {
         name: $("#name").val().trim(),
         description: $("#description").val().trim(),
         image: $("#image").val().trim(),
@@ -70,8 +70,8 @@ $(document).ready(function () {
         location3: $("#location3").val().trim()
       };
 
-      var experienceId = $("#experience-id").val().trim();
-      var method = "POST";
+      let experienceId = $("#experience-id").val().trim();
+      let method = "POST";
 
       if (experienceId !== "") {
         method = "PUT";
@@ -97,7 +97,7 @@ $(document).ready(function () {
     });
 
     $("#file").change(function () {
-      var $picture = $("#picture");
+      let $picture = $("#picture");
 
       $picture.css("display", "none");
 
