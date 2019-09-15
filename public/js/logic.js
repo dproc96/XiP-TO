@@ -45,70 +45,6 @@ if ($(".slide").length) {
   });
 }
 
-
-function makeNewModal(event) {
-  event.preventDefault();
-
-  $("#modal").empty();
-
-  let newModal = $("<modal>").addClass("modal");
-
-  let xIcon = $("<i>")
-    .attr("id", "close-modal")
-    .addClass("fas fa-times btn-close");
-  let firstNameRow = $("<input>").attr({
-    type: "text",
-    id: "inputFirstName",
-    placeholder: "First Name",
-    required: "true"
-  });
-  let lastNameRow = $("<input>").attr({
-    type: "text",
-    id: "inputlastName",
-    placeholder: "Last Name",
-    required: "true"
-  });
-
-  let emailRow = $("<input>").attr({
-    type: "email",
-    id: "inputEmail",
-    placeholder: "Email Address",
-    required: "true",
-    autofocus: "true"
-  });
-  let passswordRow = $("<input>").attr({
-    type: "text",
-    id: "inputPassword",
-    placeholder: "Password",
-    required: "true"
-  });
-  let reEnterPassswordRow = $("<input>").attr({
-    type: "text",
-    id: "reinputPassword",
-    placeholder: "ReEnter Password",
-    required: "true"
-  });
-
-  let submitBtn = $("<a>")
-    .attr("id", "submitUserInformation")
-    .addClass("btn btn__large")
-    .text("Submit");
-
-  newModal.append(
-    xIcon,
-    firstNameRow,
-    lastNameRow,
-    emailRow,
-    passswordRow,
-    reEnterPassswordRow,
-    submitBtn
-  );
-
-  $("#modal").append(newModal);
-
-}
-
-
 function postUserInfo(event) {
   event.preventDefault();
 
@@ -120,7 +56,7 @@ function postUserInfo(event) {
     score: 0,
     active: true
   };
-  
+
   if (newUserInfo.password === $("#reenterSignUpPassword").val()) {
     $.post("/api/users", newUserInfo, function(){
       location.reload();
