@@ -1,5 +1,5 @@
 // var db = require("../models");
-var metadata = require("../config/metadata");
+let metadata = require("../config/metadata");
 
 module.exports = function(app) {
   // Load index page

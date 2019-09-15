@@ -1,5 +1,5 @@
 module.exports = function (sequelize, DataTypes) {
-  var Review = sequelize.define("Review", {
+  let Review = sequelize.define("Review", {
     liked: {
       type: DataTypes.BOOLEAN,
       allowNull: false
@@ -23,7 +23,7 @@ module.exports = function (sequelize, DataTypes) {
     freezeTableName: true,
     hooks: {
       afterCreate: function (review) {
-        var User = this.sequelize.models.User;
+        let User = this.sequelize.models.User;
         //get the user id that created the experience reviewed
         this.sequelize.models.Experience.findByPk(review.ExperienceId).then(function (experience) {
           //update the user score

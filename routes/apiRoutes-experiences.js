@@ -1,5 +1,6 @@
-var db = require("../models");
-var fs = require("fs");
+
+const db = require("../models");
+const fs = require("fs");
 
 module.exports = function (app) {
 
@@ -85,6 +86,9 @@ module.exports = function (app) {
       //set the user id from the session
       req.body.UserId = req.session.UserId;
     
+
+
+
     
       //store the new experience on the database
       db.Experience.create(req.body).then(function (exp) {
@@ -94,6 +98,7 @@ module.exports = function (app) {
         
           //check if the exists in the temp folder
           if (fs.existsSync(`./public/images/uploads/tmp/${req.body.image}`)) {
+
 
             //rename the file and move it to definitive folder
             fs.renameSync(`./public/images/uploads/tmp/${req.body.image}`, `./public/images/uploads/${exp.image}`);
@@ -128,11 +133,12 @@ module.exports = function (app) {
             
         //check if the exists in the temp folder
         if (fs.existsSync(`./public/images/uploads/tmp/${req.body.image}`)) {
-          var fileExt = req.body.image.split(".");
+          let fileExt = req.body.image.split(".");
           fileExt = fileExt[fileExt.length - 1];
 
+
           //create the new file name
-          var fileName = `experience_${req.params.id}.${fileExt}`;
+          let fileName = `experience_${req.params.id}.${fileExt}`;
         
           //rename the file and move it to definitive folder
           fs.renameSync(`./public/images/uploads/tmp/${req.body.image}`, `./public/images/uploads/${fileName}`);

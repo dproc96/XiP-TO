@@ -1,4 +1,4 @@
-var db = require("../models");
+let db = require("../models");
 const bcrypt = require("bcrypt");
 var lib = require("../library/functions");
 var generator = require("generate-password");
@@ -8,7 +8,7 @@ module.exports = function (app) {
   // Create an user
   app.post("/api/users", function (req, res) {
 
-    var pwd;
+    let pwd;
     //checks if the password field was passed
     try{
       pwd = req.body.password.trim();
