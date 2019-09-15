@@ -42,7 +42,7 @@ module.exports = function(app) {
   // Load experience form page and pass an experience id
   app.get("/experiences/:id", function(req, res) {
     if (req.params.id === "new") {
-
+      
       //load categories from the database
       metadata.loadCategories().then(data => {
         metadata.categories = data;
