@@ -1,4 +1,6 @@
-var db = require("../models");
+
+const db = require("../models");
+const fs = require("fs");
 
 module.exports = function (app) {
 
@@ -14,10 +16,9 @@ module.exports = function (app) {
       res.json(data);
     }).catch(err => {
       if (err.errors) {
-        res.status(500).end(err.errors[0].message);
+        res.status(400).end(err.errors[0].message);
       }
       else {
-        console.log(err);
         res.status(500).end(err.message);
       }
     });
@@ -35,7 +36,7 @@ module.exports = function (app) {
       res.json(data);
     }).catch(err => {
       if (err.errors) {
-        res.status(500).end(err.errors[0].message);
+        res.status(400).end(err.errors[0].message);
       }
       else {
         console.log(err);
@@ -49,28 +50,29 @@ module.exports = function (app) {
 
     //check if the user is logged in
     if (!req.session.loggedin) {
-      res.status(500).end("You need to sign in to see your experiences.");
+      res.status(400).end("You need to sign in to see your experiences.");
     }
-  
-    db.Experience.findOne({
-      include: [db.Review, db.User],
-      order: [["CategoryId", "ASC"]],
-      where: {
-        UserId: req.session.UserId,
-        active: true
-      }
-    }).then(function (data) {
-      res.json(data);
-    }).catch(err => {
-      if (err.errors) {
-        res.status(500).end(err.errors[0].message);
-      }
-      else {
-        console.log(err);
-        res.status(500).end(err.message);
-      }
-    });      
-    
+    else {
+      
+      db.Experience.findOne({
+        include: [db.Review, db.User],
+        order: [["CategoryId", "ASC"]],
+        where: {
+          UserId: req.session.UserId,
+          active: true
+        }
+      }).then(function (data) {
+        res.json(data);
+      }).catch(err => {
+        if (err.errors) {
+          res.status(400).end(err.errors[0].message);
+        }
+        else {
+          console.log(err);
+          res.status(500).end(err.message);
+        }
+      });
+    }
   });
 
   // Create an experience
@@ -78,91 +80,87 @@ module.exports = function (app) {
 
     // check if the user is logged in
     if (!req.session.loggedin) {
-      res.status(500).end("You need to sign in to create an experience");
+      res.status(400).end("You need to sign in to create an experience");
     }
     else {
       //set the user id from the session
       req.body.UserId = req.session.UserId;
-    }
     
-    if (req.files) {
-      //get the file extension
-      var fileExt = req.files.image.name.split(".");
-      fileExt = fileExt[fileExt.length - 1];
-      req.body.image = fileExt;
-    }
+
+
 
     
-    //store the new experience on the database
-    db.Experience.create(req.body).then(function (result) {
-      //if there is file sent
-      if (req.files) {
-            
-        //create the file name
-        var fileName = `experience_${result.id}.${fileExt}`;
+      //store the new experience on the database
+      db.Experience.create(req.body).then(function (exp) {
+      
+        //if there is file sent
+        if (req.body.image !== "") {
+        
+          //check if the exists in the temp folder
+          if (fs.existsSync(`./public/images/uploads/tmp/${req.body.image}`)) {
 
-        //move the file from the tmp folder to the final folder
-        req.files.image.mv(`./public/images/uploads/${fileName}`, function (err) {
-          if (!err) {
-            console.log("File uploaded!");
+
+            //rename the file and move it to definitive folder
+            fs.renameSync(`./public/images/uploads/tmp/${req.body.image}`, `./public/images/uploads/${exp.image}`);
           }
-        });
 
-      }
-      res.json(result);
+        }
+        res.json(exp);
 
-    }).catch(err => {
-      if (err.errors) {
-        res.status(500).end(err.errors[0].message);
-      }
-      else {
-        console.log(err);
-        res.status(500).end(err.message);
-      }
-    });
-
+      }).catch(err => {
+        if (err.errors) {
+          res.status(400).end(err.errors[0].message);
+        }
+        else {
+          res.status(500).end(err.message);
+        }
+      });
+    }
   });
 
+  
   // Update an experience
   app.put("/api/experiences", function (req, res) {
 
     // check if the user is logged in
     if (!req.session.loggedin) {
-      res.status(500).end("You need to sign in to update an experience");
+      res.status(400).end("You need to sign in to update an experience");
     }
+    else {
+    
+      //if there is file sent
+      if (req.body.image !== "") {
+            
+        //check if the exists in the temp folder
+        if (fs.existsSync(`./public/images/uploads/tmp/${req.body.image}`)) {
+          let fileExt = req.body.image.split(".");
+          fileExt = fileExt[fileExt.length - 1];
 
-    if (req.files) {
-              
-      //get the file extension
-      var fileExt = req.files.image.name.split(".");
-      fileExt = fileExt[fileExt.length - 1];
 
-      //create the file name
-      var fileName = `experience_${req.body.id}.${fileExt}`; 
-
-      //move the file from the tmp folder to the final folder
-      req.files.image.mv(`./public/images/uploads/${fileName}`, function(err) {
-        if (!err) {
-          console.log("File uploaded!");
-        }
-      });
-      
-      req.body.image = fileName;
-    }
-
-    db.Experience.update(req.body, { where: { id: req.body.id } }).then(function (result) {
-      res.json(result);
-    }).catch(err => {
-      
-      if (err.errors) {
-        res.status(500).end(err.errors[0].message);
-      }
-      else {
-        console.log(err);
-        res.status(500).end(err.message);
-      }
+          //create the new file name
+          let fileName = `experience_${req.params.id}.${fileExt}`;
         
-    });
+          //rename the file and move it to definitive folder
+          fs.renameSync(`./public/images/uploads/tmp/${req.body.image}`, `./public/images/uploads/${fileName}`);
+
+          req.body.image = fileName;
+        }
+
+      }
+
+      db.Experience.update(req.body, { where: { id: req.body.id } }).then(function (result) {
+        res.json(result);
+      }).catch(err => {
+      
+        if (err.errors) {
+          res.status(400).end(err.errors[0].message);
+        }
+        else {
+          res.status(500).end(err.message);
+        }
+        
+      });
+    }
   });
 
   // Delete an experience by id (actually just change the active field to false)
@@ -170,27 +168,74 @@ module.exports = function (app) {
     
     // check if the user is logged in
     if (!req.session.loggedin) {
-      res.status(500).end("You need to sign in to delete experience");
+      res.status(400).end("You need to sign in to delete experience");
     }
+    else {
+    
+      db.Experience.update({
+        active: false
+      },
+      {
+        where: {
+          id: req.params.id
+        }
+      }).then(function (result) {
+        res.json(result);
+      }).catch(err => {
+        if (err.errors) {
+          res.status(400).end(err.errors[0].message);
+        }
+        else {
+          res.status(500).end(err.message);
+        }
+      });
+    }
+  });
 
-    db.Experience.update({
-      active: false
-    },
-    {
-      where: {
-        id: req.params.id
-      }
-    }).then(function (result) {
-      res.json(result);
-    }).catch(err => {
-      if (err.errors) {
-        res.status(500).end(err.errors[0].message);
+  //upload a file to the server
+  app.post("/api/uploadfile", function (req, res) {
+    // check if the user is logged in
+    if (!req.session.loggedin) {
+      res.status(400).end("You need to sign in to upload files");
+    }
+    else {
+      if (req.files) {
+              
+        var fileName = req.files.file.name;
+        
+        //get the file extension
+        var fileExt = fileName.split(".");
+        fileExt = fileExt[fileExt.length - 1];
+  
+        //add extension to filename
+        var fullFileName = `${req.files.file.tempFilePath}.${fileExt}`;
+  
+        var fileName = fullFileName.split("/");
+        fileName = fileName[fileName.length - 1];
+        
+        //rename the file to add the extension
+        req.files.file.mv(fullFileName, function(err) {
+          if (!err) {
+            fullFileName = fullFileName.replace("public/", "");
+            
+            data = {
+              fileName: fileName,
+              fullFileName: fullFileName
+            };
+            
+            res.json(data);
+          }
+          else {
+            res.status(400).end(err.message);
+          }
+        });      
+        
       }
       else {
-        console.log(err);
-        res.status(500).end(err.message);
-      }
-    });
+        res.status(500).end("File was not sent");
+      }  
+    }
+
   });
 
 };

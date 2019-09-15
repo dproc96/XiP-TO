@@ -1,4 +1,4 @@
-var db = require("../models");
+let db = require("../models");
 
 module.exports = function (app) {
 
@@ -13,7 +13,7 @@ module.exports = function (app) {
       res.json(data);
     }).catch(err => {
       if (err.errors) {
-        res.status(500).end(err.errors[0].message);
+        res.status(400).end(err.errors[0].message);
       }
       else {
         console.log(err);

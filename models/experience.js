@@ -1,5 +1,5 @@
 module.exports = function (sequelize, DataTypes) {
-  var Experience = sequelize.define("Experience", {
+  let Experience = sequelize.define("Experience", {
     name: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -54,7 +54,7 @@ module.exports = function (sequelize, DataTypes) {
       afterCreate: function (experience) {
 
         if (experience.image) {
-          var fileName = "experience_" + experience.id + "." + experience.image;
+          let fileName = "experience_" + experience.id + "." + experience.image;
           experience.image = fileName;
 
           Experience.update({

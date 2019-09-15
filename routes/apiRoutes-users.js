@@ -1,4 +1,4 @@
-var db = require("../models");
+let db = require("../models");
 const bcrypt = require("bcrypt");
 var lib = require("../library/functions");
 var generator = require("generate-password");
@@ -8,7 +8,7 @@ module.exports = function (app) {
   // Create an user
   app.post("/api/users", function (req, res) {
 
-    var pwd;
+    let pwd;
     //checks if the password field was passed
     try{
       pwd = req.body.password.trim();
@@ -20,10 +20,10 @@ module.exports = function (app) {
 
     //password validations
     if (pwd === "") {
-      res.status(500).end("Password must be informed!");        
+      res.status(400).end("Password must be informed!");        
     }
     if (pwd.length < 8) {
-      res.status(500).end("Password must have at least 8 characters!");        
+      res.status(400).end("Password must have at least 8 characters!");        
     }
 
     //crypt the password
@@ -33,10 +33,9 @@ module.exports = function (app) {
       res.json(result);
     }).catch(err => {
       if (err.errors) {
-        res.status(500).end(err.errors[0].message);
+        res.status(400).end(err.errors[0].message);
       }
       else {
-        console.log(err);
         res.status(500).end(err.message);
       }
     });
@@ -47,38 +46,39 @@ module.exports = function (app) {
     
     //checks if the user is logged in
     if (!req.session.loggedin) {
-      res.status(500).end("You need to sign in to update a user.");
+      res.status(400).end("You need to sign in to update a user.");
     }
+    else {
+      
+      //checks if the password field was passed
+      try {
+        pwd = req.body.password.trim();
+        //password validations
+        if (pwd === "") {
+          res.status(500).end("Password must be informed!");
+        }
+        if (pwd.length < 8) {
+          res.status(500).end("Password must have at least 8 characters!");
+        }
 
-    //checks if the password field was passed
-    try{
-      pwd = req.body.password.trim();
-      //password validations
-      if (pwd === "") {
-        res.status(500).end("Password must be informed!");        
+        //crypt the password
+        req.body.password = bcrypt.hashSync(pwd, 10);
       }
-      if (pwd.length < 8) {
-        res.status(500).end("Password must have at least 8 characters!");        
+      catch (e) {
+        //nothing to do, and the password won't be updated
       }
 
-      //crypt the password
-      req.body.password = bcrypt.hashSync(pwd, 10);
+      db.User.update(req.body, { where: { id: req.body.id } }).then(function () {
+        res.status(200).end("User has updated successfully!");
+      }).catch(err => {
+        if (err.errors) {
+          res.status(400).end(err.errors[0].message);
+        }
+        else {
+          res.status(500).end(err.message);
+        }
+      });
     }
-    catch (e) {
-      //nothing to do, but the password won't be updated
-    }    
-
-    db.User.update(req.body,{where:{id: req.body.id}}).then(function() {
-      res.status(200).end("User has updated successfully!");
-    }).catch(err => {
-      if (err.errors) {
-        res.status(500).end(err.errors[0].message);
-      }
-      else {
-        console.log(err);
-        res.status(500).end(err.message);
-      }
-    });
   });
 
   // Get all users
@@ -87,10 +87,9 @@ module.exports = function (app) {
       res.json(data);
     }).catch(err => {
       if (err.errors) {
-        res.status(500).end(err.errors[0].message);
+        res.status(400).end(err.errors[0].message);
       }
       else {
-        console.log(err);
         res.status(500).end(err.message);
       }
     });
@@ -106,10 +105,9 @@ module.exports = function (app) {
       res.json(data);
     }).catch(err => {
       if (err.errors) {
-        res.status(500).end(err.errors[0].message);
+        res.status(400).end(err.errors[0].message);
       }
       else {
-        console.log(err);
         res.status(500).end(err.message);
       }
     });
