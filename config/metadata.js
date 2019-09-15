@@ -14,7 +14,7 @@ function loadCategories() {
 module.exports = {
   homepageButtonText: "Back To Home Page",
   iconImageSrc: "/images/xipto.png",
-  description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+  description: "XiPTO is an experience focused site for residents and visitors in Toronto. To add your own experience, give it a name, add a picture, choose the category, give us 1-3 locations involved, and tell us the story of your experience!",
   categories: "",
   loadCategories: loadCategories,
   quotes: [
