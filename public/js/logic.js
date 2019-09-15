@@ -97,5 +97,27 @@ function makeNewModal(event) {
   );
 
   $("#modal").append(newModal);
+
 }
+
+$(document).on("click", "#submitUserInformation", postUserInfo);
+
+function postUserInfo(event) {
+  event.preventDefault();
+
+  var newUserInfo={
+    firstname: $("#inputFirstName").val().trim(),
+    lastname: $("#inputlastName").val().trim(),
+    email: $("#inputEmail").val().trim(),
+    password: $("#inputPassword").val().trim(),
+    score: 0,
+    active: true
+  };
+
+  $.post("/api/users", newUserInfo, function(){
+    location.reload();
+    
+  });
+}
+
 
