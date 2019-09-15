@@ -18,6 +18,7 @@
         "no-empty-function": "error",
         "no-multi-spaces": "error",
         "no-unused-vars": "error",
+        "no-var": "error",
         "camelcase": "error",
         "indent": [
             "error",
