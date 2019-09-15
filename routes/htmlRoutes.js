@@ -74,6 +74,25 @@ module.exports = function(app) {
     }
   });
 
+  app.get("/users/:id", function(req, res) {
+    let id = req.params.id;
+    db.User.findOne({
+      where: {
+        id: id
+      },
+      include: [{ all: true }]
+    }).then(function(results) {
+      res.render("user", {metadata: metadata, user: results});
+    }).catch(err => {
+      if (err.errors) {
+        res.status(400).end(err.errors[0].message);
+      }
+      else {
+        res.status(500).end(err.message);
+      }
+    });
+  });
+
   // Render 404 page for any unmatched routes
   app.get("*", function(req, res) {
     res.redirect("/");
