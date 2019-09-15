@@ -17,6 +17,12 @@ module.exports = function(app) {
           metadata: metadata,
           categories: []
         };
+        if (true) {
+          metadata.buttons = metadata.buttonsLoggedOut;
+        }
+        else {
+          metadata.buttons = metadata.buttonsLoggedIn;
+        }
         for (let category of metadata.categories) {
           let categoryData = {
             name: category.name,
@@ -74,6 +80,7 @@ module.exports = function(app) {
     }
   });
 
+<<<<<<< HEAD
   app.get("/users/", function (req, res) {
     let userId;
     //check if the user is logged in
@@ -100,6 +107,31 @@ module.exports = function(app) {
         }
       });
     }
+=======
+  app.get("/users/:id", function(req, res) {
+    let id = req.params.id;
+    db.User.findOne({
+      where: {
+        id: id
+      },
+      include: [{ all: true }]
+    }).then(function(results) {
+      if (true) {
+        metadata.buttons = metadata.buttonsLoggedOut;
+      }
+      else {
+        metadata.buttons = metadata.buttonsLoggedIn;
+      }
+      res.render("user", {metadata: metadata, user: results});
+    }).catch(err => {
+      if (err.errors) {
+        res.status(400).end(err.errors[0].message);
+      }
+      else {
+        res.status(500).end(err.message);
+      }
+    });
+>>>>>>> added different buttons for logged in and logges out states
   });
 
   // Render 404 page for any unmatched routes

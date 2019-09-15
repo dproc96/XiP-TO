@@ -31,11 +31,38 @@ module.exports = {
       author: "John"
     }
   ],
-  buttons: [
+  buttonsLoggedOut: [
     {
       name: "Sign In/Sign Up",
       link: "#",
       id: "sign-in"
+    },
+    {
+      name: "Post Your Experience",
+      link: "/experiences/new",
+      id: "post"
+    },
+    {
+      name: "How to Post",
+      link: "#",
+      id: "how-to"
+    },
+    {
+      name: "About Us",
+      link: "#",
+      id: "about"
+    },
+  ],
+  buttonsLoggedIn: [
+    {
+      name: "Log Out",
+      link: "#",
+      id: "log-out"
+    },
+    {
+      name: "View My Page",
+      link: "#",
+      id: "my-page"
     },
     {
       name: "Post Your Experience",
