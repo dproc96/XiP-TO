@@ -138,7 +138,7 @@ module.exports = function (app) {
 
 
           //create the new file name
-          let fileName = `experience_${req.params.id}.${fileExt}`;
+          let fileName = `experience_${req.body.id}.${fileExt}`;
         
           //rename the file and move it to definitive folder
           fs.renameSync(`./public/images/uploads/tmp/${req.body.image}`, `./public/images/uploads/${fileName}`);
