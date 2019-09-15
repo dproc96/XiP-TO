@@ -2,12 +2,16 @@
 function showErrorMessage(msg) {
   $("#message-signIn").removeClass("success-message");  
   $("#message-signIn").text(msg).addClass("error-message");  
+  $("#message-signUp").removeClass("success-message");  
+  $("#message-signUp").text(msg).addClass("error-message");  
 }
 
 //insert the success message on the #message element
 function showSuccessMessage(msg) {
   $("#message-signIn").removeClass("error-message");  
   $("#message-signIn").text(msg).addClass("success-message");  
+  $("#message-signUp").removeClass("error-message");  
+  $("#message-signUp").text(msg).addClass("success-message");  
 }
 
 //hide an element of the dom. Sample: hideElement("myelementid")
@@ -32,10 +36,36 @@ function closeModal() {
   $("#sign-up-modal").attr("class", "modal hidden");
 }
 
-$(document).on("click", "#sign-in", function () {
+function clearFields() {
+  $("#signUpFirstName").val("");
+  $("#signUpLastName").val("");
+  $("#signUpEmail").val("");
+  $("#signUpPassword").val("");
+
+  $("#signInEmail").val("");
+  $("#signInPassword").val("");
+  showSuccessMessage("");
+}
+
+function openSignInModal() {
+  
+  if ($(this).attr("id") === "sign-in") {
+    clearFields();
+  }
   $("#overlay").attr("class", "overlay");
   $("#sign-in-modal").attr("class", "modal");
-});
+}
+
+function openSignUpModal() {
+  if ($(this).attr("id") === "signUp") {
+    clearFields();
+  }
+
+  $("#sign-in-modal").attr("class", "modal hidden");
+  $("#sign-up-modal").attr("class", "modal");
+}
+
+$(document).on("click", "#sign-in", openSignInModal);
 
 $(document).on("click", "#close-modal", closeModal);
 
@@ -48,10 +78,7 @@ $(document).on("click", "#menu", function() {
   }
 });
 
-$(document).on("click", "#signUp", function() {
-  $("#sign-in-modal").attr("class", "modal hidden");
-  $("#sign-up-modal").attr("class", "modal");
-});
+$(document).on("click", "#signUp", openSignUpModal);
 
 $(document).on("click", "#submitUserInformation", postUserInfo);
 
@@ -88,25 +115,26 @@ function postUserInfo(event) {
   };
 
   if (!newUserInfo.firstname || !newUserInfo.lastname || !newUserInfo.email || !newUserInfo.password) {
-    alertInSignUp("* All fields must be entered");
+    showErrorMessage("* All fields must be entered");
   }
   else {
     if (newUserInfo.password === $("#reenterSignUpPassword").val()) {
-      $.post("/api/users", newUserInfo, function(){
-        location.reload();
-      });
+      $.ajax("/api/users", {
+        method: "POST",
+        data: newUserInfo
+      }).then(() => {
+        clearFields();
+        closeModal();
+        openSignInModal();
+        showSuccessMessage("You were registered successfully!");
+      }).catch(err => {
+        showErrorMessage(err.responseText);
+      });      
     }
     else {
-      alertInSignUp("* Passwords must match");
+      showErrorMessage("* Passwords must match");
     }
   }
-}
-
-function alertInSignUp(message) {
-  $("#sign-up-modal").append(`<p id='alert' class='error-message'>${message}</p>`);
-  setTimeout(function () {
-    $("#alert").remove();
-  }, 5000);
 }
 
 //hide the send and cancel button to request a new password
@@ -122,6 +150,7 @@ $("#resetPwd").click(function () {
     data: { email: email}
   }).then(() => {
     showSuccessMessage("Your new password was sent. Check your inbox in a few minutes!");
+    clearFields();
   }).catch(err => {
     showErrorMessage(err.responseText);
   });
@@ -179,6 +208,7 @@ $("#submitSignIn").on("click", function () {
     method: "POST",
     data: user
   }).then(() => {
+    clearFields();
     closeModal();
   }).catch(err => {
     showErrorMessage(err.responseText);
