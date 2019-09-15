@@ -1,8 +1,8 @@
 $(document).ready(function () {
   let totLocations = 1;
-  let $errorMsg = $("#error-message").css("display","none");
-  let $location2 = $("#location2"); 
-  let $location3 = $("#location3"); 
+  let $errorMsg = $("#error-message").css("display", "none");
+  let $location2 = $("#location2");
+  let $location3 = $("#location3");
 
   if ($location2.val().trim() === "") {
     $location2.css("display", "none");
@@ -17,13 +17,13 @@ $(document).ready(function () {
   else {
     totLocations++;
   }
-  
+
   if (totLocations === 3) {
     $("#add-location").css("display", "none");
   }
 
   //initialize the algolia places (responsible to autocomplete the locations)
-  for(let i = 1; i <= 3; i++) {
+  for (let i = 1; i <= 3; i++) {
     places({
       container: document.querySelector(`#location${i}`),
       style: true
@@ -33,9 +33,9 @@ $(document).ready(function () {
 
   //when user clicks on the button to add new location
   $("#add-location").on("click", function (event) {
-   
+
     event.preventDefault();
-    
+
     if ($location2.css("display") === "none") {
       $location2.css("display", "block");
     }
@@ -46,76 +46,75 @@ $(document).ready(function () {
       $(this).css("display", "none");
     }
   });
-  
+
   //when user clicks on the submit buttom
 
   $("#experience-form").submit(function () {
-    let $submitButtom = $("#submit-btn");
-    
-
-  $("#submit-btn").click(function (event) {
-    event.preventDefault();
+    let $submitButton = $("#submit-btn");
 
 
-    //change the label and disable the submit buttom
-    $(this).text("Sending...").css("disabled", "true");
+    $submitButton.click(function (event) {
+      event.preventDefault();
 
-    var data = {
-      name: $("#name").val().trim(),
-      description: $("#description").val().trim(),
-      image: $("#image").val().trim(),
-      CategoryId: $("#category").val().trim(),
-      location: $("#location1").val().trim(),
-      location2: $("#location2").val().trim(),
-      location3: $("#location3").val().trim()
-    };
 
-    var experienceId = $("#experience-id").val().trim();
-    var method = "POST";
+      //change the label and disable the submit buttom
+      $(this).text("Sending...").css("disabled", "true");
 
-    if (experienceId !== "") {
-      method = "PUT";
-      data.id = experienceId;
-    }
-    
-    $.ajax({
-      url: "/api/experiences",
-      type: method,
-      data: data,
+      var data = {
+        name: $("#name").val().trim(),
+        description: $("#description").val().trim(),
+        image: $("#image").val().trim(),
+        CategoryId: $("#category").val().trim(),
+        location: $("#location1").val().trim(),
+        location2: $("#location2").val().trim(),
+        location3: $("#location3").val().trim()
+      };
 
-      error: err => {
-        $errorMsg.text(err.responseText).css("display", "block");
-        $(this).text("Send").css("disabled", "false");
-      },
+      var experienceId = $("#experience-id").val().trim();
+      var method = "POST";
 
-      success: () => {
-        location.reload();
+      if (experienceId !== "") {
+        method = "PUT";
+        data.id = experienceId;
       }
+
+      $.ajax({
+        url: "/api/experiences",
+        type: method,
+        data: data,
+
+        error: err => {
+          $errorMsg.text(err.responseText).css("display", "block");
+          $(this).text("Send").css("disabled", "false");
+        },
+
+        success: () => {
+          location.reload();
+        }
+
+      });
 
     });
 
-  });
+    $("#file").change(function () {
+      var $picture = $("#picture");
 
-  $("#file").change(function () {
-    var $picture = $("#picture");
+      $picture.css("display", "none");
 
-    $picture.css("display", "none");
+      $("#upload-form").ajaxSubmit({
 
-    $("#upload-form").ajaxSubmit({
+        error: function (xhr) {
+          $errorMsg.text(xhr.responseText).css("display", "block");
+        },
 
-      error: function (xhr) {
-        $errorMsg.text(xhr.responseText).css("display", "block");
-      },
+        success: function (file) {
+          $picture.css("display", "block");
+          $picture.attr("src", file.fullFileName);
+          $("#image").val(file.fileName);
+          $errorMsg.text("");
+        }
 
-      success: function (file) {
-        $picture.css("display", "block");
-        $picture.attr("src", file.fullFileName);
-        $("#image").val(file.fileName);
-        $errorMsg.text("");
-      }
-
+      });
     });
   });
-    
 });
-  
