@@ -1,7 +1,7 @@
 const sgMail = require("@sendgrid/mail");
 require("dotenv").config();
 
-var sendEmail = (email, subject, htmlBody) => {
+let sendEmail = (email, subject, htmlBody) => {
   
   sgMail.setApiKey(process.env.SENDGRID_API_KEY);
   const msg = {
