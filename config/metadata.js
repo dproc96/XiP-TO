@@ -61,7 +61,7 @@ module.exports = {
     },
     {
       name: "View My Page",
-      link: "#",
+      link: "/profile",
       id: "my-page"
     },
     {

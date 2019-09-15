@@ -17,7 +17,7 @@ module.exports = function(app) {
           metadata: metadata,
           categories: []
         };
-        if (true) {
+        if (!req.session.loggedin) {
           metadata.buttons = metadata.buttonsLoggedOut;
         }
         else {
@@ -52,17 +52,28 @@ module.exports = function(app) {
       //load categories from the database
       metadata.loadCategories().then(data => {
         metadata.categories = data;
+        if (!req.session.loggedin) {
+          metadata.buttons = metadata.buttonsLoggedOut;
+        }
+        else {
+          metadata.buttons = metadata.buttonsLoggedIn;
+        }
         res.render("new-experience", { metadata: metadata });
       });
       
     }
     else {
       
-      db.Experience.findByPk(req.params.id).then(function (experience) {
+      db.Experience.findByPk(req.params.id).then(function(experience) {
         //load categories from the database
-        metadata.loadCategories().then(function(data) {
-          
-          metadata.categories = data;
+        metadata.loadCategories().then(function(categories) {
+          metadata.categories = categories;
+          if (!req.session.loggedin) {
+            metadata.buttons = metadata.buttonsLoggedOut;
+          }
+          else {
+            metadata.buttons = metadata.buttonsLoggedIn;
+          }
           metadata.experience = experience;
           res.render("new-experience", { metadata: metadata, experience: experience });
         });
@@ -112,21 +123,28 @@ module.exports = function(app) {
   app.get("/users/:id", function (req, res) {
     let userId = req.params.id;
 
-    db.User.findOne({
-      where: {
-        id: userId
-      },
-      include: [{ all: true }]
-    }).then(function (results) {
-      res.render("user", { metadata: metadata, user: results });
-    }).catch(err => {
-      if (err.errors) {
-        res.status(400).end(err.errors[0].message);
-      }
-      else {
-        res.status(500).end(err.message);
-      }
-    });
+    if (parseInt(userId) === req.session.UserId) {
+      res.redirect("/profile");
+    }
+
+    else {
+      db.User.findOne({
+        where: {
+          id: userId
+        },
+        include: [{ all: true }]
+      }).then(function (results) {
+        res.render("user", { metadata: metadata, user: results });
+      }).catch(err => {
+        if (err.errors) {
+          res.status(400).end(err.errors[0].message);
+        }
+        else {
+          res.status(500).end(err.message);
+        }
+      });
+    }
+
   });
 
   // Render 404 page for any unmatched routes

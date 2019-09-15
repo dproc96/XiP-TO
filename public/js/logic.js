@@ -201,7 +201,7 @@ $("#submitSignIn").on("click", function () {
   
   let user = {
     email: $("#signInEmail").val().trim(),
-    password: $("#signInPassword").val().trim()
+    password: $("#signInPassword").val().toString().trim()
   };
   
   $.ajax("/api/auth", {
