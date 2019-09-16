@@ -29,7 +29,7 @@ module.exports = function (sequelize, DataTypes) {
       allowNull: true
     },
     description: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: false,
       validate: {
         len: {
@@ -41,10 +41,6 @@ module.exports = function (sequelize, DataTypes) {
     image: {
       type: DataTypes.STRING,
       allowNull: true
-    },
-    active: {
-      type: DataTypes.BOOLEAN,
-      defaultValue: true
     }
   },
   {
@@ -97,6 +93,7 @@ module.exports = function (sequelize, DataTypes) {
     });
 
     Experience.belongsTo(models.Category, {
+      onDelete: "CASCADE",
       foreignKey: {
         allowNull: false,
         validate: {

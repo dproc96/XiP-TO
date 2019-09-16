@@ -13,10 +13,6 @@ module.exports = function (sequelize, DataTypes) {
           msg: "Comment must have at least 3 and max 500 characters"
         }
       }
-    },
-    active: {
-      type: DataTypes.BOOLEAN,
-      defaultValue: true
     }
   },
   {

@@ -6,10 +6,7 @@ module.exports = function (app) {
   app.get("/", function (req, res) {
     db.Experience.findAll({
       include: [{ all: true }],
-      order: [["createdAt", "DESC"], ["CategoryId", "ASC"]],
-      where: {
-        active: true
-      }
+      order: [["createdAt", "DESC"], ["CategoryId", "ASC"]]
     }).then(function (results) {
       metadata.loadCategories().then(categories => {
         metadata.categories = categories;
@@ -34,14 +31,13 @@ module.exports = function (app) {
         res.status(500).end(err.errors[0].message);
       }
       else {
-        console.log(err);
         res.status(500).end(err.message);
       }
     });
   });
 
   // Load experience form page and pass an experience id
-  app.get("/experiences/:id", function (req, res) {
+  app.get("/experiences/:id/:edit?", function (req, res) {
     if (req.params.id === "new") {
 
       //load categories from the database
@@ -59,21 +55,27 @@ module.exports = function (app) {
 
     }
     else {
-
+      //load experience
       db.Experience.findByPk(req.params.id).then(function (experience) {
-        //load categories from the database
-        metadata.loadCategories().then(function (categories) {
-          metadata.categories = categories;
-          metadata.userLoggedIn = req.session.loggedin;
-          metadata.experience = experience;
-          if (req.session.UserId === experience.UserId && req.query.q === "edit") {
-            res.render("experience-form", { metadata: metadata, experience: experience });
-          }
-          else {
-            res.redirect("/");
-          }
-        });
-
+        //if experience was found
+        if (experience) {
+          //load categories from the database
+          metadata.loadCategories().then(function (categories) {
+            metadata.categories = categories;
+            metadata.userLoggedIn = req.session.loggedin;
+            metadata.experience = experience;
+          
+            if (req.session.UserId === experience.UserId && req.params.edit) {
+              res.render("experience-form", { metadata: metadata, experience: experience });
+            }
+            else {
+              res.redirect("/"); //should render the experience view page: res.render("experience-view", { metadata: metadata, experience: experience })
+            }
+          });
+        }
+        else {
+          res.redirect("/");
+        }
       }).catch(err => {
         if (err.errors) {
           res.status(400).end(err.errors[0].message);
@@ -123,7 +125,6 @@ module.exports = function (app) {
     if (parseInt(userId) === req.session.UserId) {
       res.redirect("/profile");
     }
-
     else {
       db.User.findOne({
         where: {

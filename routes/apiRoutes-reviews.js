@@ -2,13 +2,12 @@ let db = require("../models");
 
 module.exports = function (app) {
 
-  // Get all reviews that are active from an experience
+  // Get all reviews from an experience
   app.get("/api/reviews/experience/:experienceid", function(req, res) {
     db.Review.findAll({
       include: [{all:true}],
       order: [["createdAt", "DESC"]],
       where: {
-        active: true,
         ExperienceId: req.params.experienceid
       }
     }).then(function (data) {
