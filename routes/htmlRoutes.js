@@ -54,7 +54,7 @@ module.exports = function (app) {
         }
         metadata.categories = data;
         metadata.userLoggedIn = req.session.loggedin;
-        res.render("new-experience", { metadata: metadata });
+        res.render("experience-form", { metadata: metadata });
       });
 
     }
@@ -67,7 +67,7 @@ module.exports = function (app) {
           metadata.userLoggedIn = req.session.loggedin;
           metadata.experience = experience;
           if (req.session.UserId === experience.UserId && req.query.q === "edit") {
-            res.render("new-experience", { metadata: metadata, experience: experience });
+            res.render("experience-form", { metadata: metadata, experience: experience });
           }
           else {
             res.redirect("/");
