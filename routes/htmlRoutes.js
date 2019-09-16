@@ -51,6 +51,12 @@ module.exports = function (app) {
 
       //load categories from the database
       metadata.loadCategories().then(data => {
+        if (!req.session.loggedin) {
+          metadata.buttons = metadata.buttonsLoggedOut;
+        }
+        else {
+          metadata.buttons = metadata.buttonsLoggedIn;
+        }
         metadata.categories = data;
         res.render("new-experience", { metadata: metadata });
       });
@@ -69,7 +75,12 @@ module.exports = function (app) {
             metadata.buttons = metadata.buttonsLoggedIn;
           }
           metadata.experience = experience;
-          res.render("new-experience", { metadata: metadata, experience: experience });
+          if (req.session.UserId === experience.UserId && req.query.q === "edit") {
+            res.render("new-experience", { metadata: metadata, experience: experience });
+          }
+          else {
+            res.redirect("/");
+          }
         });
 
       }).catch(err => {
