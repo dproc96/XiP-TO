@@ -160,6 +160,31 @@
     font-weight: bold;
     text-align: center;
 }
+
+.input-file {
+    padding: 10px;
+    background-color: var(--dark-color);
+    color: var(--white-color);
+    border-radius: 2px;
+    font: inherit;
+    cursor: pointer;
+}
+.input-file input {
+    display: none;
+}
+.input-file:hover{
+    background-color: var(--darkest-color);
+}
+
+/* Experience Form */
+.exp-form-image {
+    display: block;
+    border-radius: 5px;
+    width: Calc(100% - 20px);
+    margin: auto;
+}
+
+
 /* Algolia styling */
 .ap-input-icon svg{
   display: none;
