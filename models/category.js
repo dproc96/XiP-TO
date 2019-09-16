@@ -22,7 +22,13 @@ module.exports = function (sequelize, DataTypes) {
   Category.associate = function (models) {
     Category.hasMany(models.Experience,{
       foreignKey: {
-        allowNull: false
+        allowNull: false,
+        validate: {
+          notNull: {
+            args: true,
+            msg: "You must select a category"
+          }
+        }
       }
     });
   };
