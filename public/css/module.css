@@ -184,6 +184,15 @@
     margin: auto;
 }
 
+.exp-form-header{
+    display: grid;
+    grid-template-columns: auto auto;
+}
+.exp-form-header .btn{
+    width: fit-content;
+    justify-self: flex-end;
+}
+
 
 /* Algolia styling */
 .ap-input-icon svg{

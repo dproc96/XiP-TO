@@ -4,7 +4,14 @@
     <div class="card">
         <div class="grid-two-col">
             <div class="grid--column-1">
-                <h2>Add A New Experience</h2>
+                {{#if experience.id}}
+                    <div class="exp-form-header">
+                        <h2>Experience</h2>
+                        <a id="delete-btn" class="btn"><i class="far fa-trash-alt"></i> Delete it</a>
+                    </div>
+                {{else}}
+                    <h2>Add A New Experience</h2>
+                {{/if}}
                 <input type="hidden" id="experience-id" value="{{experience.id}}">
 
                 <input type="text" id="name" value="{{experience.name}}" placeholder="Name Your Experience...">
@@ -17,7 +24,6 @@
                             selected
                         {{/ifEquals}}
                         >{{name}}</option>
-                        
                     {{/each}}
                 </select>
                 
@@ -33,7 +39,6 @@
                 {{!-- Hidden image temp name --}}
                 <input type="hidden" id="image" value="{{experience.image}}">
 
-                
                 <!-- Location.............................. -->
                 <input type="text" value="{{experience.location}}" id="location1" autocomplete="off" placeholder="Main location" />
 
