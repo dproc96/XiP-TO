@@ -21,7 +21,7 @@ $(document).ready(function () {
       name: $("#name").val().trim(),
       description: $("#description").val().trim(),
       image: $("#image").val().trim(),
-      
+      CategoryId: $("#category").val().trim(),
       location: $("#location1").val().trim(),
       location2: $("#location2").val().trim(),
       location3: $("#location3").val().trim()
@@ -33,10 +33,6 @@ $(document).ready(function () {
     if (experienceId !== "") {
       method = "PUT";
       data.id = experienceId;
-    }
-
-    if (experienceId !== "") {
-      data.CategoryId = $("#category").val().trim();
     }
 
     $.ajax({
