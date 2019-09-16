@@ -56,7 +56,12 @@ module.exports = function (app) {
     }
     else {
       //load experience
-      db.Experience.findByPk(req.params.id).then(function (experience) {
+      db.Experience.findOne({
+        where: {
+          id: req.params.id
+        },
+        include: {all: true}
+      }).then(function (experience) {
         //if experience was found
         if (experience) {
           //load categories from the database
@@ -69,7 +74,11 @@ module.exports = function (app) {
               res.render("experience-form", { metadata: metadata, experience: experience });
             }
             else {
-              res.redirect("/"); //should render the experience view page: res.render("experience-view", { metadata: metadata, experience: experience })
+              let options = { metadata: metadata, experience: experience };
+              if (req.session.UserId === experience.UserId) {
+                options.user = true;
+              }
+              res.render("view-experience", options);
             }
           });
         }

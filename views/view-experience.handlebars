@@ -1,0 +1,34 @@
+<div class="grid--content">
+    <div class="card">
+        <h1>{{experience.name}}</h1>
+        <img class="block__centered experience-image" src="images/uploads/{{experience.image}}" alt="">
+        <div class="grid-two-col">
+            <div class="grid--column-1">
+                <h3>Posted By: <a style="display: inline; margin: 0;" href="/users/{{experience.UserId}}">{{experience.User.firstname}} {{experience.User.lastname}}</a> (User Score:
+                    {{experience.User.score}})</h3>
+                {{#if user}}
+                <a class="btn" href="/experiences/{{experience.id}}/edit">Edit Your Experience</a>
+                {{/if}}
+                <label for="">Primary Location:</label>
+                <a class="btn" href="https://www.google.com/maps?q={{experience.location}}" target="_blank"
+                    rel="noopener noreferrer">{{experience.location}}</a>
+
+                {{#if experience.location2}}
+                <label for="">Second Location:</label>
+                <a class="btn" href="https://www.google.com/maps?q={{experience.location2}}" target="_blank"
+                    rel="noopener noreferrer">{{experience.location2}}</a>
+                {{/if}}
+
+                {{#if experience.location3}}
+                <label for="">Third Location:</label>
+                <a class="btn" href="https://www.google.com/maps?q={{experience.location3}}" target="_blank"
+                    rel="noopener noreferrer">{{experience.location3}}</a>
+                {{/if}}
+            </div>
+            <div class="grid--column-2">
+                <h4>Description:</h4>
+                <p>{{experience.description}}</p>
+            </div>
+        </div>
+    </div>
+</div>

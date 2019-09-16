@@ -193,6 +193,13 @@
     justify-self: flex-end;
 }
 
+.experience-image {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+
 
 /* Algolia styling */
 .ap-input-icon svg{
