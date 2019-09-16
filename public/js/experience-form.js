@@ -46,7 +46,7 @@ $(document).ready(function () {
       },
 
       success: () => {
-        location.href = "/profile";
+        location.href = "/profile/";
       }
 
     });
@@ -86,7 +86,7 @@ $(document).ready(function () {
       },
 
       success: () => {
-        location.reload("/profile");
+        location.href = "/profile";
       }
 
     });
