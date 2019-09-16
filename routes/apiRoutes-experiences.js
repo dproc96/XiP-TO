@@ -4,14 +4,11 @@ const fs = require("fs");
 
 module.exports = function (app) {
 
-  // Get all experiences that are active
+  // Get all experiences
   app.get("/api/experiences", function (req, res) {
     db.Experience.findAll({
       include: [{all:true}],
-      order: [["CategoryId", "ASC"]],
-      where: {
-        active: true
-      }
+      order: [["CategoryId", "ASC"]]
     }).then(function (data) {
       res.json(data);
     }).catch(err => {
@@ -39,13 +36,12 @@ module.exports = function (app) {
         res.status(400).end(err.errors[0].message);
       }
       else {
-        console.log(err);
         res.status(500).end(err.message);
       }
     });
   });
 
-  // Get all experiences that are active from an user
+  // Get all experiences from an user
   app.get("/api/experiences/user/:userid", function (req, res) {
 
     //check if the user is logged in
@@ -58,8 +54,7 @@ module.exports = function (app) {
         include: [db.Review, db.User],
         order: [["CategoryId", "ASC"]],
         where: {
-          UserId: req.session.UserId,
-          active: true
+          UserId: req.session.UserId
         }
       }).then(function (data) {
         res.json(data);
@@ -68,7 +63,6 @@ module.exports = function (app) {
           res.status(400).end(err.errors[0].message);
         }
         else {
-          console.log(err);
           res.status(500).end(err.message);
         }
       });
@@ -159,7 +153,7 @@ module.exports = function (app) {
     }
   });
 
-  // Delete an experience by id (actually just change the active field to false)
+  // Delete an experience by id
   app.delete("/api/experiences/:id", function (req, res) {
     
     // check if the user is logged in
@@ -168,10 +162,7 @@ module.exports = function (app) {
     }
     else {
     
-      db.Experience.update({
-        active: false
-      },
-      {
+      db.Experience.destroy({
         where: {
           id: req.params.id
         }

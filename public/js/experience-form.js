@@ -46,7 +46,7 @@ $(document).ready(function () {
       },
 
       success: () => {
-        location.reload();
+        location.href = "/profile";
       }
 
     });
@@ -68,6 +68,25 @@ $(document).ready(function () {
         $picture.attr("src", file.fullFileName);
         $("#image").val(file.fileName);
         $errorMsg.text("");
+      }
+
+    });
+  });
+
+  $("#delete-btn").click(function () {
+    event.preventDefault();
+    let experienceId = $("#experience-id").val().trim();
+    
+    $.ajax({
+      url: `/api/experiences/${experienceId}`,
+      type: "DELETE",
+
+      error: err => {
+        console.log(err.responseText);
+      },
+
+      success: () => {
+        location.reload("/profile");
       }
 
     });

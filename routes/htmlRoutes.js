@@ -6,10 +6,7 @@ module.exports = function (app) {
   app.get("/", function (req, res) {
     db.Experience.findAll({
       include: [{ all: true }],
-      order: [["createdAt", "DESC"], ["CategoryId", "ASC"]],
-      where: {
-        active: true
-      }
+      order: [["createdAt", "DESC"], ["CategoryId", "ASC"]]
     }).then(function (results) {
       metadata.loadCategories().then(categories => {
         metadata.categories = categories;
@@ -59,21 +56,27 @@ module.exports = function (app) {
 
     }
     else {
-
+      
       db.Experience.findByPk(req.params.id).then(function (experience) {
-        //load categories from the database
-        metadata.loadCategories().then(function (categories) {
-          metadata.categories = categories;
-          metadata.userLoggedIn = req.session.loggedin;
-          metadata.experience = experience;
-          if (req.session.UserId === experience.UserId && req.query.q === "edit") {
-            res.render("experience-form", { metadata: metadata, experience: experience });
-          }
-          else {
-            res.redirect("/");
-          }
-        });
-
+        //if experience was found
+        if (experience) {
+          //load categories from the database
+          metadata.loadCategories().then(function (categories) {
+            metadata.categories = categories;
+            metadata.userLoggedIn = req.session.loggedin;
+            metadata.experience = experience;
+          
+            if (req.session.UserId === experience.UserId) {
+              res.render("experience-form", { metadata: metadata, experience: experience });
+            }
+            else {
+              res.redirect("/");
+            }
+          });
+        }
+        else {
+          res.redirect("/");
+        }
       }).catch(err => {
         if (err.errors) {
           res.status(400).end(err.errors[0].message);
