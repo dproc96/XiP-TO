@@ -19,11 +19,15 @@
     margin: 10px;
 }
 
-.card input, .card select, .card textarea {
+.card input, .card textarea {
     width: Calc(100% - 40px);
     padding: 10px;
 }
 
+.card select{
+    width: Calc(100% - 20px);
+
+}
 .card textarea {
     height: Calc(100% - 40px);
 }

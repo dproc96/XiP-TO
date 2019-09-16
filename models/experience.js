@@ -86,7 +86,7 @@ module.exports = function (sequelize, DataTypes) {
   Experience.associate = function (models) {
     Experience.hasMany(models.Review, {
       foreignKey: {
-        allowNull: true
+        allowNull: false
       }
     });
 
@@ -98,7 +98,13 @@ module.exports = function (sequelize, DataTypes) {
 
     Experience.belongsTo(models.Category, {
       foreignKey: {
-        allowNull: false
+        allowNull: false,
+        validate: {
+          notNull: {
+            args: true,
+            msg: "You must select a category"
+          }
+        }
       }
     });
   };  

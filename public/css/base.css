@@ -58,3 +58,8 @@ input, textarea {
 button {
     border: none;
 }
+
+select{
+    height: 35px;
+    color: grey;
+}
