@@ -13,16 +13,11 @@ module.exports = function (app) {
     }).then(function (results) {
       metadata.loadCategories().then(categories => {
         metadata.categories = categories;
+        metadata.userLoggedIn = req.session.loggedin;
         let data = {
           metadata: metadata,
           categories: []
         };
-        if (!req.session.loggedin) {
-          metadata.buttons = metadata.buttonsLoggedOut.filter(x => { return x.id !== "home"; });
-        }
-        else {
-          metadata.buttons = metadata.buttonsLoggedIn.filter(x => { return x.id !== "home"; });
-        }
         for (let category of metadata.categories) {
           let categoryData = {
             name: category.name,
@@ -58,6 +53,7 @@ module.exports = function (app) {
           metadata.buttons = metadata.buttonsLoggedIn;
         }
         metadata.categories = data;
+        metadata.userLoggedIn = req.session.loggedin;
         res.render("new-experience", { metadata: metadata });
       });
 
@@ -68,12 +64,7 @@ module.exports = function (app) {
         //load categories from the database
         metadata.loadCategories().then(function (categories) {
           metadata.categories = categories;
-          if (!req.session.loggedin) {
-            metadata.buttons = metadata.buttonsLoggedOut;
-          }
-          else {
-            metadata.buttons = metadata.buttonsLoggedIn;
-          }
+          metadata.userLoggedIn = req.session.loggedin;
           metadata.experience = experience;
           if (req.session.UserId === experience.UserId && req.query.q === "edit") {
             res.render("new-experience", { metadata: metadata, experience: experience });
@@ -112,12 +103,7 @@ module.exports = function (app) {
         },
         include: [{ all: true }]
       }).then(function (results) {
-        if (!req.session.loggedin) {
-          metadata.buttons = metadata.buttonsLoggedOut.filter(x => { return x.id !== "my-page"; });
-        }
-        else {
-          metadata.buttons = metadata.buttonsLoggedIn.filter(x => { return x.id !== "my-page"; });
-        }
+        metadata.userLoggedIn = req.session.loggedin;
         res.render("profile", { metadata: metadata, user: results });
       }).catch(err => {
         if (err.errors) {
@@ -145,12 +131,7 @@ module.exports = function (app) {
         },
         include: [{ all: true }]
       }).then(function (results) {
-        if (!req.session.loggedin) {
-          metadata.buttons = metadata.buttonsLoggedOut;
-        }
-        else {
-          metadata.buttons = metadata.buttonsLoggedIn;
-        }
+        metadata.userLoggedIn = req.session.loggedin;
         res.render("user", { metadata: metadata, user: results });
       }).catch(err => {
         if (err.errors) {

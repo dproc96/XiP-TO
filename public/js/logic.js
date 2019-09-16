@@ -231,8 +231,30 @@ $("#submitSignIn").on("click", function () {
     success: () => {
       clearFields();
       closeModal();
+      $("#wrap-btn-logout").css("display", "none");
+      $("#wrap-btn-login").css("display", "block");
     }
 
   });
 
+  $("#log-out").click(function () {
+    event.preventDefault();
+    
+    $.ajax({
+      url: "/api/logout",
+      type: "POST",
+  
+      error: err => {
+        console.log(err.responseText);
+        
+      },
+  
+      success: () => {
+        $("#wrap-btn-logout").css("display", "block");
+        $("#wrap-btn-login").css("display", "none");
+      }
+    });
+    
+  });
+  
 });
