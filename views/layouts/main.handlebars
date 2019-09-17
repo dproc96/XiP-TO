@@ -10,16 +10,17 @@
   <script src="https://kit.fontawesome.com/a4b838d1a2.js"></script>
   <link href="https://fonts.googleapis.com/css?family=Lato|Lobster&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  
-  <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
-  <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
+
+  <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+  <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" />
   <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 
-  <link rel="shortcut icon" type="image/png" href="images/xipto.png"/>
+  <link rel="shortcut icon" type="image/png" href="images/xipto.png" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <link rel="stylesheet" href="css/reset.css" type="text/css">
+  <link rel="stylesheet" href="css/algolia.css" type="text/css">
   <link rel="stylesheet" href="css/base.css" type="text/css">
   <link rel="stylesheet" href="css/layout.css" type="text/css">
   <link rel="stylesheet" href="css/module.css" type="text/css">
@@ -30,18 +31,38 @@
   {{{body}}}
 
   <div id="overlay" class="overlay hidden"></div>
-  
-  <div id="modal" class="modal hidden">
+
+  <div id="sign-in-modal" class="modal hidden">
     <i id="close-modal" class="fas fa-times btn-close"></i>
-    <h2 class="">Welcome back!</h2>
-    <input type="email" id="inputEmail" class="" placeholder="Email Address" required autofocus>
-    <input type="password" id="inputPassword" class="" placeholder="Password" required>
-    <label class="" for="rememberPassword"><input type="checkbox" class="" id="rememberPassword">  Remember password</label>
-    <a class="btn btn__large">Sign in</a>
-    <a class="" href="#">Forgot password?</a>
+    <h2 class="" id="title-signIn">Welcome back!</h2>
+
+    <input type="email" id="signInEmail" class="" placeholder="Email Address" required autofocus>
+    <input type="password" id="signInPassword" class="" placeholder="Password" required>
+
+    <p id="message-signIn"></p>
+
+    <a class="btn btn__large" id="submitSignIn">Sign in</a>
+    <a class="btn btn__large" id="signUp">Sign Up</a>
+    <a class="btn btn__large" id="resetPwd">Send</a>
+    
+    <a class="" href="#" id="cancelResetPwd">Sign In</a>
+    <a class="" href="#" id="forgot-pwd">Forgot password?</a>
+
   </div>
 
-    <script src="js/logic.js"></script>
+  <div id="sign-up-modal" class="modal hidden">
+    <i id="close-modal" class="fas fa-times btn-close" aria-hidden="true"></i>
+    <input type="text" id="signUpFirstName" placeholder="First Name" required="required">
+    <input type="text" id="signUpLastName" placeholder="Last Name" required="required">
+    <input type="email" id="signUpEmail" placeholder="Email Address" required="required" autofocus="autofocus">
+    <input type="password" id="signUpPassword" placeholder="Password" required="required">
+    <input type="password" id="reenterSignUpPassword" placeholder="ReEnter Password" required="required">
+
+    <p id="message-signUp"></p>
+    <a id="submitUserInformation" class="btn btn__large">Submit</a>
+  </div>
+
+  <script src="js/logic.js"></script>
 </body>
 
 </html>

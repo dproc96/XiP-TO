@@ -1,0 +1,38 @@
+<div class="grid--sidebar">
+    <div class="flex flex-start">
+        <h1 id="menu" class="fas fa-bars mobile-only"></h1>
+        <h1 class="title">Experience Toronto!</h1>
+        <h1 class="fas fa-bars mobile-only invisible"></h1>
+    </div>
+    <img src="{{metadata.iconImageSrc}}" alt="" class="block__centered icon icon__large desktop-only">
+    <div id="nav" class="desktop-only">
+        {{#each metadata.buttons}}
+        <a href="{{link}}" id="{{id}}" class="btn">{{name}}</a>
+        {{/each}}
+    </div>
+</div>
+<div class="grid--content">
+    <div class="card">
+        <h1>{{user.firstname}} {{user.lastname}}</h1>
+        <h5>Current Score: {{user.score}}</h5>
+        <h5>Email: {{user.email}}</h5>
+
+        <div class="slide">
+            {{#each user.Experiences}}
+            <div class="carousel--element grow-in">
+                <div class="carousel--element--header">
+                    <h3>{{name}}</h3>
+                </div>
+                <img src="images/uploads/{{image}}" onerror="this.onerror=null; this.src='images/toronto.jpg'" alt="">
+                <div class="flex badge-box">
+                    <div class="carousel--element--badge">
+                        <a href="/experience/{{id}}">
+                            <h4>Edit</h4>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+</div>

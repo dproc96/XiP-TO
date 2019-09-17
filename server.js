@@ -1,29 +1,42 @@
 require("dotenv").config();
-var express = require("express");
-var exphbs = require("express-handlebars");
-var fs = require("fs");
-var fileUpload = require("express-fileupload");
+let express = require("express");
+let exphbs = require("express-handlebars");
+let fs = require("fs");
+let fileUpload = require("express-fileupload");
+let session = require("express-session");
 
-var db = require("./models");
+let db = require("./models");
 
-var app = express();
-var PORT = process.env.PORT || 3000;
+let app = express();
+let PORT = process.env.PORT || 3000;
 
 // Middleware
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static("public"));
+
 app.use(fileUpload({
   limits: { fileSize: 50 * 1024 * 1024 },
   useTempFiles : true,
   tempFileDir : "./public/images/uploads/tmp/"
 }));
 
+app.use(session({
+  secret: "XiPTOkey",
+  resave: true,
+  saveUninitialized: true
+}));
+
 // Handlebars
 app.engine(
   "handlebars",
   exphbs({
-    defaultLayout: "main"
+    defaultLayout: "main",
+    helpers: {
+      ifEquals: function(arg1, arg2, options) {
+        return (arg1 === arg2) ? options.fn(this) : options.inverse(this);
+      }
+    }
   })
 );
 app.set("view engine", "handlebars");
@@ -33,9 +46,10 @@ require("./routes/apiRoutes-categories")(app);
 require("./routes/apiRoutes-experiences")(app);
 require("./routes/apiRoutes-reviews")(app);
 require("./routes/apiRoutes-users")(app);
+require("./routes/apiRoutes-auth")(app);
 require("./routes/htmlRoutes")(app);
 
-var syncOptions = { force: false };
+let syncOptions = { force: false };
 
 // If running a test, set syncOptions.force to true
 // clearing the `testdb`

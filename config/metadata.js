@@ -3,7 +3,7 @@ db = require("../models");
 //load categories from the database
 function loadCategories() {
   return db.Category.findAll({
-    attributes: ["name", ["id", "value"]],
+    attributes: ["name", "id"],
     where: {
       active: true
     },
@@ -14,7 +14,7 @@ function loadCategories() {
 module.exports = {
   homepageButtonText: "Back To Home Page",
   iconImageSrc: "/images/xipto.png",
-  description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+  description: "XiPTO is an experience focused site for residents and visitors in Toronto. To add your own experience, give it a name, add a picture, choose the category, give us 1-3 locations involved, and tell us the story of your experience!",
   categories: "",
   loadCategories: loadCategories,
   quotes: [
@@ -31,11 +31,48 @@ module.exports = {
       author: "John"
     }
   ],
-  buttons: [
+  buttonsLoggedOut: [
     {
       name: "Sign In/Sign Up",
       link: "#",
       id: "sign-in"
+    }, 
+    {
+      name: "Back to Home",
+      link: "/",
+      id: "home"
+    },
+    {
+      name: "Post Your Experience",
+      link: "/experiences/new",
+      id: "post"
+    },
+    {
+      name: "How to Post",
+      link: "#",
+      id: "how-to"
+    },
+    {
+      name: "About Us",
+      link: "#",
+      id: "about"
+    },
+  ],
+  buttonsLoggedIn: [
+    {
+      name: "Log Out",
+      link: "#",
+      id: "log-out"
+    },
+    {
+      name: "Back to Home",
+      link: "/",
+      id: "home"
+    },
+    {
+      name: "View My Page",
+      link: "/profile",
+      id: "my-page"
     },
     {
       name: "Post Your Experience",

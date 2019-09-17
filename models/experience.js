@@ -1,5 +1,5 @@
 module.exports = function (sequelize, DataTypes) {
-  var Experience = sequelize.define("Experience", {
+  let Experience = sequelize.define("Experience", {
     name: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -22,23 +22,11 @@ module.exports = function (sequelize, DataTypes) {
     },
     location2: {
       type: DataTypes.STRING,
-      allowNull: true,
-      validate: {
-        len: {
-          args: [6, 200],
-          msg: "Location 2 must have at least 6 and max 200 characters"
-        }
-      }
+      allowNull: true
     },
     location3: {
       type: DataTypes.STRING,
-      allowNull: true,
-      validate: {
-        len: {
-          args: [6, 200],
-          msg: "Location 3 must have at least 6 and max 200 characters"
-        }
-      }
+      allowNull: true
     },
     description: {
       type: DataTypes.STRING,
@@ -66,7 +54,7 @@ module.exports = function (sequelize, DataTypes) {
       afterCreate: function (experience) {
 
         if (experience.image) {
-          var fileName = "experience_" + experience.id + "." + experience.image;
+          let fileName = "experience_" + experience.id + "." + experience.image;
           experience.image = fileName;
 
           Experience.update({
