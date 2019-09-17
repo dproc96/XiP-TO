@@ -11,12 +11,23 @@ function loadCategories() {
   });
 }
 
+//load categories from the database
+function loadUsers() {
+  return db.User.findAll({
+    attributes: ["firstname", "lastname", "id"],
+    where: {
+      active: true
+    }
+  });
+}
+
 module.exports = {
   homepageButtonText: "Back To Home Page",
   iconImageSrc: "/images/xipto.png",
   description: "XiPTO is an experience focused site for residents and visitors in Toronto. To add your own experience, give it a name, add a picture, choose the category, give us 1-3 locations involved, and tell us the story of your experience!",
   categories: "",
   loadCategories: loadCategories,
+  loadUsers: loadUsers,
   userLoggedIn: false,
   quotes: [
     {

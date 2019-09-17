@@ -41,14 +41,14 @@ module.exports = function (app) {
     if (req.params.id === "new") {
 
       //load categories from the database
-      metadata.loadCategories().then(data => {
+      metadata.loadCategories().then(categories => {
         if (!req.session.loggedin) {
           metadata.buttons = metadata.buttonsLoggedOut;
         }
         else {
           metadata.buttons = metadata.buttonsLoggedIn;
         }
-        metadata.categories = data;
+        metadata.categories = categories;
         metadata.userLoggedIn = req.session.loggedin;
         res.render("experience-form", { metadata: metadata });
       });
@@ -56,7 +56,14 @@ module.exports = function (app) {
     }
     else {
       //load experience
-      db.Experience.findByPk(req.params.id).then(function (experience) {
+      db.Experience.findOne({
+        where: {
+          id: req.params.id
+        },
+        include: {
+          all: true
+        }
+      }).then(function (experience) {
         //if experience was found
         if (experience) {
           //load categories from the database
@@ -69,7 +76,16 @@ module.exports = function (app) {
               res.render("experience-form", { metadata: metadata, experience: experience });
             }
             else {
-              res.redirect("/"); //should render the experience view page: res.render("experience-view", { metadata: metadata, experience: experience })
+              metadata.loadUsers().then(users => {
+                experience.Reviews.map(x => {
+                  x.User = users.filter(y => { return y.id === x.UserId; })[0];
+                });
+                let options = { metadata: metadata, experience: experience };
+                if (req.session.UserId === experience.UserId) {
+                  options.user = true;
+                }
+                res.render("view-experience", options);
+              });
             }
           });
         }

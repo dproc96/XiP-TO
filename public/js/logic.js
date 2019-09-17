@@ -2,18 +2,22 @@ $(document).ready(function () {
 
   //insert the error message on the #message element
   function showErrorMessage(msg) {
-    $("#message-signIn").removeClass("success-message");  
-    $("#message-signIn").text(msg).addClass("error-message");  
-    $("#message-signUp").removeClass("success-message");  
-    $("#message-signUp").text(msg).addClass("error-message");  
+    $("#message-signIn").removeClass("success-message");
+    $("#message-signIn").text(msg).addClass("error-message");
+    $("#message-signUp").removeClass("success-message");
+    $("#message-signUp").text(msg).addClass("error-message");
+    $("#message-review").removeClass("success-message");
+    $("#message-review").text(msg).addClass("error-message");
   }
 
   //insert the success message on the #message element
   function showSuccessMessage(msg) {
-    $("#message-signIn").removeClass("error-message");  
-    $("#message-signIn").text(msg).addClass("success-message");  
-    $("#message-signUp").removeClass("error-message");  
-    $("#message-signUp").text(msg).addClass("success-message");  
+    $("#message-signIn").removeClass("error-message");
+    $("#message-signIn").text(msg).addClass("success-message");
+    $("#message-signUp").removeClass("error-message");
+    $("#message-signUp").text(msg).addClass("success-message");
+    $("#message-review").removeClass("error-message");
+    $("#message-review").text(msg).addClass("success-message");
   }
 
   //hide an element of the dom. Sample: hideElement("myelementid")
@@ -28,7 +32,7 @@ $(document).ready(function () {
     if (typeof display === "undefined") {
       display = "block";
     }
-    
+
     $(`#${elementId}`).css("display", "block");
   }
 
@@ -71,19 +75,19 @@ $(document).ready(function () {
     $("#sign-up-modal").attr("class", "modal");
   }
 
-  function cancelResetPwd () {
+  function cancelResetPwd() {
     event.preventDefault();
-    
+
     $("#title-signIn").text("Welcome Back!");
 
     //show the unecessary fields to request a new password
     showElement("signInPassword");
-    
+
     //show sign in and sign up buttons and forgot passoword link
     showElement("submitSignIn");
     showElement("signUp");
     showElement("forgot-pwd");
-    
+
     //hide reset and cancel buttons
     hideElement("resetPwd");
     hideElement("cancelResetPwd");
@@ -93,7 +97,7 @@ $(document).ready(function () {
   function postUserInfo(event) {
     event.preventDefault();
 
-    let newUserInfo={
+    let newUserInfo = {
       firstname: $("#signUpFirstName").val().trim(),
       lastname: $("#signUpLastName").val().trim(),
       email: $("#signUpEmail").val().trim(),
@@ -109,20 +113,20 @@ $(document).ready(function () {
           url: "/api/users",
           type: "POST",
           data: newUserInfo,
-      
+
           error: err => {
             showErrorMessage(err.responseText);
           },
-      
+
           success: () => {
-            
+
             clearFields();
             closeModal();
             openSignInModal();
             showSuccessMessage("You were registered successfully!");
           }
         });
-            
+
       }
       else {
         showErrorMessage("* Passwords must match");
@@ -130,20 +134,20 @@ $(document).ready(function () {
     }
   }
 
-  function userLogOut () {
+  function userLogOut() {
     event.preventDefault();
-    
+
     $.ajax({
       url: "/api/logout",
       type: "POST",
-  
+
       error: err => {
         console.log(err.responseText);
-        
+
       },
-  
+
       success: () => {
-        
+
         $("#wrap-btn-logout").css("display", "block");
         $("#wrap-btn-login").css("display", "none");
       }
@@ -156,7 +160,7 @@ $(document).ready(function () {
       email: $("#signInEmail").val().trim(),
       password: $("#signInPassword").val().trim()
     };
-    
+
     $.ajax({
       url: "/api/auth",
       type: "POST",
@@ -177,7 +181,28 @@ $(document).ready(function () {
 
   }
 
-  function forgotPassword () {
+  function addReview(liked) {
+    let data = {
+      ExperienceId: parseInt($("#comment").attr("data-experience")),
+      liked: liked,
+      comment: $("#comment").val()
+    };
+    $.ajax({
+      url: "/api/reviews",
+      type: "POST",
+      data: data,
+
+      error: err => {
+        showErrorMessage(err.responseText);
+      },
+
+      success: () => {
+        location.reload();
+      }
+    });
+  }
+
+  function forgotPassword() {
     event.preventDefault();
     clearFields();
 
@@ -185,16 +210,16 @@ $(document).ready(function () {
 
     //hide the unecessary fields to request a new password
     hideElement("signInPassword");
-    
+
     //hide sign in and sign up buttons and forgot passoword link
     hideElement("submitSignIn");
     hideElement("signUp");
     hideElement("forgot-pwd");
-    
+
     //show reset and cancel buttons
     showElement("resetPwd");
     showElement("cancelResetPwd");
-    
+
   }
 
   function requestPassord() {
@@ -214,7 +239,7 @@ $(document).ready(function () {
         clearFields();
       }
     });
-    
+
   }
 
   //hide the send and cancel button to request a new password
@@ -226,12 +251,12 @@ $(document).ready(function () {
   //send a request to new password
   $("#resetPwd").on("click", requestPassord);
   //when clicks on cancel button to request a password to show default modal sign in fields
-  $("#cancelResetPwd").on("click",cancelResetPwd);
+  $("#cancelResetPwd").on("click", cancelResetPwd);
 
   //sign in
   $("#submitSignIn").on("click", userLogIn);
   //log out
-  $("#log-out").on("click", userLogOut);  
+  $("#log-out").on("click", userLogOut);
 
   //manage modals
   $(document).on("click", "#sign-in", openSignInModal);
@@ -241,9 +266,18 @@ $(document).ready(function () {
   //submit new user
   $(document).on("click", "#submitUserInformation", postUserInfo);
 
+  //add a review of an experience
+  $(document).on("click", "#liked", function () {
+    addReview(true);
+  });
+
+  $(document).on("click", "#disliked", function () {
+    addReview(false);
+  });
+
 
   //MENU BEHAVIOR
-  $(document).on("click", "#menu", function() {
+  $(document).on("click", "#menu", function () {
     let nav = $("#nav");
     if (nav.attr("class") === "desktop-only") {
       nav.attr("class", "");
