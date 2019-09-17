@@ -81,9 +81,9 @@ $(document).ready(function () {
           $("#picture").attr("src", `./images/uploads/${res.fileName}`);
         }
         else {
-          showSuccessMessage("Profile updated!", $msg);
           $(this).css("disabled", "false");  
         }
+        showSuccessMessage("Profile updated!", $msg);
         
       }
     });

@@ -195,8 +195,8 @@
 .profile-form-image{
     width: 250px;
     height: 250px;
-    overflow: hidden;
-    border-radius: 150px;
+    object-fit: cover;
+    border-radius: 100%;
     justify-content:center;
     align-content:center;
     margin: 20px auto;

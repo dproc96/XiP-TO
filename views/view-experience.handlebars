@@ -4,6 +4,11 @@
         <img class="block__centered experience-image" src="images/uploads/{{experience.image}}" alt="">
         <div class="grid-two-col">
             <div class="grid--column-1">
+                {{#if experience.User.image}}
+                <div style="background-image: url(images/uploads/{{experience.User.image}}); background-size: 150%; background-position: center; float: left;"
+                    class="carousel--element--badge">
+                </div>
+                {{/if}}
                 <h3>Posted By: <a style="display: inline; margin: 0;" href="/users/{{experience.UserId}}">{{experience.User.firstname}} {{experience.User.lastname}}</a> (User Score:
                     {{experience.User.score}})</h3>
                 {{#if user}}
