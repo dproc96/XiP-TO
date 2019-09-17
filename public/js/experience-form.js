@@ -1,26 +1,5 @@
 $(document).ready(function () {
-  let totLocations = 1;
   let $errorMsg = $("#error-message").css("display", "none");
-  let $location2 = $("#location2");
-  let $location3 = $("#location3");
-
-  if ($location2.val().trim() === "") {
-    $location2.css("display", "none");
-  }
-  else {
-    totLocations++;
-  }
-
-  if ($location3.val().trim() !== "") {
-    $location3.css("display", "none");
-  }
-  else {
-    totLocations++;
-  }
-
-  if (totLocations === 3) {
-    $("#add-location").css("display", "none");
-  }
 
   //initialize the algolia places (responsible to autocomplete the locations)
   for (let i = 1; i <= 3; i++) {
@@ -30,22 +9,6 @@ $(document).ready(function () {
     });
     $(`#location${i}`).attr("class", "");
   }
-
-  //when user clicks on the button to add new location
-  $("#add-location").on("click", function (event) {
-
-    event.preventDefault();
-
-    if ($location2.css("display") === "none") {
-      $location2.css("display", "block");
-    }
-    else if ($location3.css("display") === "none") {
-      $location3.css("display", "block");
-    }
-    else {
-      $(this).css("display", "none");
-    }
-  });
 
   //when user clicks on the submit buttom
   $("#submit-btn").click(function () {
@@ -83,7 +46,7 @@ $(document).ready(function () {
       },
 
       success: () => {
-        location.reload();
+        location.href = "/profile/";
       }
 
     });
@@ -105,6 +68,25 @@ $(document).ready(function () {
         $picture.attr("src", file.fullFileName);
         $("#image").val(file.fileName);
         $errorMsg.text("");
+      }
+
+    });
+  });
+
+  $("#delete-btn").click(function () {
+    event.preventDefault();
+    let experienceId = $("#experience-id").val().trim();
+    
+    $.ajax({
+      url: `/api/experiences/${experienceId}`,
+      type: "DELETE",
+
+      error: err => {
+        console.log(err.responseText);
+      },
+
+      success: () => {
+        location.href = "/profile";
       }
 
     });

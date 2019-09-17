@@ -6,23 +6,15 @@ module.exports = function (app) {
   app.get("/", function (req, res) {
     db.Experience.findAll({
       include: [{ all: true }],
-      order: [["createdAt", "DESC"], ["CategoryId", "ASC"]],
-      where: {
-        active: true
-      }
+      order: [["createdAt", "DESC"], ["CategoryId", "ASC"]]
     }).then(function (results) {
       metadata.loadCategories().then(categories => {
         metadata.categories = categories;
+        metadata.userLoggedIn = req.session.loggedin;
         let data = {
           metadata: metadata,
           categories: []
         };
-        if (!req.session.loggedin) {
-          metadata.buttons = metadata.buttonsLoggedOut.filter(x => { return x.id !== "home"; });
-        }
-        else {
-          metadata.buttons = metadata.buttonsLoggedIn.filter(x => { return x.id !== "home"; });
-        }
         for (let category of metadata.categories) {
           let categoryData = {
             name: category.name,
@@ -39,39 +31,67 @@ module.exports = function (app) {
         res.status(500).end(err.errors[0].message);
       }
       else {
-        console.log(err);
         res.status(500).end(err.message);
       }
     });
   });
 
   // Load experience form page and pass an experience id
-  app.get("/experiences/:id", function (req, res) {
+  app.get("/experiences/:id/:edit?", function (req, res) {
     if (req.params.id === "new") {
 
       //load categories from the database
-      metadata.loadCategories().then(data => {
-        metadata.categories = data;
-        res.render("new-experience", { metadata: metadata });
+      metadata.loadCategories().then(categories => {
+        if (!req.session.loggedin) {
+          metadata.buttons = metadata.buttonsLoggedOut;
+        }
+        else {
+          metadata.buttons = metadata.buttonsLoggedIn;
+        }
+        metadata.categories = categories;
+        metadata.userLoggedIn = req.session.loggedin;
+        res.render("experience-form", { metadata: metadata });
       });
 
     }
     else {
-
-      db.Experience.findByPk(req.params.id).then(function (experience) {
-        //load categories from the database
-        metadata.loadCategories().then(function (categories) {
-          metadata.categories = categories;
-          if (!req.session.loggedin) {
-            metadata.buttons = metadata.buttonsLoggedOut;
-          }
-          else {
-            metadata.buttons = metadata.buttonsLoggedIn;
-          }
-          metadata.experience = experience;
-          res.render("new-experience", { metadata: metadata, experience: experience });
-        });
-
+      //load experience
+      db.Experience.findOne({
+        where: {
+          id: req.params.id
+        },
+        include: {
+          all: true
+        }
+      }).then(function (experience) {
+        //if experience was found
+        if (experience) {
+          //load categories from the database
+          metadata.loadCategories().then(function (categories) {
+            metadata.categories = categories;
+            metadata.userLoggedIn = req.session.loggedin;
+            metadata.experience = experience;
+          
+            if (req.session.UserId === experience.UserId && req.params.edit) {
+              res.render("experience-form", { metadata: metadata, experience: experience });
+            }
+            else {
+              metadata.loadUsers().then(users => {
+                experience.Reviews.map(x => {
+                  x.User = users.filter(y => { return y.id === x.UserId; })[0];
+                });
+                let options = { metadata: metadata, experience: experience };
+                if (req.session.UserId === experience.UserId) {
+                  options.user = true;
+                }
+                res.render("view-experience", options);
+              });
+            }
+          });
+        }
+        else {
+          res.redirect("/");
+        }
       }).catch(err => {
         if (err.errors) {
           res.status(400).end(err.errors[0].message);
@@ -101,12 +121,7 @@ module.exports = function (app) {
         },
         include: [{ all: true }]
       }).then(function (results) {
-        if (!req.session.loggedin) {
-          metadata.buttons = metadata.buttonsLoggedOut.filter(x => { return x.id !== "my-page"; });
-        }
-        else {
-          metadata.buttons = metadata.buttonsLoggedIn.filter(x => { return x.id !== "my-page"; });
-        }
+        metadata.userLoggedIn = req.session.loggedin;
         res.render("profile", { metadata: metadata, user: results });
       }).catch(err => {
         if (err.errors) {
@@ -126,7 +141,6 @@ module.exports = function (app) {
     if (parseInt(userId) === req.session.UserId) {
       res.redirect("/profile");
     }
-
     else {
       db.User.findOne({
         where: {
@@ -134,12 +148,7 @@ module.exports = function (app) {
         },
         include: [{ all: true }]
       }).then(function (results) {
-        if (!req.session.loggedin) {
-          metadata.buttons = metadata.buttonsLoggedOut;
-        }
-        else {
-          metadata.buttons = metadata.buttonsLoggedIn;
-        }
+        metadata.userLoggedIn = req.session.loggedin;
         res.render("user", { metadata: metadata, user: results });
       }).catch(err => {
         if (err.errors) {

@@ -20,7 +20,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <link rel="stylesheet" href="css/reset.css" type="text/css">
-  <link rel="stylesheet" href="css/algolia.css" type="text/css">
   <link rel="stylesheet" href="css/base.css" type="text/css">
   <link rel="stylesheet" href="css/layout.css" type="text/css">
   <link rel="stylesheet" href="css/module.css" type="text/css">
@@ -28,6 +27,44 @@
 </head>
 
 <body>
+  <div class="grid--sidebar">
+    <div class="flex flex-start">
+        <h1 id="menu" class="fas fa-bars mobile-only"></h1>
+        <h1 class="title">Experience Toronto!</h1>
+        <h1 class="fas fa-bars mobile-only invisible"></h1>
+    </div>
+    <img src="{{metadata.iconImageSrc}}" alt="" class="block__centered icon icon__large desktop-only">
+    <div id="nav" class="desktop-only">
+        <a href="/" id="home" class="btn"><i class="fas fa-home"></i> Home</a>      
+
+        {{!-- logged out --}}
+        <div id="wrap-btn-logout">
+          <a href="#" id="sign-in" class="btn">Sign In/Sign Up</a>
+        </div>
+        
+        {{!-- logged in --}}
+        <div id="wrap-btn-login">
+          <a href="#" id="log-out" class="btn">Log Out</a>
+          <a href="/profile" id="my-page" class="btn">View My Page</a>
+        </div>
+
+        {{!-- static --}}
+        <a href="/experiences/new" id="post" class="btn">Post Your Experience</a>
+        <a href="#" id="how-to" class="btn">How to Post</a>
+        <a href="#" id="about" class="btn">About Us</a>      
+        
+        {{#if metadata.userLoggedIn}}
+        <script>
+            $("#wrap-btn-logout").css("display", "none");
+        </script>  
+        {{else}}
+        <script>
+            $("#wrap-btn-login").css("display", "none");
+        </script>  
+        {{/if}}
+    </div>
+  </div>
+
   {{{body}}}
 
   <div id="overlay" class="overlay hidden"></div>

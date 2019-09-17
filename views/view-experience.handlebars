@@ -1,0 +1,49 @@
+<div class="grid--content">
+    <div class="card">
+        <h1>{{experience.name}}</h1>
+        <img class="block__centered experience-image" src="images/uploads/{{experience.image}}" alt="">
+        <div class="grid-two-col">
+            <div class="grid--column-1">
+                <h3>Posted By: <a style="display: inline; margin: 0;" href="/users/{{experience.UserId}}">{{experience.User.firstname}} {{experience.User.lastname}}</a> (User Score:
+                    {{experience.User.score}})</h3>
+                {{#if user}}
+                <a class="btn" href="/experiences/{{experience.id}}/edit">Edit Your Experience</a>
+                {{/if}}
+                <label for="">Primary Location:</label>
+                <a class="btn" href="https://www.google.com/maps?q={{experience.location}}" target="_blank"
+                    rel="noopener noreferrer">{{experience.location}}</a>
+
+                {{#if experience.location2}}
+                <label for="">Second Location:</label>
+                <a class="btn" href="https://www.google.com/maps?q={{experience.location2}}" target="_blank"
+                    rel="noopener noreferrer">{{experience.location2}}</a>
+                {{/if}}
+
+                {{#if experience.location3}}
+                <label for="">Third Location:</label>
+                <a class="btn" href="https://www.google.com/maps?q={{experience.location3}}" target="_blank"
+                    rel="noopener noreferrer">{{experience.location3}}</a>
+                {{/if}}
+            </div>
+            <div class="grid--column-2">
+                <h4>Description:</h4>
+                <p>{{experience.description}}</p>
+            </div>
+        </div>
+        <h2>Reviews:</h2>
+        <input id="comment" type="text" data-experience="{{experience.id}}" placeholder="If you've done this experience, add your review and give a like or dislike">
+        <div class="flex">
+            <button id="liked" class="btn">Like</button>
+            <button id="disliked" class="btn">Dislike</button>
+        </div>
+        <div id="message-review"></div>
+        {{#each experience.Reviews}}
+        <div style="height: min-content;" class="comment grow-in">
+            <h3><a href="/users/{{UserId}}" style="display: inline; margin: 0;">{{User.firstname}}</a> {{#unless liked}}dis{{/unless}}liked this experience...</h3>
+            <p>
+                {{comment}}
+            </p>
+        </div>
+        {{/each}}
+    </div>
+</div>

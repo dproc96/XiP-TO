@@ -2,13 +2,12 @@ let db = require("../models");
 
 module.exports = function (app) {
 
-  // Get all reviews that are active from an experience
+  // Get all reviews from an experience
   app.get("/api/reviews/experience/:experienceid", function(req, res) {
     db.Review.findAll({
       include: [{all:true}],
       order: [["createdAt", "DESC"]],
       where: {
-        active: true,
         ExperienceId: req.params.experienceid
       }
     }).then(function (data) {
@@ -30,6 +29,8 @@ module.exports = function (app) {
       res.status(400).end("You need to sign in to create a review.");
     }
     else {
+      //set the user id from the session
+      req.body.UserId = req.session.UserId;
     
       db.Review.create(req.body).then(function (result) {
         res.json(result);

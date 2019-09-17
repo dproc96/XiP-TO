@@ -1,16 +1,4 @@
-<div class="grid--sidebar">
-    <div class="flex flex-start">
-        <h1 id="menu" class="fas fa-bars mobile-only"></h1>
-        <h1 class="title">Experience Toronto!</h1>
-        <h1 class="fas fa-bars mobile-only invisible"></h1>
-    </div>
-    <img src="{{metadata.iconImageSrc}}" alt="" class="block__centered icon icon__large desktop-only">
-    <div id="nav" class="desktop-only">
-        {{#each metadata.buttons}}
-        <a href="{{link}}" id="{{id}}" class="btn">{{name}}</a>
-        {{/each}}
-    </div>
-</div>
+
 <div class="grid--content">
     <div class="card">
         <h1>{{user.firstname}} {{user.lastname}}</h1>
@@ -25,7 +13,7 @@
                 <img src="images/uploads/{{image}}" onerror="this.onerror=null; this.src='images/toronto.jpg'" alt="">
                 <div class="flex badge-box">
                     <div class="carousel--element--badge">
-                        <a href="/experience/{{id}}">
+                        <a href="/experiences/{{id}}">
                             <h4>Read More</h4>
                         </a>
                     </div>

@@ -50,8 +50,8 @@ module.exports = function (app) {
     });
   });
 
-  //Sign out the user
-  app.post("/api/signout", function (req, res) {
+  //Log out the user
+  app.post("/api/logout", function (req, res) {
     req.session.destroy((err) => {
       if (err) {
         console.log("Error destroying session:");
