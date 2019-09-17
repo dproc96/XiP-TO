@@ -1,15 +1,24 @@
 $(document).ready(function () {
   $msgProfile = $("#profile-message");
   $msgPwd = $("#pwd-message");
+  $msgImg = $("#img-message");
+
+  function clearMessages() {
+    $msgProfile.text("");
+    $msgPwd.text("");
+    $msgPwd.text("");
+  }
 
   //insert the error message on the #message element
   function showErrorMessage(msg, $msgElement) {
+    clearMessages();
     $msgElement.removeClass("success-message");
     $msgElement.text(msg).addClass("error-message");
   }
 
   //insert the success message on the #message element
   function showSuccessMessage(msg, $msgElement) {
+    clearMessages();
     $msgElement.removeClass("error-message");
     $msgElement.text(msg).addClass("success-message");
   }
@@ -31,21 +40,7 @@ $(document).ready(function () {
       showErrorMessage("* All fields must be entered", $msgProfile);
     }
     else {
-      $.ajax({
-        url: "/api/users",
-        type: "PUT",
-        data: data,
-  
-        error: err => {
-          showErrorMessage(err.responseText, $msgProfile);
-          $(this).css("disabled", "false");
-        },
-  
-        success: () => {
-          showSuccessMessage("Account updated successfully!", $msgProfile);
-          $(this).css("disabled", "false");
-        }
-      });
+      updateProfile(data, $msgProfile);
     }
   }
 
@@ -66,22 +61,53 @@ $(document).ready(function () {
       showErrorMessage("* Passwords must match", $msgPwd);
     }
     else {
-      $.ajax({
-        url: "/api/users",
-        type: "PUT",
-        data: data,
-
-        error: err => {
-          showErrorMessage(err.responseText, $msgPwd);
-          $(this).css("disabled", "false");
-        },
-
-        success: () => {
-          showSuccessMessage("Password updated successfully!", $msgPwd);
-          $(this).css("disabled", "false");
-        }
-      });
+      updateProfile(data, $msgPwd);
     }
+  }
+
+  function updateProfile(data, $msg) {
+    $.ajax({
+      url: "/api/users",
+      type: "PUT",
+      data: data,
+
+      error: err => {
+        showErrorMessage(err.responseText, $msg);
+        $(this).css("disabled", "false");
+      },
+
+      success: (res) => {
+        if (res.fileName) {
+          $("#picture").attr("src", `./images/uploads/${res.fileName}`);
+        }
+        else {
+          showSuccessMessage("Profile updated!", $msg);
+          $(this).css("disabled", "false");  
+        }
+        
+      }
+    });
+  }
+
+  function submitImg () {
+    let $picture = $("#picture");
+
+    $picture.css("display", "none");
+
+    $("#upload-form").ajaxSubmit({
+
+      error: function (xhr) {
+        showErrorMessage(xhr.responseText, $msgImg);
+      },
+
+      success: function (file) {
+        $picture.css("display", "block");
+        $picture.attr("src", file.fullFileName);
+        $("#image").val(file.fileName);
+        
+        updateProfile({ image: file.fileName }, $msgImg);
+      }
+    });
   }
 
   //when user clicks on the profile submit buttom
@@ -90,24 +116,6 @@ $(document).ready(function () {
   //when user clicks on the password submit buttom
   $("#submit-pwd").on("click", submitNewPwd);
 
-  $("#file").change(function () {
-    let $picture = $("#picture");
-
-    $picture.css("display", "none");
-
-    $("#upload-form").ajaxSubmit({
-
-      error: function (xhr) {
-        showErrorMessage(xhr.responseText,$msgProfile);
-      },
-
-      success: function (file) {
-        $picture.css("display", "block");
-        $picture.attr("src", file.fullFileName);
-        $("#image").val(file.fileName);
-        showSuccessMessage("",$msgProfile);
-      }
-    });
-  });
+  $("#file").change(submitImg);
   
 });

@@ -45,7 +45,8 @@ module.exports = function (app) {
 
   // Update an user
   app.put("/api/users", function (req, res) {
-    
+    let data = {};
+
     //checks if the user is logged in
     if (!req.session.loggedin) {
       res.status(400).end("You need to sign in to update a user.");
@@ -79,18 +80,18 @@ module.exports = function (app) {
           fileExt = fileExt[fileExt.length - 1];
 
           //create the new file name
-          let fileName = `profile_${req.body.id}.${fileExt}`;
+          let fileName = `profile_${req.session.UserId}.${fileExt}`.toLowerCase();
         
           //rename the file and move it to definitive folder
           fs.renameSync(`./public/images/uploads/tmp/${req.body.image}`, `./public/images/uploads/${fileName}`);
 
           req.body.image = fileName;
+          data.fileName = fileName;
         }
-
       }      
-      
+
       db.User.update(req.body, { where: { id: req.session.UserId } }).then(function () {
-        res.status(200).end("User has updated successfully!");
+        res.json(data);
       }).catch(err => {
         
         if (err.errors) {

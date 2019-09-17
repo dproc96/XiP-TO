@@ -193,9 +193,13 @@
 }
 
 .profile-form-image{
-    width: 100%;
-    border-radius: 5px;
-    margin: auto;
+    width: 250px;
+    height: 250px;
+    overflow: hidden;
+    border-radius: 150px;
+    justify-content:center;
+    align-content:center;
+    margin: 20px auto;
 }
 
 .experience-image {

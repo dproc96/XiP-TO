@@ -2,39 +2,46 @@
 
 <div class="grid--content">
     <div class="card">
-      <h3>Personal Info</h3>
+      <div class="grid-two-col">
+        <div class="grid--column-1">
+          <h3>Personal Info</h3>
+          <input type="text" id="firstname" value="{{user.firstname}}" placeholder="First Name">
+          <input type="text" id="lastname" value="{{user.lastname}}" placeholder="Last Name">
+          <input type="email" id="email" value="{{user.email}}" placeholder="E-mail">
+          
+          <!-- error message.............................. -->
+          <p id="profile-message"></p>
 
-      {{!-- Picture --}}
-      <img src="./images/uploads/{{user.image}}" onerror="this.onerror=null; this.src='images/profile.jpg'" id="picture" class="profile-form-image">
-      {{!-- File upload form --}}
-      <form action="/api/uploadfile" method="post" id="upload-form">
-          <label for="file" class="input-file">
-              <i class="fas fa-cloud-upload-alt"></i> Change Picture
-              <input type="file" name="file" id="file" />
-          </label>
-      </form>
+          <!-- submit button.............................. -->
+          <a class="btn" id="submit-profile">Submit</a>
 
-      {{!-- Hidden image temp name --}}
-      <input type="hidden" id="image" value="{{user.image}}">
+          <h3>Password</h3>
+          <input type="password" value="" id="password" autocomplete="off" placeholder="New password" />
+          <input type="password" value="" id="confirm-password" autocomplete="off" placeholder="Confirm new password" />
+          
+          <p id="pwd-message"></p>
+          <a class="btn" id="submit-pwd">Change Password</a>
+        </div>
 
-      <input type="text" id="firstname" value="{{user.firstname}}" placeholder="First Name">
-      <input type="text" id="lastname" value="{{user.lastname}}" placeholder="Last Name">
-      <input type="email" id="email" value="{{user.email}}" placeholder="E-mail">
-      
-      <!-- error message.............................. -->
-      <p id="profile-message"></p>
+        <div class="grid--column-2">
+          {{!-- Picture --}}
+          <img src="./images/uploads/{{user.image}}" id="picture" class="profile-form-image">
+          <!-- error message.............................. -->
+          <p id="img-message"></p>
 
-      <!-- submit button.............................. -->
-      <a class="btn" id="submit-profile">Submit</a>
-    </div>
+          {{!-- File upload form --}}
+          <form action="/api/uploadfile" method="post" id="upload-form">
+              <label for="file" class="input-file">
+                  <i class="fas fa-cloud-upload-alt"></i> Change Picture
+                  <input type="file" name="file" id="file" />
+              </label>
+          </form>
 
-    <div class="card">
-      <h3>Password</h3>
-      <input type="password" value="" id="password" autocomplete="off" placeholder="New password" />
-      <input type="password" value="" id="confirm-password" autocomplete="off" placeholder="Confirm new password" />
-      
-      <p id="pwd-message"></p>
-      <a class="btn" id="submit-pwd">Change Password</a>
+          {{!-- Hidden image temp name --}}
+          <input type="hidden" id="image" value="{{user.image}}">
+
+        </div>
+      </div>
     </div>
 </div>
 <!-- Ajax form library -->
