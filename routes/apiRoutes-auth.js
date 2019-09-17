@@ -29,6 +29,8 @@ module.exports = function (app) {
           // Passwords match
           req.session.loggedin = true;
           req.session.UserId = user.id;
+          req.session.UserName = user.firstname;
+          req.session.UserImage = user.image;
           res.status(200).end("User has signed up successfully!");
             
         } else {

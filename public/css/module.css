@@ -183,7 +183,6 @@
     width: Calc(100% - 20px);
     margin: auto;
 }
-
 .exp-form-header{
     display: grid;
     grid-template-columns: auto auto;
@@ -191,6 +190,16 @@
 .exp-form-header .btn{
     width: fit-content;
     justify-self: flex-end;
+}
+
+.profile-form-image{
+    width: 250px;
+    height: 250px;
+    overflow: hidden;
+    border-radius: 150px;
+    justify-content:center;
+    align-content:center;
+    margin: 20px auto;
 }
 
 .experience-image {

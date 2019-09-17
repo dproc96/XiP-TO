@@ -162,6 +162,27 @@ module.exports = function (app) {
 
   });
 
+  app.get("/account", function (req, res) {
+
+    if (!req.session.loggedin) {
+      res.redirect("/");
+    }
+    else {
+      db.User.findByPk(req.session.UserId).then(function (results) {
+        metadata.userLoggedIn = req.session.loggedin;
+        res.render("profile-form", { metadata: metadata, user: results });
+      }).catch(err => {
+        if (err.errors) {
+          res.status(400).end(err.errors[0].message);
+        }
+        else {
+          res.status(500).end(err.message);
+        }
+      });
+    }
+
+  });
+
   app.get("*", function (req, res) {
     res.redirect("/");
   });

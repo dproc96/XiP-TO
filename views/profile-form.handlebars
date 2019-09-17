@@ -1,0 +1,50 @@
+<script src="https://cdn.jsdelivr.net/npm/places.js@1.16.4"></script>
+
+<div class="grid--content">
+    <div class="card">
+      <div class="grid-two-col">
+        <div class="grid--column-1">
+          <h3>Personal Info</h3>
+          <input type="text" id="firstname" value="{{user.firstname}}" placeholder="First Name">
+          <input type="text" id="lastname" value="{{user.lastname}}" placeholder="Last Name">
+          <input type="email" id="email" value="{{user.email}}" placeholder="E-mail">
+          
+          <!-- error message.............................. -->
+          <p id="profile-message"></p>
+
+          <!-- submit button.............................. -->
+          <a class="btn" id="submit-profile">Submit</a>
+
+          <h3>Password</h3>
+          <input type="password" value="" id="password" autocomplete="off" placeholder="New password" />
+          <input type="password" value="" id="confirm-password" autocomplete="off" placeholder="Confirm new password" />
+          
+          <p id="pwd-message"></p>
+          <a class="btn" id="submit-pwd">Change Password</a>
+        </div>
+
+        <div class="grid--column-2">
+          {{!-- Picture --}}
+          <img src="./images/uploads/{{user.image}}" id="picture" class="profile-form-image">
+          <!-- error message.............................. -->
+          <p id="img-message"></p>
+
+          {{!-- File upload form --}}
+          <form action="/api/uploadfile" method="post" id="upload-form">
+              <label for="file" class="input-file">
+                  <i class="fas fa-cloud-upload-alt"></i> Change Picture
+                  <input type="file" name="file" id="file" />
+              </label>
+          </form>
+
+          {{!-- Hidden image temp name --}}
+          <input type="hidden" id="image" value="{{user.image}}">
+
+        </div>
+      </div>
+    </div>
+</div>
+<!-- Ajax form library -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.51/jquery.form.min.js"></script>
+<script src="js/profile-form.js"></script>
