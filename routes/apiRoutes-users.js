@@ -2,6 +2,7 @@ let db = require("../models");
 const bcrypt = require("bcrypt");
 let lib = require("../library/functions");
 let generator = require("generate-password");
+let fs = require("fs");
 
 module.exports = function (app) {
 
@@ -29,7 +30,6 @@ module.exports = function (app) {
       //crypt the password
       req.body.password = bcrypt.hashSync(pwd, 10);  
     }
-    
     
     db.User.create(req.body).then(function(result) {
       res.json(result);
@@ -70,9 +70,29 @@ module.exports = function (app) {
         //nothing to do, and the password won't be updated
       }
 
-      db.User.update(req.body, { where: { id: req.body.id } }).then(function () {
+      //if there is file sent
+      if (req.body.image !== "") {
+                  
+        //check if the exists in the temp folder
+        if (fs.existsSync(`./public/images/uploads/tmp/${req.body.image}`)) {
+          let fileExt = req.body.image.split(".");
+          fileExt = fileExt[fileExt.length - 1];
+
+          //create the new file name
+          let fileName = `profile_${req.body.id}.${fileExt}`;
+        
+          //rename the file and move it to definitive folder
+          fs.renameSync(`./public/images/uploads/tmp/${req.body.image}`, `./public/images/uploads/${fileName}`);
+
+          req.body.image = fileName;
+        }
+
+      }      
+      
+      db.User.update(req.body, { where: { id: req.session.UserId } }).then(function () {
         res.status(200).end("User has updated successfully!");
       }).catch(err => {
+        
         if (err.errors) {
           res.status(400).end(err.errors[0].message);
         }

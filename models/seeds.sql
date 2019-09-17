@@ -9,7 +9,12 @@ INSERT INTO Category (name) VALUES ("Museum");
 INSERT INTO Category (name) VALUES ("Other");
 
 /*test data*/
-INSERT INTO User VALUES (1,'John','Doe','john@gmail.com','123456789',18,1,'2019-09-14 14:23:59','2019-09-14 14:32:20'),(2,'Carol','Cavalcanti','carol@gmail.com','123456789',5,1,'2019-09-14 14:31:49','2019-09-14 14:32:51'),(3,'Dan','Proctor','dan@gmail.com','123456789',3,1,'2019-09-14 14:31:49','2019-09-14 14:32:51'),(4,'Rob','Gronkowski','gronk@gmail.com','$2b$10$F.mAHbUstqqJrkZEoCq3iuLWBk8aq5pyrpb0VzZDnJe8hu0VyJdJy',22,1,'2019-09-14 14:31:49','2019-09-14 14:32:51'),(5,'Julian','Edelman','jules@gmail.com','123456789',19,1,'2019-09-14 14:31:49','2019-09-14 14:32:51');
+INSERT INTO User VALUES 
+(1,'John','Doe','john@gmail.com','123456789',null,18,1,'2019-09-14 14:23:59','2019-09-14 14:32:20'),
+(2,'Carol','Cavalcanti','carolinapc@gmail.com','$2b$10$fo85sCgXJsNGGC0Sk28d/u5j7TmmjyxgVbETTYzKwKOAEFobJD8Ra',null,5,1,'2019-09-14 14:31:49','2019-09-14 14:32:51'),
+(3,'Dan','Proctor','dan@gmail.com','123456789',null,3,1,'2019-09-14 14:31:49','2019-09-14 14:32:51'),
+(4,'Rob','Gronkowski','gronk@gmail.com','$2b$10$F.mAHbUstqqJrkZEoCq3iuLWBk8aq5pyrpb0VzZDnJe8hu0VyJdJy',null,22,1,'2019-09-14 14:31:49','2019-09-14 14:32:51'),
+(5,'Julian','Edelman','jules@gmail.com','123456789',null,19,1,'2019-09-14 14:31:49','2019-09-14 14:32:51');
 INSERT INTO Experience VALUES 
 (1,'High Park Scavenger Hunt','1873 Bloor St W, Toronto, ON M6R 2Z3',NULL,NULL,'My friends and I found a scavenger hunt on High Park''s website, it was great!','high-park-scavenger-hunt.jpg','2019-09-14 14:24:17','2019-09-14 14:24:17',1,1),
 (2,'Picnic in Christie Pits','750 Bloor St W, Toronto, ON M6G 3K4',NULL,NULL,'My wife and I had a picnic in Christie Pits and watched a local baseball league play on a Saturday.','picnic-in-christie-pits.jpg','2019-09-14 14:24:33','2019-09-14 14:24:33',1,1),
