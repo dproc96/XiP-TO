@@ -2,6 +2,9 @@
 <div class="grid--content">
     <div class="card">
         <h1>{{user.firstname}} {{user.lastname}}</h1>
+        {{#if user.image}}
+        <img class="profile-form-image block__centered" src="/images/uploads/{{user.image}}" alt="">
+        {{/if}}
         <h5>Current Score: {{user.score}}</h5>
 
         <div class="slide">
