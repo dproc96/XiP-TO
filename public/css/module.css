@@ -200,6 +200,14 @@
     margin-bottom: 10px;
 }
 
+.comment {
+    background-color: var(--dark-color-opacity);
+    width: 90%;
+    padding: 10px;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+
 
 /* Algolia styling */
 .ap-input-icon svg{

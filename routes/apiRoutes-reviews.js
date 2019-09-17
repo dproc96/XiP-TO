@@ -29,6 +29,8 @@ module.exports = function (app) {
       res.status(400).end("You need to sign in to create a review.");
     }
     else {
+      //set the user id from the session
+      req.body.UserId = req.session.UserId;
     
       db.Review.create(req.body).then(function (result) {
         res.json(result);

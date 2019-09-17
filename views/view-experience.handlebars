@@ -30,5 +30,20 @@
                 <p>{{experience.description}}</p>
             </div>
         </div>
+        <h2>Reviews:</h2>
+        <input id="comment" type="text" data-experience="{{experience.id}}" placeholder="If you've done this experience, add your review and give a like or dislike">
+        <div class="flex">
+            <button id="liked" class="btn">Like</button>
+            <button id="disliked" class="btn">Dislike</button>
+        </div>
+        <div id="message-review"></div>
+        {{#each experience.Reviews}}
+        <div style="height: min-content;" class="comment grow-in">
+            <h3><a href="/users/{{UserId}}" style="display: inline; margin: 0;">{{User.firstname}}</a> {{#unless liked}}dis{{/unless}}liked this experience...</h3>
+            <p>
+                {{comment}}
+            </p>
+        </div>
+        {{/each}}
     </div>
 </div>
