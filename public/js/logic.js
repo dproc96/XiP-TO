@@ -197,8 +197,7 @@ $(document).ready(function () {
       },
 
       success: () => {
-        // showSuccessMessage("Your new password was sent. Check your inbox in a few minutes!");
-        // clearFields();
+        location.reload();
       }
     });
   }
