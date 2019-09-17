@@ -60,20 +60,31 @@ if (process.env.NODE_ENV === "test") {
 // Starting the server, syncing our models ------------------------------------/
 db.sequelize.sync(syncOptions).then(function () {
   
-  //execute the schema changes and the seeds
-  let schema = fs.readFileSync("./models/schema.sql", { encoding: "utf8" });
-  let seeds = fs.readFileSync("./models/seeds.sql", { encoding: "utf8" });
+  if (syncOptions) {
+    
+    //execute the schema changes and the seeds
+    let schema = fs.readFileSync("./models/schema.sql", { encoding: "utf8" });
+    let seeds = fs.readFileSync("./models/seeds.sql", { encoding: "utf8" });
   
-  db.sequelize.query(schema + seeds, { raw: true }).then(() => {
-    app.listen(PORT, function() {
+    db.sequelize.query(schema + seeds, { raw: true }).then(() => {
+      app.listen(PORT, function () {
+        console.log(
+          "==> 🌎  Listening on port %s. Visit http://localhost:%s/ in your browser.",
+          PORT,
+          PORT
+        );
+      });
+    });
+  }
+  else {
+    app.listen(PORT, function () {
       console.log(
         "==> 🌎  Listening on port %s. Visit http://localhost:%s/ in your browser.",
         PORT,
         PORT
       );
-    });  
-  });
-
+    });
+  }
   
 });
 
