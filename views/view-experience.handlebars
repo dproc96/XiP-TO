@@ -5,8 +5,7 @@
         <div class="grid-two-col">
             <div class="grid--column-1">
                 {{#if experience.User.image}}
-                <div style="background-image: url(images/uploads/{{experience.User.image}}); background-size: 150%; background-position: center; float: left;"
-                    class="carousel--element--badge">
+                <div style="background-image: url(images/uploads/{{experience.User.image}}); background-size: 150%; background-position: center; float: left;" class="carousel--element--badge">
                 </div>
                 {{/if}}
                 <h3>Posted By: <a style="display: inline; margin: 0;" href="/users/{{experience.UserId}}">{{experience.User.firstname}} {{experience.User.lastname}}</a> (User Score:
@@ -44,7 +43,8 @@
         <div id="message-review"></div>
         {{#each experience.Reviews}}
         <div style="height: min-content;" class="comment grow-in">
-            <h3><a href="/users/{{UserId}}" style="display: inline; margin: 0;">{{User.firstname}}</a> {{#unless liked}}dis{{/unless}}liked this experience...</h3>
+            <img class="icon" style="height: 30px; width: 30px; display: inline-block; vertical-align: middle;" src="images/uploads/{{User.image}}" onerror="this.onerror=null; this.src='images/toronto.jpg'" alt="">
+            <h3 style="display: inline-block; vertical-align: middle;"><a href="/users/{{UserId}}" style="display: inline; margin: 0;">{{User.firstname}}</a> {{#unless liked}}dis{{/unless}}liked this experience...</h3>
             <p>
                 {{comment}}
             </p>
