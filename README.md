@@ -19,8 +19,9 @@ Xipto is a social app which people use to share their experiences that they had 
        * Used express-fileupload middleware to upload images.
        * Used generate-password for generating random and unique passwords.
        * Used express-session to handle sessions in Node.js.
+       * Used bcrypt npm package to hash passwords.
        * Used SendGrid API to send e-mails.
-       * Used bcrypt to hash passwords.
+       * Used Algolia Places API to search address.
     
 ## Instructions
 ### App Setup
