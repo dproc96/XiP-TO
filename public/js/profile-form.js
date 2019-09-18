@@ -67,7 +67,7 @@ $(document).ready(function () {
 
   function updateProfile(data, $msg) {
     $.ajax({
-      url: "//api/users",
+      url: "/api/users",
       type: "PUT",
       data: data,
 
