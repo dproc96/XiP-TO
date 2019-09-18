@@ -60,7 +60,7 @@ if (process.env.NODE_ENV === "test") {
 // Starting the server, syncing our models ------------------------------------/
 db.sequelize.sync(syncOptions).then(function () {
   
-  if (syncOptions) {
+  if (syncOptions.force) {
     
     //execute the schema changes and the seeds
     let schema = fs.readFileSync("./models/schema.sql", { encoding: "utf8" });
