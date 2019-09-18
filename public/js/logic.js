@@ -37,6 +37,7 @@ $(document).ready(function () {
   }
 
   function closeModal() {
+    clearFields();
     $("#overlay").attr("class", "overlay hidden");
     $("#sign-in-modal").attr("class", "modal hidden");
     $("#sign-up-modal").attr("class", "modal hidden");
@@ -56,18 +57,21 @@ $(document).ready(function () {
 
   function openSignInModal() {
     event.preventDefault();
-
-    if ($(this).attr("id") === "sign-in") {
+    let sourceId = $(this).attr("id");
+    
+    if ( sourceId === "sign-in") {
       clearFields();
     }
+  
     $("#overlay").attr("class", "overlay");
     $("#sign-in-modal").attr("class", "modal");
   }
 
   function openSignUpModal() {
     event.preventDefault();
+    let sourceId = $(this).attr("id");
 
-    if ($(this).attr("id") === "signUp") {
+    if (sourceId === "signUp") {
       clearFields();
     }
 
@@ -77,6 +81,7 @@ $(document).ready(function () {
 
   function cancelResetPwd() {
     event.preventDefault();
+    clearFields();
 
     $("#title-signIn").text("Welcome Back!");
 
@@ -235,8 +240,8 @@ $(document).ready(function () {
       },
 
       success: () => {
-        showSuccessMessage("Your new password was sent. Check your inbox in a few minutes!");
         clearFields();
+        showSuccessMessage("Your new password was sent. Check your inbox in a few minutes!");
       }
     });
 
