@@ -41,6 +41,16 @@ app.engine(
 );
 app.set("view engine", "handlebars");
 
+function runServer() {
+  app.listen(PORT, function () {
+    console.log(
+      "==> 🌎  Listening on port %s. Visit http://localhost:%s/ in your browser.",
+      PORT,
+      PORT
+    );
+  });
+}
+
 // Routes
 require("./routes/apiRoutes-categories")(app);
 require("./routes/apiRoutes-experiences")(app);
@@ -67,23 +77,11 @@ db.sequelize.sync(syncOptions).then(function () {
     let seeds = fs.readFileSync("./models/seeds.sql", { encoding: "utf8" });
   
     db.sequelize.query(schema + seeds, { raw: true }).then(() => {
-      app.listen(PORT, function () {
-        console.log(
-          "==> 🌎  Listening on port %s. Visit http://localhost:%s/ in your browser.",
-          PORT,
-          PORT
-        );
-      });
+      runServer();
     });
   }
   else {
-    app.listen(PORT, function () {
-      console.log(
-        "==> 🌎  Listening on port %s. Visit http://localhost:%s/ in your browser.",
-        PORT,
-        PORT
-      );
-    });
+    runServer();
   }
   
 });
