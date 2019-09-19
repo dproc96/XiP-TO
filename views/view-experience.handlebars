@@ -43,7 +43,7 @@
         <div id="message-review"></div>
         {{#each experience.Reviews}}
         <div style="height: min-content;" class="comment grow-in">
-            <img class="icon" style="height: 30px; width: 30px; display: inline-block; vertical-align: middle;" src="images/uploads/{{User.image}}" onerror="this.onerror=null; this.src='images/toronto.jpg'" alt="">
+            <img class="icon" style="height: 30px; width: 30px; object-fit:cover; display: inline-block; vertical-align: middle;" src="/images/uploads/{{User.image}}" data-src="images/uploads/{{User.image}}" onerror="this.onerror=null; this.src='images/profile.jpg'" alt="">
             <h3 style="display: inline-block; vertical-align: middle;"><a href="/users/{{UserId}}" style="display: inline; margin: 0;">{{User.firstname}}</a> {{#unless liked}}dis{{/unless}}liked this experience...</h3>
             <p>
                 {{comment}}
