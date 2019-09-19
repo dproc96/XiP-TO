@@ -7,7 +7,7 @@ Xipto is a social app which people use to share their experiences that they had 
  *  A user is able to share and review as many as experiences he wants by creating an account first and then sign in. The user’s score raises 5 points by sharing a new experience and 1 point by reviewing an experience. 
 
 
- *  The app is a full-stack web application created with MySQL, Node, Express.js, , Handlebars, and Sequelize.js . 
+ *  The app is a full-stack web application created with MySQL, Node, Express.js, Handlebars, and Sequelize.js . 
  
        * Used Express to manage the server and routes.
        * Used Node and MySQL to query and routed data in the app.
@@ -19,6 +19,9 @@ Xipto is a social app which people use to share their experiences that they had 
        * Used express-fileupload middleware to upload images.
        * Used generate-password for generating random and unique passwords.
        * Used express-session to handle sessions in Node.js.
+       * Used bcrypt npm package to hash passwords.
+       * Used SendGrid API to send e-mails.
+       * Used Algolia Places API to search address.
     
 ## Instructions
 ### App Setup
@@ -28,11 +31,14 @@ Xipto is a social app which people use to share their experiences that they had 
 4.	Install the Handlebars npm package: npm install express-handlebars.
 5.	Install MySQL npm package: npm install mysql.
 6.	Require the following npm packages inside of the server.js file:
-      *  Express.
+      *  Express
       *  Express-handlebars
       *  Express-fileupload – used to upload images.
       *  Express-session - used to handle sessions in Node.js.
       *  Fs - used to work with file system.
+      *  @sendgrid/mail - used to send e-mails (required an API key on the sendgrid.com website)
+      *  bcrypt - used to hash passwords
+      
 ### DB Setup
 1.	Inside the models directory, create schema.sql and seeds.sql.
 2.	Write SQL queries in schema.sql. 
