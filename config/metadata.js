@@ -14,7 +14,7 @@ function loadCategories() {
 //load categories from the database
 function loadUsers() {
   return db.User.findAll({
-    attributes: ["firstname", "lastname", "id"],
+    attributes: ["firstname", "lastname", "id", "image"],
     where: {
       active: true
     }
