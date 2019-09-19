@@ -83,4 +83,8 @@
   .card {
     width: 80%;
   }
+
+  .badge-box {
+    left: 10px;
+}
 }
