@@ -2,6 +2,8 @@
 
 Xipto is a social app which people use to share their experiences that they had in different places like restaurant, theatre, parks, and so on.
 
+[View website](https://xip-to.herokuapp.com/)
+
 ## Overview
 
  *  A user is able to share and review as many as experiences he wants by creating an account first and then sign in. The user’s score raises 5 points by sharing a new experience and 1 point by reviewing an experience. 
